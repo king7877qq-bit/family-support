@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Family Support | دعم عائلة</title>
+<meta name="description" content="Personal family support initiative from Syria. Humanitarian support for Fareed and his family.">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #333; background: #fafafa; transition: all 0.3s ease; }
+  body[dir="rtl"] { direction: rtl; }
+  body.ar { direction: rtl; }
+  body.en { direction: ltr; }
+  [dir="rtl"] body { direction: rtl; }
+  [dir="ltr"] body { direction: ltr; }
+
+  /* Language switcher */
+  .lang-switch { position: fixed; top: 1rem; right: 1rem; z-index: 1000; display: flex; gap: 0.5rem; }
+  body[dir="rtl"] .lang-switch { left: 1rem; right: auto; }
+  .lang-btn { padding: 0.4rem 0.8rem; border: 2px solid #c41e3a; background: transparent; color: #c41e3a; border-radius: 20px; cursor: pointer; font-weight: 600; font-size: 0.9rem; transition: all 0.3s; }
+  .lang-btn.active { background: #c41e3a; color: #fff; }
+  .lang-btn:hover { background: #c41e3a; color: #fff; }
+
+  /* Header */
+  header { background: #fff; border-bottom: 1px solid #eee; position: sticky; top: 0; z-index: 900; }
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 1.5rem; }
+  .top-bar { display: flex; justify-content: space-between; align-items: center; padding: 1rem 0; }
+  .logo { font-size: 1.5rem; font-weight: 800; color: #c41e3a; display: flex; align-items: center; gap: 0.5rem; }
+  .logo span { color: #2d3436; }
+  nav ul { display: flex; list-style: none; gap: 1.5rem; }
+  nav a { text-decoration: none; color: #333; font-weight: 500; transition: color 0.3s; }
+  nav a:hover { color: #c41e3a; }
+  .mobile-menu { display: none; font-size: 1.5rem; background: none; border: none; color: #333; cursor: pointer; }
+  body[dir="rtl"] .mobile-menu { /* handled by css */ }
+
+  /* Hero */
+  .hero { padding: 4rem 0 3rem; text-align: center; background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%); }
+  .hero h1 { font-size: 2.5rem; color: #2d3436; margin-bottom: 1rem; line-height: 1.3; }
+  .hero p { font-size: 1.1rem; color: #666; max-width: 700px; margin: 0 auto 2rem; }
+  .hero-img { width: 100%; max-width: 400px; height: 300px; background: #e9ecef; border-radius: 12px; margin: 0 auto 1rem; display: flex; align-items: center; justify-content: center; color: #888; font-size: 0.9rem; border: 2px dashed #ccc; overflow: hidden; }
+  .hero-img img { max-width: 100%; max-height: 100%; object-fit: cover; display: none; }
+  .photo-placeholder { color: #999; font-size: 0.95rem; }
+
+  /* Sections */
+  section { padding: 4rem 0; }
+  .section-title { text-align: center; margin-bottom: 3rem; }
+  .section-title h2 { font-size: 2rem; color: #2d3436; margin-bottom: 0.5rem; }
+  .section-title p { color: #666; font-size: 1.1rem; }
+
+  /* Story */
+  .story-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start; }
+  body[dir="rtl"] .story-grid { /* handled naturally */ }
+  .story-card { background: #fff; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); border: 1px solid #eee; }
+  .story-card h3 { color: #c41e3a; margin-bottom: 1rem; font-size: 1.4rem; }
+  .story-card p { color: #555; margin-bottom: 1rem; }
+  .family-list { list-style: none; }
+  .family-list li { margin-bottom: 0.8rem; padding-left: 1.5rem; position: relative; }
+  body[dir="rtl"] .family-list li { padding-left: 0; padding-right: 1.5rem; }
+  .family-list li::before { content: "•"; color: #c41e3a; position: absolute; left: 0; font-size: 1.2rem; font-weight: bold; }
+  body[dir="rtl"] .family-list li::before { left: auto; right: 0; }
+  .story-note { background: #fff3cd; border: 1px solid #ffeaa7; padding: 1rem; border-radius: 8px; margin-top: 1.5rem; font-size: 0.95rem; color: #856404; }
+
+  /* Donate */
+  .donate-card { background: #fff; border-radius: 12px; padding: 2.5rem; max-width: 500px; margin: 0 auto; box-shadow: 0 4px 20px rgba(0,0,0,0.08); border: 1px solid #eee; text-align: center; }
+  .wallet-box { background: #f8f9fa; border: 2px dashed #c41e3a; border-radius: 8px; padding: 1.5rem; margin: 1.5rem 0; word-break: break-all; font-family: monospace; font-size: 1.1rem; color: #2d3436; position: relative; }
+  .copy-btn { position: absolute; top: 0.5rem; right: 0.5rem; background: #c41e3a; color: #fff; border: none; padding: 0.4rem 0.8rem; border-radius: 4px; cursor: pointer; font-size: 0.85rem; }
+  body[dir="rtl"] .copy-btn { left: 0.5rem; right: auto; }
+  .copy-btn:hover { background: #a8162d; }
+  .copy-btn:active { transform: scale(0.95); }
+  .qr-box { margin: 1.5rem 0; }
+  .qr-box img { max-width: 180px; border: 1px solid #ddd; border-radius: 4px; padding: 0.5rem; background: #fff; }
+  .network-warning { background: #ffeaa7; border: 1px solid #fdcb6e; color: #d63031; padding: 1rem; border-radius: 8px; font-size: 0.9rem; margin-top: 1.5rem; }
+  .network-warning strong { color: #c41e3a; }
+  .donate-methods { display: flex; gap: 1rem; justify-content: center; margin-top: 1.5rem; flex-wrap: wrap; }
+  .method-btn { padding: 0.8rem 1.5rem; border: 2px solid #c41e3a; background: transparent; color: #c41e3a; border-radius: 8px; cursor: pointer; font-weight: 600; transition: all 0.3s; text-decoration: none; font-size: 0.95rem; }
+  .method-btn:hover { background: #c41e3a; color: #fff; }
+
+  /* YouTube */
+  .youtube-card { background: #fff; border-radius: 12px; padding: 2rem; max-width: 600px; margin: 0 auto; box-shadow: 0 4px 20px rgba(0,0,0,0.08); border: 1px solid #eee; text-align: center; }
+  .yt-link { display: inline-block; background: #ff0000; color: #fff; padding: 1rem 2rem; border-radius: 8px; text-decoration: none; font-weight: 700; font-size: 1.1rem; margin-top: 1rem; transition: all 0.3s; }
+  .yt-link:hover { background: #cc0000; transform: translateY(-2px); }
+  .yt-placeholder { color: #888; font-size: 0.95rem; margin-top: 1rem; }
+
+  /* Contact */
+  .contact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; }
+  .contact-card { background: #fff; padding: 2rem; border-radius: 12px; text-align: center; box-shadow: 0 4px 6px rgba(0,0,0,0.05); border: 1px solid #eee; }
+  .contact-card .icon { font-size: 2rem; margin-bottom: 1rem; display: block; }
+  .contact-card h3 { color: #2d3436; margin-bottom: 0.5rem; }
+  .contact-card p { color: #666; margin-bottom: 1rem; word-break: break-all; }
+  .contact-btn { display: inline-block; background: #c41e3a; color: #fff; padding: 0.7rem 1.5rem; border-radius: 8px; text-decoration: none; font-weight: 600; transition: all 0.3s; }
+  .contact-btn:hover { background: #a8162d; }
+
+  /* Updates */
+  .updates-card { background: #fff; border-radius: 12px; padding: 2.5rem; max-width: 800px; margin: 0 auto; box-shadow: 0 4px 20px rgba(0,0,0,0.08); border: 1px solid #eee; text-align: center; }
+  .updates-placeholder { color: #888; font-size: 1.1rem; margin-top: 1rem; }
+  .updates-list { list-style: none; text-align: left; max-width: 600px; margin: 1.5rem auto 0; }
+  .updates-list li { padding: 1rem 0; border-bottom: 1px solid #eee; color: #555; }
+
+  /* Disclaimer */
+  .disclaimer { background: #fff3cd; border: 1px solid #ffeaa7; border-radius: 8px; padding: 1.5rem; margin-top: 3rem; font-size: 0.9rem; color: #856404; text-align: center; max-width: 900px; margin-left: auto; margin-right: auto; }
+
+  footer { background: #2d3436; color: #fff; padding: 3rem 0 1.5rem; text-align: center; }
+  footer p { color: #bbb; font-size: 0.9rem; margin-bottom: 0.5rem; }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .hero h1 { font-size: 1.8rem; }
+    .story-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+    .lang-switch { top: 0.5rem; right: 0.5rem; left: auto; }
+    body[dir="rtl"] .lang-switch { left: 0.5rem; right: auto; }
+    nav ul { display: none; flex-direction: column; position: absolute; top: 100%; left: 0; right: 0; background: #fff; padding: 1rem; border-bottom: 1px solid #eee; }
+    nav ul.show { display: flex; }
+    .mobile-menu { display: block; }
+    .donate-card { padding: 1.5rem; }
+  }
+</style>
+</head>
+<body lang="en" dir="ltr">
+
+<div class="lang-switch">
+  <button class="lang-btn active" data-lang="en" onclick="setLang('en')">English</button>
+  <button class="lang-btn" data-lang="ar" onclick="setLang('ar')">العربية</button>
+</div>
+
+<header>
+  <div class="container top-bar">
+    <div class="logo">Family <span>Support</span></div>
+    <button class="mobile-menu" onclick="toggleMenu()">☰</button>
+    <nav>
+      <ul id="nav-menu" class="">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#story">Our Story</a></li>
+        <li><a href="#donate">Donate &amp; Support</a></li>
+        <li><a href="#youtube">YouTube</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li><a href="#updates">Updates</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<section id="home" class="hero">
+  <div class="container">
+    <h1 data-en="Family Support" data-ar="دعم عائلة">Family Support</h1>
+    <p data-en="A personal family support initiative from Syria. Fareed, his mother, and his brother are seeking humanitarian support." data-ar="مبادرة دعم عائلية شخصية من سوريا. فريد ووالدته وأخيه يطلبون الدعم الإنساني.">A personal family support initiative from Syria. Fareed, his mother, and his brother are seeking humanitarian support.</p>
+    <div class="hero-img" id="family-photo">
+      <img id="family-photo-img" src="" alt="Family photo">
+      <div class="photo-placeholder" id="photo-placeholder" data-en="Space for a real family photo will be added here later." data-ar="سيتم إضافة مساحة لصورة عائلية حقيقية هنا لاحقًا.">Space for a real family photo will be added here later.</div>
+    </div>
+  </div>
+</section>
+
+<section id="story" class="story">
+  <div class="container">
+    <div class="section-title">
+      <h2 data-en="Our Story" data-ar="قصتنا">Our Story</h2>
+      <p data-en="Fareed, his mother, and his brother live in Syria and are seeking humanitarian support. This page is a personal initiative to share their story and receive help." data-ar="يعيش فريد ووالدته وأخيه في سوريا ويطلبون الدعم الإنساني. هذه الصفحة مبادرة شخصية لمشاركة قصتهم وتلقي المساعدة.">Fareed, his mother, and his brother live in Syria and are seeking humanitarian support. This page is a personal initiative to share their story and receive help.</p>
+    </div>
+    <div class="story-grid">
+      <div class="story-card">
+        <h3 data-en="Who We Are" data-ar="من نحن">Who We Are</h3>
+        <ul class="family-list">
+          <li data-en="Fareed — founder of this support initiative." data-ar="فريد — مؤسس مبادرة الدعم هذه.">Fareed — founder of this support initiative.</li>
+          <li data-en="His mother." data-ar="والدته.">His mother.</li>
+          <li data-en="His brother." data-ar="أخيه.">His brother.</li>
+        </ul>
+        <p data-en="Location: Syria." data-ar="المكان: سوريا.">Location: Syria.</p>
+        <div class="story-note">
+          <strong data-en="Important:" data-ar="هام:">Important:</strong> <span data-en="This page is prepared for your review. No medical, financial, or personal details beyond what you provided have been added." data-ar="هذه الصفحة معدة للمراجعة. لم تتم إضافة أي تفاصيل طبية أو مالية أو شخصية باستثناء ما قدمته أنت.">This page is prepared for your review. No medical, financial, or personal details beyond what you provided have been added.</span>
+        </div>
+      </div>
+      <div class="story-card">
+        <h3 data-en="How You Can Help" data-ar="كيف يمكنك المساعدة">How You Can Help</h3>
+        <p data-en="You can support us through cryptocurrency donation, by sharing our story, or by contacting us directly." data-ar="يمكنك دعمنا من خلال التبرع بالعملات المشفرة، أو بمشاركة قصتنا، أو بالتواصل معنا مباشرة.">You can support us through cryptocurrency donation, by sharing our story, or by contacting us directly.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="donate" class="donate">
+  <div class="container">
+    <div class="section-title">
+      <h2 data-en="Donate &amp; Support" data-ar="التبرع والدعم">Donate &amp; Support</h2>
+      <p data-en="Support our family with USDT on TRON network (TRC20 only)." data=ar="دعم عائلتنا באמצעות USDT على شبكة TRON (TRC20 فقط).">Support our family with USDT on TRON network (TRC20 only).</p>
+    </div>
+    <div class="donate-card">
+      <div class="wallet-box">
+        <span id="wallet-address" data-en="TYtWeZ6Xf9a8uACp35Bv2BpgmZjrHt8mTG" data-ar="TYtWeZ6Xf9a8uACp35Bv2BpgmZjrHt8mTG">TYtWeZ6Xf9a8uACp35Bv2BpgmZjrHt8mTG</span>
+        <button class="copy-btn" id="copy-btn" data-en="Copy" data-ar="نسخ">Copy</button>
+      </div>
+      <div class="qr-box">
+        <img id="qr-code" src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=TYtWeZ6Xf9a8uACp35Bv2BpgmZjrHt8mTG" alt="Trust Wallet QR code">
+      </div>
+      <div class="network-warning">
+        <strong data-en="⚠ Network Warning:" data-ar="⚠ تحذير الشبكة:">⚠ Network Warning:</strong><br>
+        <span data-en="Send USDT via TRON network (TRC20) only. Sending to other networks may result in permanent loss of funds." data=ar="أرسل USDT عبر شبكة TRON (TRC20) فقط. الإرسال إلى شبكات أخرى قد يؤدي إلى فقدان دائم للأموال.">Send USDT via TRON network (TRC20) only. Sending to other networks may result in permanent loss of funds.</span>
+      </div>
+      <div class="donate-methods">
+        <a href="https://tronscan.org/#/address/TYtWeZ6Xf9a8uACp35Bv2BpgmZjrHt8mTG" target="_blank" rel="noopener" class="method-btn" data-en="View on Tronscan" data-ar="عرض على ترون سكان">View on Tronscan</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="youtube" class="youtube">
+  <div class="container">
+    <div class="section-title">
+      <h2 data-en="Our Story on YouTube" data-ar="قصتنا على يوتيوب">Our Story on YouTube</h2>
+      <p data-en="Watch our videos and subscribe to the channel." data=ar="شاهد فيديوهاتنا واشترك في القناة.">Watch our videos and subscribe to the channel.</p>
+    </div>
+    <div class="youtube-card">
+      <a href="https://www.youtube.com/@FareedFamilySupport" target="_blank" rel="noopener" class="yt-link" data-en="Visit YouTube Channel" data-ar="زيارة قناة يوتيوب">Visit YouTube Channel</a>
+      <div class="yt-placeholder" data-en="Public videos will appear here if available on the channel." data-ar="ستظهر الفيديوهات العامة هنا إذا كانت متوفرة على القناة.">Public videos will appear here if available on the channel.</div>
+    </div>
+  </div>
+</section>
+
+<section id="contact" class="contact">
+  <div class="container">
+    <div class="section-title">
+      <h2 data-en="Contact Us" data=ar="تواصل معنا">Contact Us</h2>
+      <p data-en="Reach out to us by email or WhatsApp." data=ar="تواصل معنا عبر البريد الإلكتروني أو الواتساب.">Reach out to us by email or WhatsApp.</p>
+    </div>
+    <div class="contact-grid">
+      <div class="contact-card">
+        <span class="icon">✉️</span>
+        <h3 data-en="Email" data-ar="البريد الإلكتروني">Email</h3>
+        <p>king7877@gmail.com</p>
+        <a href="mailto:king7877@gmail.com" class="contact-btn" data-en="Send Email" data-ar="إرسال بريد">Send Email</a>
+      </div>
+      <div class="contact-card">
+        <span class="icon">💬</span>
+        <h3 data-en="WhatsApp" data-ar="واتساب">WhatsApp</h3>
+        <p>+963 997 675 625</p>
+        <a href="https://wa.me/963997675625" target="_blank" rel="noopener" class="contact-btn" data-en="Message on WhatsApp" data-ar="مراسلة على واتساب">Message on WhatsApp</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="updates" class="updates">
+  <div class="container">
+    <div class="section-title">
+      <h2 data-en="Updates" data-ar="التحديثات">Updates</h2>
+      <p data-en="Latest news and support updates will be posted here." data=ar="سيتم نشر أحدث الأخبار والتحديثات هنا.">Latest news and support updates will be posted here.</p>
+    </div>
+    <div class="updates-card">
+      <ul class="updates-list" id="updates-list">
+        <!-- Updates will be added here later -->
+      </ul>
+      <p class="updates-placeholder" data-en="No updates yet. Real updates will be added here as they happen." data-ar="لا توجد تحديثات بعد. سيتم إضافة التحديثات الحقيقية هنا عند حدوثها.">No updates yet. Real updates will be added here as they happen.</p>
+    </div>
+  </div>
+</section>
+
+<div class="disclaimer">
+  <strong data-en="Important Notice:" data-ar="إشعار هام:">Important Notice:</strong><br>
+  <span data-en="This is a personal family support initiative, not a registered charity or nonprofit organization. No official registration number or legal entity is claimed." data=ar="هذه مبادرة دعم عائلية شخصية، وليست جمعية خيرية مسجلة أو منظمة غير ربحية. لا يُClaim رقم تسجيل رسمي أو كيان قانوني.">This is a personal family support initiative, not a registered charity or nonprofit organization. No official registration number or legal entity is claimed.</span>
+</div>
+
+<footer>
+  <div class="container">
+    <p data-en="© 2024 Family Support — Personal Family Initiative" data-ar="© 2024 دعم عائلة — مبادرة عائلية شخصية">© 2024 Family Support — Personal Family Initiative</p>
+    <p data-en="Syria" data-ar="سوريا">Syria</p>
+  </div>
+</footer>
+
+<script>
+  const translations = {
+    en: {
+      'Home': 'Home',
+      'Our Story': 'Our Story',
+      'Donate & Support': 'Donate & Support',
+      'YouTube': 'YouTube',
+      'Contact': 'Contact',
+      'Updates': 'Updates',
+      'Family Support': 'Family Support',
+      'A personal family support initiative from Syria. Fareed, his mother, and his brother are seeking humanitarian support.': 'A personal family support initiative from Syria. Fareed, his mother, and his brother are seeking humanitarian support.',
+      'Space for a real family photo will be added here later.': 'Space for a real family photo will be added here later.',
+      'Our Story': 'Our Story',
+      'Fareed, his mother, and his brother live in Syria and are seeking humanitarian support. This page is a personal initiative to share their story and receive help.': 'Fareed, his mother, and his brother live in Syria and are seeking humanitarian support. This page is a personal initiative to share their story and receive help.',
+      'Who We Are': 'Who We Are',
+      'Fareed — founder of this support initiative.': 'Fareed — founder of this support initiative.',
+      'His mother.': 'His mother.',
+      'His brother.': 'His brother.',
+      'Location: Syria.': 'Location: Syria.',
+      'Important:': 'Important:',
+      'This page is prepared for your review. No medical, financial, or personal details beyond what you provided have been added.': 'This page is prepared for your review. No medical, financial, or personal details beyond what you provided have been added.',
+      'How You Can Help': 'How You Can Help',
+      'You can support us through cryptocurrency donation, by sharing our story, or by contacting us directly.': 'You can support us through cryptocurrency donation, by sharing our story, or by contacting us directly.',
+      'Donate & Support': 'Donate & Support',
+      'Support our family with USDT on TRON network (TRC20 only).': 'Support our family with USDT on TRON network (TRC20 only).',
+      'TYtWeZ6Xf9a8uACp35Bv2BpgmZjrHt8mTG': 'TYtWeZ6Xf9a8uACp35Bv2BpgmZjrHt8mTG',
+      'Copy': 'Copy',
+      '⚠ Network Warning:': '⚠ Network Warning:',
+      'Send USDT via TRON network (TRC20) only. Sending to other networks may result in permanent loss of funds.': 'Send USDT via TRON network (TRC20) only. Sending to other networks may result in permanent loss of funds.',
+      'View on Tronscan': 'View on Tronscan',
+      'Our Story on YouTube': 'Our Story on YouTube',
+      'Watch our videos and subscribe to the channel.': 'Watch our videos and subscribe to the channel.',
+      'Visit YouTube Channel': 'Visit YouTube Channel',
+      'Public videos will appear here if available on the channel.': 'Public videos will appear here if available on the channel.',
+      'Contact Us': 'Contact Us',
+      'Reach out to us by email or WhatsApp.': 'Reach out to us by email or WhatsApp.',
+      'Email': 'Email',
+      'Send Email': 'Send Email',
+      'WhatsApp': 'WhatsApp',
+      'Message on WhatsApp': 'Message on WhatsApp',
+      'Updates': 'Updates',
+      'Latest news and support updates will be posted here.': 'Latest news and support updates will be posted here.',
+      'No updates yet. Real updates will be added here as they happen.': 'No updates yet. Real updates will be added here as they happen.',
+      'Important Notice:': 'Important Notice:',
+      'This is a personal family support initiative, not a registered charity or nonprofit organization. No official registration number or legal entity is claimed.': 'This is a personal family support initiative, not a registered charity or nonprofit organization. No official registration number or legal entity is claimed.',
+      '© 2024 Family Support — Personal Family Initiative': '© 2024 Family Support — Personal Family Initiative',
+      'Syria': 'Syria'
+    },
+    ar: {
+      'Home': 'الرئيسية',
+      'Our Story': 'قصتنا',
+      'Donate & Support': 'التبرع والدعم',
+      'YouTube': 'يوتيوب',
+      'Contact': 'اتصل بنا',
+      'Updates': 'التحديثات',
+      'Family Support': 'دعم عائلة',
+      'A personal family support initiative from Syria. Fareed, his mother, and his brother are seeking humanitarian support.': 'مبادرة دعم عائلية شخصية من سوريا. فريد ووالدته وأخيه يطلبون الدعم الإنساني.',
+      'Space for a real family photo will be added here later.': 'سيتم إضافة مساحة لصورة عائلية حقيقية هنا لاحقًا.',
+      'Our Story': 'قصتنا',
+      'Fareed, his mother, and his brother live in Syria and are seeking humanitarian support. This page is a personal initiative to share their story and receive help.': 'يعيش فريد ووالدته وأخيه في سوريا ويطلبون الدعم الإنساني. هذه الصفحة مبادرة شخصية لمشاركة قصتهم وتلقي المساعدة.',
+      'Who We Are': 'من نحن',
+      'Fareed — founder of this support initiative.': 'فريد — مؤسس مبادرة الدعم هذه.',
+      'His mother.': 'والدته.',
+      'His brother.': 'أخيه.',
+      'Location: Syria.': 'المكان: سوريا.',
+      'Important:': 'هام:',
+      'This page is prepared for your review. No medical, financial, or personal details beyond what you provided have been added.': 'هذه الصفحة معدة للمراجعة. لم تتم إضافة أي تفاصيل طبية أو مالية أو شخصية باستثناء ما قدمته أنت.',
+      'How You Can Help': 'كيف يمكنك المساعدة',
+      'You can support us through cryptocurrency donation, by sharing our story, or by contacting us directly.': 'يمكنك دعمنا من خلال التبرع بالعملات المشفرة، أو بمشاركة قصتنا، أو بالتواصل معنا مباشرة.',
+      'Donate & Support': 'التبرع والدعم',
+      'Support our family with USDT on TRON network (TRC20 only).': 'دعم عائلتنا باستخدام USDT على شبكة TRON (TRC20 فقط).',
+      'TYtWeZ6Xf9a8uACp35Bv2BpgmZjrHt8mTG': 'TYtWeZ6Xf9a8uACp35Bv2BpgmZjrHt8mTG',
+      'Copy': 'نسخ',
+      '⚠ Network Warning:': '⚠ تحذير الشبكة:',
+      'Send USDT via TRON network (TRC20) only. Sending to other networks may result in permanent loss of funds.': 'أرسل USDT عبر شبكة TRON (TRC20) فقط. الإرسال إلى شبكات أخرى قد يؤدي إلى فقدان دائم للأموال.',
+      'View on Tronscan': 'عرض على ترون سكان',
+      'Our Story on YouTube': 'قصتنا على يوتيوب',
+      'Watch our videos and subscribe to the channel.': 'شاهد فيديوهاتنا واشترك في القناة.',
+      'Visit YouTube Channel': 'زيارة قناة يوتيوب',
+      'Public videos will appear here if available on the channel.': 'ستظهر الفيديوهات العامة هنا إذا كانت متوفرة على القناة.',
+      'Contact Us': 'تواصل معنا',
+      'Reach out to us by email or WhatsApp.': 'تواصل معنا عبر البريد الإلكتروني أو الواتساب.',
+      'Email': 'البريد الإلكتروني',
+      'Send Email': 'إرسال بريد',
+      'WhatsApp': 'واتساب',
+      'Message on WhatsApp': 'مراسلة على واتساب',
+      'Updates': 'التحديثات',
+      'Latest news and support updates will be posted here.': 'سيتم نشر أحدث الأخبار والتحديثات هنا.',
+      'No updates yet. Real updates will be added here as they happen.': 'لا توجد تحديثات بعد. سيتم إضافة التحديثات الحقيقية هنا عند حدوثها.',
+      'Important Notice:': 'إشعار هام:',
+      'This is a personal family support initiative, not a registered charity or nonprofit organization. No official registration number or legal entity is claimed.': 'هذه مبادرة دعم عائلية شخصية، وليست جمعية خيرية مسجلة أو منظمة غير ربحية. لا يُClaim رقم تسجيل رسمي أو كيان قانوني.',
+      '© 2024 Family Support — Personal Family Initiative': '© 2024 دعم عائلة — مبادرة عائلية شخصية',
+      'Syria': 'سوريا'
+    }
+  };
+
+  function setLang(lang) {
+    document.documentElement.lang = lang;
+    document.body.lang = lang;
+    document.body.dir = lang === 'ar' ? 'rtl' : 'ltr';
+    document.body.className = lang === 'ar' ? 'ar' : 'en';
+
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.lang === lang);
+    });
+
+    document.querySelectorAll('[data-en]').forEach(el => {
+      const key = el.getAttribute('data-en');
+      if (translations[lang] && translations[lang][key]) {
+        el.textContent = translations[lang][key];
+      }
+    });
+  }
+
+  function toggleMenu() {
+    const menu = document.getElementById('nav-menu');
+    menu.classList.toggle('show');
+  }
+
+  // Copy wallet address
+  document.getElementById('copy-btn').addEventListener('click', function() {
+    const address = document.getElementById('wallet-address').textContent;
+    navigator.clipboard.writeText(address).then(() => {
+      const btn = document.getElementById('copy-btn');
+      const original = btn.textContent;
+      btn.textContent = document.body.lang === 'ar' ? 'تم النسخ!' : 'Copied!';
+      setTimeout(() => { btn.textContent = original; }, 1500);
+    });
+  });
+
+  // Show family photo placeholder - real image to be added by user
+  // No fake images used
+</script>
+</body>
+</html>
