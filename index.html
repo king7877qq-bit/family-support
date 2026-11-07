@@ -320,6 +320,37 @@ footer{background:#173746!important;color:#fff!important}
  .story-card,.contact-card,.priority-card,.donate-card,.youtube-card,.updates-card{transition:none!important}
 }
 
+
+/* Hard override for icon contrast across browsers */
+.visual-mark,
+.priority-icon,
+.contact-card .icon,
+.youtube-icon,
+.visual-mark *,
+.priority-icon *,
+.contact-card .icon *,
+.youtube-icon *{
+  color:#063f55!important;
+  -webkit-text-fill-color:#063f55!important;
+  fill:#063f55!important;
+  stroke:#063f55!important;
+  opacity:1!important;
+  filter:none!important;
+  text-shadow:none!important;
+}
+.visual-mark,
+.priority-icon,
+.contact-card .icon,
+.youtube-icon{
+  background:#b9e0f2!important;
+  border:2px solid #4e9abb!important;
+  box-shadow:0 4px 13px rgba(6,63,85,.16)!important;
+}
+.priority-icon{font-weight:900!important;font-size:2rem!important}
+.contact-card .icon{font-weight:900!important;font-size:1.85rem!important}
+.youtube-icon{font-weight:900!important;font-size:2.1rem!important}
+.visual-mark{font-weight:900!important;font-size:2.3rem!important}
+
 </style>
 </head>
 <body lang="en" dir="ltr">
