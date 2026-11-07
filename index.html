@@ -115,7 +115,8 @@ footer p{color:#d0dcda;font-size:.88rem;margin:4px 0}
 @media(max-width:760px){.priority-grid{grid-template-columns:1fr}.priority-card{padding:22px}}
 
 
-.goal-card{max-width:760px;margin:28px auto 0;padding:30px 32px;background:#fff;border:1px solid var(--line);border-radius:20px;box-shadow:var(--shadow);text-align:center}
+.hero-copy .goal-card{max-width:560px;margin:28px 0 0;padding:23px 25px;background:#fff;border:1px solid var(--line);border-radius:20px;box-shadow:var(--shadow);text-align:start}
+body[dir=rtl] .hero-copy .goal-card{text-align:right}
 .goal-kicker{color:var(--teal);font-size:.82rem;font-weight:850;letter-spacing:.06em;text-transform:uppercase}
 .goal-card h3{margin:7px 0 2px;color:var(--teal-dark);font-size:clamp(2.5rem,6vw,3.7rem);line-height:1.2;letter-spacing:-.04em}
 .goal-duration{color:var(--ink);font-size:1.02rem;font-weight:700}
@@ -123,7 +124,7 @@ footer p{color:#d0dcda;font-size:.88rem;margin:4px 0}
 .goal-track span{display:block;width:0;height:100%;border-radius:999px;background:var(--teal)}
 .goal-update,.goal-disclaimer{color:var(--muted);font-size:.9rem;line-height:1.8}
 .goal-disclaimer{margin-top:10px;padding-top:12px;border-top:1px solid var(--line)}
-@media(max-width:760px){.goal-card{padding:25px 18px}}
+@media(max-width:760px){.hero-copy .goal-card{max-width:100%;margin:25px auto 0;padding:22px 18px;text-align:center}body[dir=rtl] .hero-copy .goal-card{text-align:center}}
 
 </style>
 </head>
@@ -159,6 +160,13 @@ footer p{color:#d0dcda;font-size:.88rem;margin:4px 0}
       <div class="hero-actions">
         <a class="btn btn-primary" href="#donate" data-en="Support the family" data-ar="ساهم في دعم العائلة">Support the family</a>
         <a class="btn btn-secondary" href="#story" data-en="Read our story" data-ar="تعرّف على قصتنا">Read our story</a>
+      </div>
+    <div class="goal-card" aria-labelledby="campaign-goal-title">
+      <div class="goal-kicker" data-en="Our initial fundraising goal" data-ar="هدف حملتنا الأولي">Our initial fundraising goal</div>
+      <h3 id="campaign-goal-title" data-en="$1,500" data-ar="1,500 دولار">$1,500</h3>
+      <p class="goal-duration" data-en="To help cover our family’s essential needs for two months." data-ar="للمساعدة في تغطية احتياجات أسرتنا الأساسية لمدة شهرين.">To help cover our family’s essential needs for two months.</p>
+      <div class="goal-track" role="progressbar" aria-label="Fundraising progress will be updated after donations are verified" aria-valuetext="Not yet updated">
+        <span></span>
       </div>
     </div>
     <div class="hero-visual" aria-label="Family Support">
@@ -215,13 +223,7 @@ footer p{color:#d0dcda;font-size:.88rem;margin:4px 0}
       <article class="priority-card"><div class="priority-icon" aria-hidden="true">💡</div><h3 data-en="Household bills" data-ar="فواتير المنزل">Household bills</h3><p data-en="Basic household utilities and essential bills, including electricity and water." data-ar="المرافق والفواتير المنزلية الأساسية، بما فيها الكهرباء والمياه.">Basic household utilities and essential bills, including electricity and water.</p></article>
       <article class="priority-card"><div class="priority-icon" aria-hidden="true">🔥</div><h3 data-en="Winter heating" data-ar="التدفئة الشتوية">Winter heating</h3><p data-en="Heating fuel to keep the home warm during the cold months." data-ar="وقود التدفئة للحفاظ على دفء المنزل خلال أشهر البرد.">Heating fuel to keep the home warm during the cold months.</p></article>
     </div>
-    <div class="goal-card" aria-labelledby="campaign-goal-title">
-      <div class="goal-kicker" data-en="Our initial fundraising goal" data-ar="هدف حملتنا الأولي">Our initial fundraising goal</div>
-      <h3 id="campaign-goal-title" data-en="$1,500" data-ar="1,500 دولار">$1,500</h3>
-      <p class="goal-duration" data-en="To help cover our family’s essential needs for two months." data-ar="للمساعدة في تغطية احتياجات أسرتنا الأساسية لمدة شهرين.">To help cover our family’s essential needs for two months.</p>
-      <div class="goal-track" role="progressbar" aria-label="Fundraising progress will be updated after donations are verified" aria-valuetext="Not yet updated">
-        <span></span>
-      </div>
+
       <p class="goal-update" data-en="The amount received and progress will be updated only after donations are confirmed." data-ar="سيتم تحديث المبلغ المستلم ونسبة الإنجاز بعد التأكد من وصول التبرعات فقط.">The amount received and progress will be updated only after donations are confirmed.</p>
       <p class="goal-disclaimer" data-en="This is an initial target, not a fixed promise. It may be adjusted if prices change or unexpected emergencies arise." data-ar="هذا هدف أولي وليس مبلغاً ثابتاً أو وعداً نهائياً. قد نعدّله إذا تغيرت الأسعار أو ظهرت حالات طارئة غير متوقعة.">This is an initial target, not a fixed promise. It may be adjusted if prices change or unexpected emergencies arise.</p>
     </div>
