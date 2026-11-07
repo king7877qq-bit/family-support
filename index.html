@@ -103,6 +103,17 @@ footer p{color:#d0dcda;font-size:.88rem;margin:4px 0}
 @media(max-width:760px){.container{width:min(100% - 32px,600px)}.top-bar{min-height:72px;flex-wrap:wrap;padding:12px 0;gap:12px}.logo{font-size:1.18rem}.mobile-menu{display:block;order:2;margin-inline-start:auto}nav{order:4;width:100%;margin:0}nav ul{display:none;position:absolute;top:100%;inset-inline:0;flex-direction:column;align-items:stretch;gap:0;padding:10px 22px 18px;background:#fff;border-bottom:1px solid var(--line);box-shadow:0 18px 28px #17343a12}nav ul.show{display:flex}nav li a{display:block;padding:11px 5px;border-bottom:1px solid #f0f3f1}.lang-switch{order:3}.hero{padding:54px 0 48px}.hero-grid{grid-template-columns:1fr;gap:22px;text-align:center}.hero h1,.hero p{margin-inline:auto}.hero h1{font-size:clamp(2.45rem,11vw,3.5rem)}.hero-actions{justify-content:center}.hero-visual{min-height:300px}.visual-orbit{width:280px}.visual-card{max-width:300px;padding:25px 20px}.visual-float{inset-inline-start:2%;bottom:12px}section{padding:60px 0}.section-heading{margin-bottom:30px}.story-grid,.contact-grid{grid-template-columns:1fr}.story-card,.contact-card{padding:24px}.donate-card,.youtube-card{padding:25px 18px}.wallet-box{flex-direction:column;padding:18px 12px}.disclaimer{width:calc(100% - 32px);margin-bottom:45px}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition-duration:.01ms!important;animation-duration:.01ms!important}}
 
+
+.priority-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;max-width:900px;margin:auto}
+.priority-card{padding:25px 26px;background:#fff;border:1px solid var(--line);border-radius:18px;box-shadow:0 10px 28px rgba(23,52,58,.045)}
+.priority-card .priority-icon{font-size:1.55rem;margin-bottom:9px}
+.priority-card h3{color:var(--teal-dark);font-size:1.16rem;margin-bottom:7px}
+.priority-card p{color:var(--muted);line-height:1.85}
+.priority-note{max-width:900px;margin:22px auto 0;padding:17px 20px;border-radius:13px;background:#eef5f0;border:1px solid #dce9df;color:#45614f;text-align:center}
+.transparency-note{max-width:900px;margin:0 auto 60px;padding:23px 25px;border:1px solid var(--line);border-radius:16px;background:#fff;color:#52666a;text-align:center}
+.transparency-note strong{display:block;color:var(--teal-dark);margin-bottom:7px}
+@media(max-width:760px){.priority-grid{grid-template-columns:1fr}.priority-card{padding:22px}}
+
 </style>
 </head>
 <body lang="en" dir="ltr">
@@ -131,9 +142,9 @@ footer p{color:#d0dcda;font-size:.88rem;margin:4px 0}
 <section id="home" class="hero">
   <div class="container hero-grid">
     <div class="hero-copy">
-      <div class="eyebrow" data-en="A personal family initiative" data-ar="مبادرة عائلية شخصية">A personal family initiative</div>
-      <h1 data-en="Family Support" data-ar="دعم عائلة">Family Support</h1>
-      <p data-en="A personal family support initiative from Syria. Fareed, his mother, and his brother are seeking humanitarian support." data-ar="مبادرة دعم عائلية شخصية من سوريا. فريد ووالدته وأخيه يطلبون الدعم الإنساني.">A personal family support initiative from Syria. Fareed, his mother, and his brother are seeking humanitarian support.</p>
+      <div class="eyebrow" data-en="Basic needs. Dignity. Hope." data-ar="الاحتياجات الأساسية والكرامة والأمل">Basic needs. Dignity. Hope.</div>
+      <h1 data-en="Help Us Live with Dignity" data-ar="ساعدونا لنعيش بكرامة">Help Us Live with Dignity</h1>
+      <p data-en="We are seeking help with our family’s essential living costs in Syria: food, medicines, household bills, and winter heating. Our priority is to meet these needs with dignity." data-ar="نطلب المساعدة لتأمين تكاليف المعيشة الأساسية لأسرتنا في سوريا: الطعام والأدوية وفواتير المنزل والتدفئة الشتوية. أولويتنا تلبية هذه الاحتياجات بكرامة.">We are seeking help with our family’s essential living costs in Syria: food, medicines, household bills, and winter heating. Our priority is to meet these needs with dignity.</p>
       <div class="hero-actions">
         <a class="btn btn-primary" href="#donate" data-en="Support the family" data-ar="ساهم في دعم العائلة">Support the family</a>
         <a class="btn btn-secondary" href="#story" data-en="Read our story" data-ar="تعرّف على قصتنا">Read our story</a>
@@ -155,8 +166,8 @@ footer p{color:#d0dcda;font-size:.88rem;margin:4px 0}
 <section id="story" class="story">
   <div class="container">
     <div class="section-title section-heading">
-      <div class="kicker" data-en="Our family" data-ar="عائلتنا">Our family</div><h2 data-en="Our Story" data-ar="قصتنا">Our Story</h2>
-      <p data-en="Fareed, his mother, and his brother live in Syria and are seeking humanitarian support. This page is a personal initiative to share their story and receive help." data-ar="يعيش فريد ووالدته وأخيه في سوريا ويطلبون الدعم الإنساني. هذه الصفحة مبادرة شخصية لمشاركة قصتهم وتلقي المساعدة.">Fareed, his mother, and his brother live in Syria and are seeking humanitarian support. This page is a personal initiative to share their story and receive help.</p>
+      <div class="kicker" data-en="Our family" data-ar="عائلتنا">Our family</div><h2 data-en="A Family Trying to Meet Its Basic Needs" data-ar="أسرة تحاول تأمين احتياجاتها الأساسية">A Family Trying to Meet Its Basic Needs</h2>
+      <p data-en="Our family is facing ongoing difficulty covering everyday living expenses. I work as a taxi driver, and my brother’s work is not always steady. We are asking for help with essentials rather than non-urgent expenses." data-ar="تواجه أسرتنا صعوبة مستمرة في تغطية نفقات المعيشة اليومية. أعمل سائق سيارة أجرة، وعمل أخي ليس مستقراً دائماً. نطلب المساعدة للاحتياجات الضرورية، وليس للنفقات غير العاجلة.">Our family is facing ongoing difficulty covering everyday living expenses. I work as a taxi driver, and my brother’s work is not always steady. We are asking for help with essentials rather than non-urgent expenses.</p>
     </div>
     <div class="story-grid">
       <div class="story-card">
@@ -173,9 +184,27 @@ footer p{color:#d0dcda;font-size:.88rem;margin:4px 0}
       </div>
       <div class="story-card">
         <h3 data-en="How You Can Help" data-ar="كيف يمكنك المساعدة">How You Can Help</h3>
-        <p data-en="You can support us through cryptocurrency donation, by sharing our story, or by contacting us directly." data-ar="يمكنك دعمنا من خلال التبرع بالعملات المشفرة، أو بمشاركة قصتنا، أو بالتواصل معنا مباشرة.">You can support us through cryptocurrency donation, by sharing our story, or by contacting us directly.</p>
+        <p data-en="Your support will go toward food, essential medicines, household utilities and bills, and heating fuel. We will share updates as funds are received and used." data-ar="سيُخصص دعمكم للطعام والأدوية الضرورية وفواتير ومرافق المنزل ووقود التدفئة. سننشر تحديثات عند استلام التبرعات واستخدامها.">Your support will go toward food, essential medicines, household utilities and bills, and heating fuel. We will share updates as funds are received and used.</p>
       </div>
     </div>
+  </div>
+</section>
+
+
+<section id="priorities" class="priorities">
+  <div class="container">
+    <div class="section-title section-heading">
+      <div class="kicker" data-en="Current campaign priorities" data-ar="أولويات الحملة الحالية">Current campaign priorities</div>
+      <h2 data-en="What Your Support Will Help Cover" data-ar="ما الذي ستساعد تبرعاتكم على تأمينه؟">What Your Support Will Help Cover</h2>
+      <p data-en="The campaign is focused on essential, recurring family needs. We are not including car repairs or other non-urgent expenses in this fundraising goal." data-ar="تركز الحملة على احتياجات الأسرة الأساسية والمتكررة. لا نُدرج إصلاح السيارة أو النفقات غير العاجلة ضمن هدف التبرعات الحالي.">The campaign is focused on essential, recurring family needs. We are not including car repairs or other non-urgent expenses in this fundraising goal.</p>
+    </div>
+    <div class="priority-grid">
+      <article class="priority-card"><div class="priority-icon" aria-hidden="true">🥖</div><h3 data-en="Food & groceries" data-ar="الطعام والمواد الغذائية">Food & groceries</h3><p data-en="Daily food and basic groceries for the household, including suitable food needs for our mother." data-ar="الطعام اليومي والمواد الغذائية الأساسية للمنزل، بما فيها احتياجات والدتنا الغذائية المناسبة.">Daily food and basic groceries for the household, including suitable food needs for our mother.</p></article>
+      <article class="priority-card"><div class="priority-icon" aria-hidden="true">💊</div><h3 data-en="Essential medicines" data-ar="الأدوية الضرورية">Essential medicines</h3><p data-en="Ongoing medicines and essential health needs for our mother." data-ar="الأدوية المستمرة والاحتياجات الصحية الضرورية لوالدتنا.">Ongoing medicines and essential health needs for our mother.</p></article>
+      <article class="priority-card"><div class="priority-icon" aria-hidden="true">💡</div><h3 data-en="Household bills" data-ar="فواتير المنزل">Household bills</h3><p data-en="Basic household utilities and essential bills, including electricity and water." data-ar="المرافق والفواتير المنزلية الأساسية، بما فيها الكهرباء والمياه.">Basic household utilities and essential bills, including electricity and water.</p></article>
+      <article class="priority-card"><div class="priority-icon" aria-hidden="true">🔥</div><h3 data-en="Winter heating" data-ar="التدفئة الشتوية">Winter heating</h3><p data-en="Heating fuel to keep the home warm during the cold months." data-ar="وقود التدفئة للحفاظ على دفء المنزل خلال أشهر البرد.">Heating fuel to keep the home warm during the cold months.</p></article>
+    </div>
+    <div class="priority-note" data-en="We will publish a clear budget and periodic updates. We will not display a fundraising target or donation totals until the figures can be verified." data-ar="سننشر ميزانية واضحة وتحديثات دورية. لن نعرض هدفاً مالياً أو إجمالي تبرعات قبل التحقق من الأرقام.">We will publish a clear budget and periodic updates. We will not display a fundraising target or donation totals until the figures can be verified.</div>
   </div>
 </section>
 
@@ -183,7 +212,7 @@ footer p{color:#d0dcda;font-size:.88rem;margin:4px 0}
   <div class="container">
     <div class="section-title">
       <div class="kicker" data-en="Ways to help" data-ar="طرق المساعدة">Ways to help</div><h2 data-en="Donate &amp; Support" data-ar="التبرع والدعم">Donate &amp; Support</h2>
-      <p data-en="Support our family with USDT on TRON network (TRC20 only)." data-ar="دعم عائلتنا באמצעות USDT على شبكة TRON (TRC20 فقط).">Support our family with USDT on TRON network (TRC20 only).</p>
+      <p data-en="If you are able to help, your contribution will support the essential needs listed above. USDT donations are accepted on the TRON network (TRC20 only)." data-ar="إذا كان بإمكانكم المساعدة، فستساهم تبرعاتكم في تأمين الاحتياجات الأساسية المذكورة أعلاه. نستقبل تبرعات USDT عبر شبكة TRON (TRC20 فقط).">If you are able to help, your contribution will support the essential needs listed above. USDT donations are accepted on the TRON network (TRC20 only).</p>
     </div>
     <div class="donate-card">
       <div class="network-pill" data-en="USDT · TRON network · TRC20 only" data-ar="USDT · شبكة TRON · TRC20 فقط">USDT · TRON network · TRC20 only</div>
@@ -256,6 +285,12 @@ footer p{color:#d0dcda;font-size:.88rem;margin:4px 0}
     </div>
   </div>
 </section>
+
+
+<div class="transparency-note">
+  <strong data-en="Transparency & donor privacy" data-ar="الشفافية وخصوصية المتبرعين">Transparency & donor privacy</strong>
+  <span data-en="We will record contributions and publish honest updates about how donations are used. Donors’ names and donation amounts will never be published without their explicit permission. Anonymous support is always welcome." data-ar="سنسجل المساهمات وننشر تحديثات صادقة حول أوجه إنفاق التبرعات. لن ننشر أسماء المتبرعين أو مبالغ تبرعاتهم دون موافقتهم الصريحة. ونرحب دائماً بالتبرع المجهول.">We will record contributions and publish honest updates about how donations are used. Donors’ names and donation amounts will never be published without their explicit permission. Anonymous support is always welcome.</span>
+</div>
 
 <div class="disclaimer">
   <strong data-en="Important Notice:" data-ar="إشعار هام:">Important Notice:</strong><br>
