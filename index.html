@@ -321,36 +321,20 @@ footer{background:#173746!important;color:#fff!important}
 }
 
 
-/* Hard override for icon contrast across browsers */
-.visual-mark,
-.priority-icon,
-.contact-card .icon,
-.youtube-icon,
-.visual-mark *,
-.priority-icon *,
-.contact-card .icon *,
-.youtube-icon *{
-  color:#063f55!important;
-  -webkit-text-fill-color:#063f55!important;
-  fill:#063f55!important;
-  stroke:#063f55!important;
-  opacity:1!important;
-  filter:none!important;
-  text-shadow:none!important;
-}
+/* Accessible icon contrast without overriding each SVG's own colors */
 .visual-mark,
 .priority-icon,
 .contact-card .icon,
 .youtube-icon{
-  background:#b9e0f2!important;
-  border:2px solid #4e9abb!important;
-  box-shadow:0 4px 13px rgba(6,63,85,.16)!important;
+  color:#075b70!important;
+  -webkit-text-fill-color:initial!important;
+  opacity:1!important;
+  filter:none!important;
+  text-shadow:none!important;
+  background:#d9eff9!important;
+  border:1px solid #9bcce1!important;
+  box-shadow:0 5px 14px rgba(7,75,99,.10)!important;
 }
-.priority-icon{font-weight:900!important;font-size:2rem!important}
-.contact-card .icon{font-weight:900!important;font-size:1.85rem!important}
-.youtube-icon{font-weight:900!important;font-size:2.1rem!important}
-.visual-mark{font-weight:900!important;font-size:2.3rem!important}
-
 
 /* Warm, accessible icon artwork and a lighter, compact donation panel */
 .visual-mark,.priority-icon,.contact-card .icon,.youtube-icon{
@@ -367,8 +351,8 @@ footer{background:#173746!important;color:#fff!important}
 .contact-card .icon{width:58px!important;height:58px!important;border-radius:18px!important}
 .youtube-icon{width:58px!important;height:58px!important;border-radius:18px!important}
 .donate-card{
-  max-width:680px!important;
-  padding:26px 28px!important;
+  max-width:610px!important;
+  padding:22px 22px!important;
   background:linear-gradient(145deg,#edf9ff 0%,#e3f4fb 100%)!important;
   border:1px solid #a9d2e5!important;
   border-radius:25px!important;
@@ -386,7 +370,7 @@ footer{background:#173746!important;color:#fff!important}
 .donate-card .network-pill{margin-bottom:14px;background:#d9f1e7;color:#236b56}
 .donate-card .wallet-box{background:#f0f9fc;border-color:#9bcbdc;padding:15px;margin:14px 0;border-radius:15px}
 .donate-card .qr-box{margin:17px auto 5px}
-.donate-card .qr-box img{width:142px;height:142px;padding:7px;border-radius:14px}
+.donate-card .qr-box img{width:126px;height:126px;padding:7px;border-radius:14px}
 .donate-card .network-warning{margin-top:17px}
 @media(max-width:760px){
  .donate-card{padding:22px 16px!important}
