@@ -266,6 +266,60 @@ footer{background:#173746!important;color:#fff!important}
   .story-card,.contact-card,.priority-card,.donate-card,.youtube-card,.updates-card{transition:none}
 }
 
+
+/* Definitive icon and card refinement — v2 */
+.story-card,.contact-card,.priority-card,.donate-card,.youtube-card,.updates-card{
+  background:#f3faff!important;
+  border:1.5px solid #9fc9df!important;
+  border-radius:24px!important;
+  box-shadow:0 10px 26px rgba(13,65,88,.12)!important;
+}
+.story-card,.contact-card,.priority-card{padding:30px}
+.visual-mark,.contact-card .icon,.priority-card .priority-icon,.youtube-icon{
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  width:60px!important;
+  height:60px!important;
+  min-width:60px!important;
+  min-height:60px!important;
+  margin:0 auto 16px!important;
+  padding:0!important;
+  border-radius:18px!important;
+  background:#c6e7f6!important;
+  border:1.5px solid #78b5d2!important;
+  color:#064d63!important;
+  font-family:"Segoe UI Symbol","Arial Unicode MS",sans-serif!important;
+  font-style:normal!important;
+  font-weight:800!important;
+  font-size:1.8rem!important;
+  line-height:1!important;
+  text-shadow:none!important;
+  box-shadow:0 4px 12px rgba(7,75,99,.12)!important;
+}
+.visual-mark{width:76px!important;height:76px!important;min-width:76px!important;min-height:76px!important;font-size:2.2rem!important}
+.priority-card .priority-icon{margin:0 0 15px!important;font-size:1.75rem!important}
+.contact-card .icon{font-size:1.75rem!important}
+.youtube-icon{font-size:2rem!important}
+.story-card h3,.priority-card h3,.contact-card h3{color:#064d63!important}
+@media(hover:hover) and (pointer:fine){
+ .story-card:hover,.contact-card:hover,.priority-card:hover,.donate-card:hover,.youtube-card:hover,.updates-card:hover{
+  transform:translateY(-4px);
+  border-color:#5fa6c8!important;
+  box-shadow:0 16px 34px rgba(13,65,88,.17)!important;
+ }
+}
+@media(max-width:760px){
+ .story-card,.contact-card,.priority-card{padding:24px}
+ .visual-mark,.contact-card .icon,.priority-card .priority-icon,.youtube-icon{
+  width:56px!important;height:56px!important;min-width:56px!important;min-height:56px!important;
+ }
+ .visual-mark{width:68px!important;height:68px!important;min-width:68px!important;min-height:68px!important}
+}
+@media(prefers-reduced-motion:reduce){
+ .story-card,.contact-card,.priority-card,.donate-card,.youtube-card,.updates-card{transition:none!important}
+}
+
 </style>
 </head>
 <body lang="en" dir="ltr">
@@ -361,10 +415,10 @@ footer{background:#173746!important;color:#fff!important}
       <p data-en="The campaign is focused on essential, recurring family needs. We are not including car repairs or other non-urgent expenses in this fundraising goal." data-ar="تركز الحملة على احتياجات الأسرة الأساسية والمتكررة. لا نُدرج إصلاح السيارة أو النفقات غير العاجلة ضمن هدف التبرعات الحالي.">The campaign is focused on essential, recurring family needs. We are not including car repairs or other non-urgent expenses in this fundraising goal.</p>
     </div>
     <div class="priority-grid">
-      <article class="priority-card"><div class="priority-icon" aria-hidden="true">🥖</div><h3 data-en="Food & groceries" data-ar="الطعام والمواد الغذائية">Food & groceries</h3><p data-en="Daily food and basic groceries for the household, including suitable food needs for our mother." data-ar="الطعام اليومي والمواد الغذائية الأساسية للمنزل، بما فيها احتياجات والدتنا الغذائية المناسبة.">Daily food and basic groceries for the household, including suitable food needs for our mother.</p></article>
-      <article class="priority-card"><div class="priority-icon" aria-hidden="true">💊</div><h3 data-en="Essential medicines" data-ar="الأدوية الضرورية">Essential medicines</h3><p data-en="Ongoing medicines and essential health needs for our mother." data-ar="الأدوية المستمرة والاحتياجات الصحية الضرورية لوالدتنا.">Ongoing medicines and essential health needs for our mother.</p></article>
-      <article class="priority-card"><div class="priority-icon" aria-hidden="true">💡</div><h3 data-en="Household bills" data-ar="فواتير المنزل">Household bills</h3><p data-en="Basic household utilities and essential bills, including electricity and water." data-ar="المرافق والفواتير المنزلية الأساسية، بما فيها الكهرباء والمياه.">Basic household utilities and essential bills, including electricity and water.</p></article>
-      <article class="priority-card"><div class="priority-icon" aria-hidden="true">🔥</div><h3 data-en="Winter heating" data-ar="التدفئة الشتوية">Winter heating</h3><p data-en="Heating fuel to keep the home warm during the cold months." data-ar="وقود التدفئة للحفاظ على دفء المنزل خلال أشهر البرد.">Heating fuel to keep the home warm during the cold months.</p></article>
+      <article class="priority-card"><div class="priority-icon" aria-hidden="true">▤</div><h3 data-en="Food & groceries" data-ar="الطعام والمواد الغذائية">Food & groceries</h3><p data-en="Daily food and basic groceries for the household, including suitable food needs for our mother." data-ar="الطعام اليومي والمواد الغذائية الأساسية للمنزل، بما فيها احتياجات والدتنا الغذائية المناسبة.">Daily food and basic groceries for the household, including suitable food needs for our mother.</p></article>
+      <article class="priority-card"><div class="priority-icon" aria-hidden="true">✚</div><h3 data-en="Essential medicines" data-ar="الأدوية الضرورية">Essential medicines</h3><p data-en="Ongoing medicines and essential health needs for our mother." data-ar="الأدوية المستمرة والاحتياجات الصحية الضرورية لوالدتنا.">Ongoing medicines and essential health needs for our mother.</p></article>
+      <article class="priority-card"><div class="priority-icon" aria-hidden="true">⌂</div><h3 data-en="Household bills" data-ar="فواتير المنزل">Household bills</h3><p data-en="Basic household utilities and essential bills, including electricity and water." data-ar="المرافق والفواتير المنزلية الأساسية، بما فيها الكهرباء والمياه.">Basic household utilities and essential bills, including electricity and water.</p></article>
+      <article class="priority-card"><div class="priority-icon" aria-hidden="true">♨</div><h3 data-en="Winter heating" data-ar="التدفئة الشتوية">Winter heating</h3><p data-en="Heating fuel to keep the home warm during the cold months." data-ar="وقود التدفئة للحفاظ على دفء المنزل خلال أشهر البرد.">Heating fuel to keep the home warm during the cold months.</p></article>
     </div>
   </div>
 </section>
@@ -402,7 +456,7 @@ footer{background:#173746!important;color:#fff!important}
       <p data-en="Watch our videos and subscribe to the channel." data-ar="شاهد فيديوهاتنا واشترك في القناة.">Watch our videos and subscribe to the channel.</p>
     </div>
     <div class="youtube-card">
-      <div class="youtube-icon" aria-hidden="true">▶</div>
+      <div class="youtube-icon" aria-hidden="true">▷</div>
       <a href="https://www.youtube.com/@FareedFamilySupport" target="_blank" rel="noopener" class="yt-link" data-en="Visit YouTube Channel" data-ar="زيارة قناة يوتيوب">Visit YouTube Channel</a>
       <div class="yt-placeholder" data-en="Public videos will appear here if available on the channel." data-ar="ستظهر الفيديوهات العامة هنا إذا كانت متوفرة على القناة.">Public videos will appear here if available on the channel.</div>
     </div>
@@ -417,13 +471,13 @@ footer{background:#173746!important;color:#fff!important}
     </div>
     <div class="contact-grid">
       <div class="contact-card">
-        <span class="icon">✉️</span>
+        <span class="icon" aria-hidden="true">✉</span>
         <h3 data-en="Email" data-ar="البريد الإلكتروني">Email</h3>
         <p>king7877@gmail.com</p>
         <a href="mailto:king7877@gmail.com" class="contact-btn" data-en="Send Email" data-ar="إرسال بريد">Send Email</a>
       </div>
       <div class="contact-card">
-        <span class="icon">💬</span>
+        <span class="icon" aria-hidden="true">☏</span>
         <h3 data-en="WhatsApp" data-ar="واتساب">WhatsApp</h3>
         <p>+963 997 675 625</p>
         <a href="https://wa.me/963997675625" target="_blank" rel="noopener" class="contact-btn" data-en="Message on WhatsApp" data-ar="مراسلة على واتساب">Message on WhatsApp</a>
