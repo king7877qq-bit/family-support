@@ -206,6 +206,66 @@ footer{background:#173746!important;color:#fff!important}
 .youtube-icon{display:inline-grid;place-items:center;width:54px;height:54px;border-radius:16px;background:#c5e8f5!important;color:#075b70!important}
 .visual-float{background:#eaf7ff!important;color:#075b70!important;border-color:#91c8df!important}
 
+
+/* Refined human-centered cards and consistent icon language */
+:root{
+  --card-surface:#edf8ff;
+  --card-border:#b5d7e9;
+  --card-shadow:0 8px 24px rgba(25,73,96,.075);
+  --card-shadow-hover:0 15px 34px rgba(25,73,96,.13);
+}
+.story-card,.contact-card,.priority-card,.donate-card,.youtube-card,.updates-card{
+  background:linear-gradient(155deg,#f2faff 0%,#e8f5fd 100%)!important;
+  border:1px solid var(--card-border)!important;
+  border-radius:22px!important;
+  box-shadow:var(--card-shadow)!important;
+  transition:transform .22s ease,box-shadow .22s ease,border-color .22s ease;
+}
+.story-card,.contact-card,.priority-card{padding:28px}
+@media(hover:hover) and (pointer:fine){
+  .story-card:hover,.contact-card:hover,.priority-card:hover,.donate-card:hover,.youtube-card:hover,.updates-card:hover{
+    transform:translateY(-3px);
+    box-shadow:var(--card-shadow-hover)!important;
+    border-color:#86bdd8!important;
+  }
+}
+.visual-card{
+  border:1px solid #c4dfef!important;
+  border-radius:28px!important;
+  box-shadow:0 20px 48px rgba(25,73,96,.13)!important;
+}
+.visual-mark,.contact-card .icon,.priority-card .priority-icon,.youtube-icon{
+  display:inline-grid;
+  place-items:center;
+  width:58px;
+  height:58px;
+  min-width:58px;
+  min-height:58px;
+  padding:0;
+  margin:0 auto 16px;
+  border-radius:19px!important;
+  background:linear-gradient(145deg,#d8effb,#c5e6f5)!important;
+  border:1px solid #a8d2e7!important;
+  color:#075b70!important;
+  box-shadow:0 5px 13px rgba(21,91,117,.09);
+}
+.visual-mark{width:76px;height:76px;min-width:76px;min-height:76px;border-radius:23px!important;font-size:2rem}
+.priority-card .priority-icon{font-size:1.55rem;margin:0 0 14px}
+.youtube-icon{font-size:1.8rem;margin:0 auto 16px}
+.contact-card .icon{font-size:1.55rem}
+.story-card h3,.priority-card h3,.contact-card h3{color:#075b70}
+.story-note,.priority-note{border-radius:16px}
+.btn,.method-btn,.contact-btn,.yt-link,.copy-btn{border-radius:13px}
+.goal-card,.hero-copy .goal-card{border-radius:22px!important}
+@media(max-width:760px){
+  .story-card,.contact-card,.priority-card{padding:23px}
+  .visual-mark,.contact-card .icon,.priority-card .priority-icon,.youtube-icon{width:54px;height:54px;min-width:54px;min-height:54px;border-radius:17px!important}
+  .visual-mark{width:68px;height:68px;min-width:68px;min-height:68px}
+}
+@media(prefers-reduced-motion:reduce){
+  .story-card,.contact-card,.priority-card,.donate-card,.youtube-card,.updates-card{transition:none}
+}
+
 </style>
 </head>
 <body lang="en" dir="ltr">
