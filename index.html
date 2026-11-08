@@ -86,10 +86,8 @@ window.setTimeout(function() {
 </script>
 <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer
   onerror="window.OneSignalInitStatus='SDK script failed to load';const b=document.getElementById('onesignal-subscribe');if(b){b.textContent=document.documentElement.lang==='ar'?'تعذر تحميل خدمة الإشعارات':'Could not load notification service';b.title=window.OneSignalInitStatus;}console.error(window.OneSignalInitStatus);"></script>
-<script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer
-  onerror="window.OneSignalInitStatus='SDK script failed to load';const b=document.getElementById('onesignal-subscribe');if(b){b.disabled=false;b.textContent='Notification service failed to load';b.title=window.OneSignalInitStatus;}console.error(window.OneSignalInitStatus);"></script>
-<script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer
-  onerror="const b=document.getElementById('onesignal-subscribe');if(b){b.disabled=true;b.textContent=document.documentElement.lang==='ar'?'تعذر تحميل خدمة الإشعارات':'Could not load notification service';}console.error('OneSignal SDK failed to load.');"></script>
+
+
 <style>
 .push-subscribe{display:inline-flex;align-items:center;justify-content:center;margin-top:18px;padding:12px 20px;border:0;border-radius:14px;background:#286f87;color:#fff4df;font:900 .92rem/1.4 inherit;cursor:pointer;box-shadow:0 8px 20px #245a6418;transition:transform .2s,box-shadow .2s}
 .push-subscribe:hover{transform:translateY(-2px);box-shadow:0 12px 24px #245a6428}
