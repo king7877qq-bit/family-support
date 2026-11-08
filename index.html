@@ -31,18 +31,22 @@ window.OneSignalInitStatus = "loading";
 document.addEventListener("DOMContentLoaded", function() {
   const button = document.getElementById("onesignal-subscribe");
   if (!button) return;
-  button.addEventListener("click", function() {
+  button.addEventListener("click", async function() {
+    if (window.OneSignalInitStatus !== "ready") {
+      const status = window.OneSignalInitStatus || "unknown";
+      button.textContent = document.documentElement.lang === "ar" ? "خدمة الإشعارات لم تجهز بعد" : "Notification service is not ready";
+      button.title = status;
+      console.error("OneSignal is not ready:", status);
+      return;
+    }
     button.disabled = true;
     button.textContent = document.documentElement.lang === "ar" ? "جارٍ طلب الإذن…" : "Requesting permission…";
     window.OneSignalDeferred.push(async function(OneSignal) {
       try {
-        if (window.OneSignalInitStatus !== "ready") {
-          throw new Error("OneSignal initialization status: " + window.OneSignalInitStatus);
-        }
         await OneSignal.Slidedown.promptPush();
       } catch (error) {
         console.error("OneSignal subscription prompt error:", error);
-        button.textContent = document.documentElement.lang === "ar" ? "فشل طلب الإشعارات — راجع إعدادات المتصفح" : "Notification request failed — check browser settings";
+        button.textContent = document.documentElement.lang === "ar" ? "فشل طلب الإشعارات" : "Notification request failed";
         button.title = String(error);
       } finally {
         button.disabled = false;
@@ -63,13 +67,25 @@ window.OneSignalDeferred.push(async function(OneSignal) {
     console.error("OneSignal initialization failed:", error);
     const button = document.getElementById("onesignal-subscribe");
     if (button) {
-      button.disabled = false;
       button.textContent = document.documentElement.lang === "ar" ? "تعذر تهيئة الإشعارات" : "Notification setup failed";
       button.title = window.OneSignalInitStatus;
     }
   }
 });
+window.setTimeout(function() {
+  if (window.OneSignalInitStatus === "loading") {
+    window.OneSignalInitStatus = "timeout: OneSignal SDK did not finish initialization";
+    const button = document.getElementById("onesignal-subscribe");
+    if (button) {
+      button.textContent = document.documentElement.lang === "ar" ? "انتهت مهلة تحميل الإشعارات" : "Notification setup timed out";
+      button.title = window.OneSignalInitStatus;
+    }
+    console.error(window.OneSignalInitStatus);
+  }
+}, 12000);
 </script>
+<script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer
+  onerror="window.OneSignalInitStatus='SDK script failed to load';const b=document.getElementById('onesignal-subscribe');if(b){b.textContent=document.documentElement.lang==='ar'?'تعذر تحميل خدمة الإشعارات':'Could not load notification service';b.title=window.OneSignalInitStatus;}console.error(window.OneSignalInitStatus);"></script>
 <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer
   onerror="window.OneSignalInitStatus='SDK script failed to load';const b=document.getElementById('onesignal-subscribe');if(b){b.disabled=false;b.textContent='Notification service failed to load';b.title=window.OneSignalInitStatus;}console.error(window.OneSignalInitStatus);"></script>
 <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer
