@@ -59,7 +59,8 @@ window.OneSignalDeferred.push(async function(OneSignal) {
     await OneSignal.init({
       appId: "37279332-e398-4b88-8522-69ec7cf88c94",
       serviceWorkerPath: "/family-support/OneSignalSDKWorker.js",
-      serviceWorkerParam: { scope: "/family-support/" }
+      serviceWorkerParam: { scope: "/family-support/" },
+      serviceWorkerOverrideForTypical: true
     });
     window.OneSignalInitStatus = "ready";
   } catch (error) {
