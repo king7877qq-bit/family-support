@@ -2,7 +2,7 @@
 <html lang="en" dir="ltr">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#eaf3ef"><meta name="description" content="Family Support — A personal family initiative for essential needs.">
+<meta name="theme-color" content="#0b3d60"><meta name="description" content="Family Support — A personal family initiative for essential needs.">
 <title>Family Support | A little kindness changes everything</title>
 <style>
 
@@ -348,6 +348,52 @@ footer{background:var(--forest-deep);border-top:4px solid #58a6c8;color:#eaf7fc}
 }
 
 </style>
+
+<style id="sky-blue-final">
+/* Final, high-specificity design layer: intentionally overrides every earlier theme rule. */
+html,body{background:#eaf6fb!important;color:#173b53!important}
+body{--paper:#eaf6fb;--paper-deep:#d5edf7;--ink:#173b53;--muted:#527184;--forest:#145b83;--forest-deep:#0b3d60;--sage:#8fc9e2;--sage-light:#d7eff9;--clay:#267fa8;--clay-light:#c5e5f2;--ochre:#68aeca;--line:#79b7d2;--white:#f7fcff;--shadow:0 18px 44px rgba(13,64,94,.12)}
+header{background:#eaf6fb!important;border-bottom:3px solid #0b3d60!important}
+.hero{background:linear-gradient(120deg,#eaf8fd 0%,#bfe4f3 56%,#83c6e2 100%)!important;border-bottom:4px solid #0b3d60!important}
+.hero:before{background:linear-gradient(105deg,rgba(239,249,253,.97),rgba(220,242,250,.78) 54%,rgba(151,208,231,.18))!important}
+.hero h1,.intro h2,.giving-copy h2,.quote blockquote,.story-copy h3,.need h3,.donate h3,.contact-card h3{color:#0b3d60!important}
+.hero h1 span,.kicker,.eyebrow,.goal-label,.percent{color:#176f9b!important}
+.hero-photo-frame{background:#f8fdff!important;border:3px solid #0b3d60!important;box-shadow:0 22px 48px rgba(11,61,96,.2)!important}
+.goal-card,.donate{background:#f7fcff!important;border:2px solid #0b3d60!important;box-shadow:0 18px 44px rgba(13,64,94,.12)!important}
+.goal-card{border-top:4px solid #0b3d60!important}
+section{position:relative!important;border-top:4px solid #0b3d60!important;border-bottom:2px solid #79b7d2!important}
+section:before{content:""!important;position:absolute!important;top:7px!important;left:0!important;right:0!important;height:1px!important;background:#fff!important;pointer-events:none!important}
+.story{background:#e6f4fa!important}
+.needs{background:#d5edf7!important}
+.giving{background:#eaf6fb!important}
+.updates{background:#d8edf7!important}
+.contact{background:#e8f5fb!important}
+.youtube{background:#cfe9f5!important}
+.story-grid{display:grid!important;grid-template-columns:minmax(0,.92fr) minmax(0,1.08fr)!important;grid-template-areas:"family quote" "copy copy"!important;gap:26px 38px!important;align-items:stretch!important}
+.story-grid>.family-photo-wrap{grid-area:family!important;display:flex!important;align-items:stretch!important;justify-content:center!important;width:100%!important;margin:0!important}
+.story-grid>.quote{grid-area:quote!important;align-self:stretch!important;padding:32px!important;background:#f7fcff!important;border:2px solid #0b3d60!important;border-radius:5px!important;box-shadow:0 12px 30px rgba(13,64,94,.09)!important}
+.story-grid>.story-copy{grid-area:copy!important;padding:28px 32px!important;background:#d7edf7!important;border:1px solid #6ca9c6!important;border-inline-start:5px solid #0b3d60!important;border-radius:3px!important}
+.family-photo-card{width:100%!important;max-width:440px!important;height:100%!important;padding:12px!important;background:#f7fcff!important;border:2px solid #0b3d60!important;box-shadow:0 12px 30px rgba(13,64,94,.1)!important}
+.family-photo-card img{width:100%!important;height:calc(100% - 72px)!important;min-height:280px!important;max-height:430px!important;object-fit:cover!important;border:4px solid #9acbe0!important}
+.needs-grid,.contact-grid{border:2px solid #0b3d60!important;background:rgba(247,252,255,.55)!important}
+.need{border-inline-end:1px solid #79b7d2!important}
+.need-icon,.contact-icon{background:#f7fcff!important;border:1px solid #4d94b5!important}
+.donate{border-top:6px solid #0b3d60!important}
+.wallet{background:#e6f4fa!important;border:1px dashed #267fa8!important}
+.updates .update-card,.youtube-panel{border-top:2px solid #0b3d60!important;border-bottom:2px solid #0b3d60!important}
+.youtube-video{border:3px solid #0b3d60!important}
+.trust{background:#eaf6fb!important}
+.trust-box{background:#f7fcff!important;border:1px solid #79b7d2!important}
+footer{background:#0b3d60!important;border-top:4px solid #58a6c8!important}
+@media(max-width:700px){
+ .story-grid{grid-template-columns:1fr!important;grid-template-areas:"family" "quote" "copy"!important;gap:20px!important}
+ .story-grid>.family-photo-wrap{max-width:440px!important;width:100%!important;margin-inline:auto!important}
+ .family-photo-card{height:auto!important}
+ .family-photo-card img{height:auto!important;min-height:0!important;max-height:440px!important;object-fit:contain!important}
+ .story-grid>.quote,.story-grid>.story-copy{padding:23px 20px!important}
+}
+</style>
+
 </head>
 <body><div class="topline"></div>
 <header><div class="wrap nav"><a class="brand" href="#home"><span class="brand-icon"><svg viewBox="0 0 40 40" aria-hidden="true"><path d="M5 19 20 7l15 12v14H5Z" fill="#f0e9ce" stroke="#347b83" stroke-width="2.2" stroke-linejoin="round"/><path d="M15 33V22h10v11" fill="#8bc99b" stroke="#347b83" stroke-width="2"/><path d="m12 17 8-6 8 6" fill="none" stroke="#347b83" stroke-width="2.5" stroke-linecap="round"/></svg></span>Family Support</a><button class="menu" id="menu" aria-label="Open menu">☰</button><ul class="links" id="links"><li><a href="#story" data-ar="قصتنا" data-en="Our story">Our story</a></li><li><a href="#needs" data-ar="احتياجاتنا" data-en="Our needs">Our needs</a></li><li><a href="#giving" data-ar="كيف تساعد" data-en="How to help">How to help</a></li><li><a href="#updates" data-ar="التحديثات" data-en="Updates">Updates</a></li><li><a href="#contact" data-ar="تواصل" data-en="Contact">Contact</a></li></ul><div class="lang"><button id="ar">عربي</button><button class="active" id="en" aria-current="true">EN</button></div></div></header>
