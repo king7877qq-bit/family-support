@@ -6,6 +6,7 @@
 <title>Family Support | A little kindness changes everything</title>
 <style>
 
+
 :root{
   color-scheme:light;
   --paper:#f3ecdf;
@@ -249,6 +250,103 @@ footer p{margin:2px 0;font-size:.8rem}
  .reveal{opacity:1;transform:none}
 }
 
+
+
+/* Sky-blue visual identity: clear architectural frames and section separation */
+:root{
+ --paper:#eaf6fb;--paper-deep:#d5edf7;--ink:#173b53;--muted:#527184;
+ --forest:#145b83;--forest-deep:#0b3d60;--sage:#8fc9e2;--sage-light:#d7eff9;
+ --clay:#267fa8;--clay-light:#c5e5f2;--ochre:#68aeca;--line:#79b7d2;
+ --white:#f7fcff;--shadow:0 18px 44px rgba(13,64,94,.12);
+}
+body{background:var(--paper);color:var(--ink)}
+.topline{height:5px;background:linear-gradient(90deg,#0b3d60,#3d9ac4,#b8e5f4,#267fa8,#0b3d60)}
+header{background:rgba(234,246,251,.96);border-bottom:2px solid var(--forest-deep);box-shadow:0 4px 18px rgba(13,64,94,.07)}
+.brand,.links a{color:var(--forest-deep)}
+.brand-icon,.lang{background:#cce9f5}
+.lang button.active{background:var(--forest-deep)}
+.menu{background:#cce9f5;color:var(--forest-deep)}
+.hero{background:#bfe4f3;border-bottom:4px solid var(--forest-deep)}
+.hero:before{background:linear-gradient(105deg,rgba(239,249,253,.98) 0%,rgba(220,242,250,.88) 43%,rgba(151,208,231,.25) 100%)}
+.hero:after{border-color:rgba(11,61,96,.2);box-shadow:0 0 0 42px rgba(255,255,255,.12),0 0 0 90px rgba(11,61,96,.06)}
+.hero h1,.intro h2,.giving-copy h2{color:var(--forest-deep)}
+.hero h1 span,.kicker,.eyebrow{color:#176f9b}
+.eyebrow i{background:#267fa8;box-shadow:0 0 0 5px rgba(38,127,168,.15)}
+.hero-copy,.intro p,.story-copy p,.giving-copy p{color:#42677d}
+.primary,.chain,.contact-link,.copy,.share-button.primary-share{background:var(--forest-deep);border-color:var(--forest-deep)}
+.primary:hover,.chain:hover,.contact-link:hover,.copy:hover,.share-button.primary-share:hover{background:#176f9b}
+.soft,.hero-share-button,.share-button{color:var(--forest-deep);border-color:#4b91b2}
+.hero-photo-frame{background:#f8fdff;border:2px solid var(--forest-deep);box-shadow:0 22px 48px rgba(11,61,96,.2)}
+.hero-photo-frame:before{border:1px solid #79b7d2}
+.hero-share-button{background:#e7f6fc}
+.goal-card{background:#f8fdff;border:2px solid var(--forest-deep);box-shadow:var(--shadow)}
+.goal-label,.percent{color:#176f9b}
+.goal-value{color:var(--forest-deep)}
+.meter{background:#b9dce9;border:1px solid #6da9c5}
+.fill{background:linear-gradient(90deg,#d66f65,#e4b36f,#70b7c8,#176f9b)}
+section{border-top:3px solid var(--forest-deep);border-bottom:1px solid #8bc2d9}
+section:before{content:"";position:absolute;top:7px;left:0;right:0;height:1px;background:rgba(255,255,255,.9);pointer-events:none}
+.story{background:#e6f4fa}
+.story:after{border-color:rgba(20,91,131,.15);box-shadow:0 0 0 35px rgba(143,201,226,.12),0 0 0 72px rgba(143,201,226,.08)}
+.story-grid{grid-template-columns:minmax(0,.92fr) minmax(0,1.08fr);grid-template-areas:"family quote" "copy copy";gap:26px 38px;align-items:stretch}
+.story-grid>.family-photo-wrap{grid-area:family;display:flex;align-items:stretch;justify-content:center;margin:0;min-width:0}
+.story-grid>.quote{grid-area:quote;align-self:stretch;padding:34px 30px;background:#f7fcff;border:2px solid var(--forest-deep);border-radius:5px;box-shadow:0 12px 30px rgba(13,64,94,.09)}
+.story-grid>.story-copy{grid-area:copy;padding:28px 32px;background:#d7edf7;border:1px solid #6ca9c6;border-inline-start:5px solid var(--forest-deep);border-radius:3px}
+.family-photo-card{width:100%;max-width:440px;height:100%;padding:12px;background:#f7fcff;border:2px solid var(--forest-deep);border-bottom:2px solid var(--forest-deep);box-shadow:0 12px 30px rgba(13,64,94,.1)}
+.family-photo-card img{height:calc(100% - 72px);min-height:280px;max-height:430px;object-fit:cover;object-position:center;border:4px solid #9acbe0;box-shadow:none}
+.family-photo-card figcaption{padding:12px 5px 2px;color:var(--forest-deep)}
+.quote{border-top:0}
+.quote-mark{color:#398eb5}
+.quote blockquote,.story-copy h3{color:var(--forest-deep)}
+.signature{color:#176f9b}
+.signature b{background:#c5e5f2;color:var(--forest-deep)}
+.needs{background:#d5edf7}
+.needs-grid{border-top:2px solid var(--forest-deep);border-bottom:2px solid var(--forest-deep);background:rgba(247,252,255,.5)}
+.need{border-inline-end:1px solid #79b7d2}
+.need:hover{background:#f1faff}
+.need-icon{background:#f7fcff;border:1px solid #4d94b5}
+.need h3{color:var(--forest-deep)}
+.need p,.needs-foot{color:#42677d}
+.needs-foot{border-inline-start-color:var(--forest-deep)}
+.giving{background:#eaf6fb}
+.giving-copy h2{color:var(--forest-deep)}
+.tick{background:#cce9f5;color:var(--forest-deep)}
+.donate{background:#f7fcff;border:2px solid var(--forest-deep);border-top:6px solid var(--forest-deep);box-shadow:var(--shadow)}
+.heart{background:#d4edf7}
+.network{background:#d7eff9;color:var(--forest-deep)}
+.donate h3,.paypal-box h4{color:var(--forest-deep)}
+.wallet{background:#e6f4fa;border:1px dashed #267fa8}
+.address,.paypal-email{color:var(--forest-deep)}
+.warning{background:#d9edf6;border-inline-start:4px solid #267fa8;color:#315d73}
+.warning strong{color:var(--forest-deep)}
+.paypal-box{background:#eaf5fa;border:1px solid #79b7d2}
+.updates{background:#d8edf7}
+.update-card{border-top:2px solid var(--forest-deep);border-bottom:2px solid var(--forest-deep)}
+.update-symbol{background:#f7fcff;color:#176f9b;border:1px solid #79b7d2}
+.update-card h3{color:var(--forest-deep)}
+.contact{background:#e8f5fb}
+.contact-grid{border-top:2px solid var(--forest-deep);border-bottom:2px solid var(--forest-deep);background:rgba(247,252,255,.55)}
+.contact-card{border-inline-end:1px solid #79b7d2}
+.contact-icon{background:#cce9f5;border:1px solid #79b7d2}
+.contact-card h3{color:var(--forest-deep)}
+.youtube{background:#cfe9f5}
+.youtube-panel{border-top:2px solid var(--forest-deep);border-bottom:2px solid var(--forest-deep)}
+.youtube-icon{background:#b8deed;color:var(--forest-deep)}
+.youtube-copy h3{color:var(--forest-deep)}
+.youtube-video{background:#c5e5f2;border:3px solid var(--forest-deep);box-shadow:var(--shadow)}
+.trust{background:#eaf6fb}
+.trust-box{background:#f7fcff;border:1px solid #79b7d2;color:#42677d}
+.trust-box strong{color:var(--forest-deep)}
+.trust-box.disclaimer{background:#d7edf7;border-color:#4f91b1;color:#315d73}
+.trust-box.disclaimer strong{color:var(--forest-deep)}
+footer{background:var(--forest-deep);border-top:4px solid #58a6c8;color:#eaf7fc}
+@media(max-width:700px){
+ .story-grid{grid-template-columns:1fr;grid-template-areas:"family" "quote" "copy";gap:20px}
+ .story-grid>.family-photo-wrap{max-width:440px;width:100%;margin-inline:auto}
+ .family-photo-card img{height:auto;min-height:0;max-height:440px}
+ .story-grid>.quote,.story-grid>.story-copy{padding:23px 20px}
+}
+
 </style>
 </head>
 <body><div class="topline"></div>
@@ -257,7 +355,7 @@ footer p{margin:2px 0;font-size:.8rem}
 <div class="hero"><div class="sun"></div><div class="cloud" style="top:25%;left:-180px"></div><div class="cloud" style="top:54%;left:-300px;animation-delay:-14s;opacity:.7"></div><div class="wrap hero-grid"><div class="reveal"><span class="eyebrow"><i></i><span data-ar="حكاية عائلة… وأمل لا ينطفئ" data-en="A family's story · A hope that stays">A family's story · A hope that stays</span></span><h1 data-ar="أحياناً، <span>القليل من الرحمة</span> يصنع فرقاً كبيراً." data-en="Sometimes, <span>a little kindness</span> changes everything.">Sometimes, <span>a little kindness</span> changes everything.</h1><p class="hero-copy" data-ar="نحن عائلة تحاول أن تعبر أياماً صعبة بكرامة. لا نطلب المستحيل؛ نبحث عن يدٍ حنونة تساعدنا في تأمين أساسيات الحياة، يوماً بعد يوم." data-en="We are a family trying to move through difficult days with dignity. We are not asking for the impossible — only for a helping hand with life's essentials, one day at a time.">We are a family trying to move through difficult days with dignity. We are not asking for the impossible — only for a helping hand with life's essentials, one day at a time.</p><div class="actions"><a class="btn primary" href="#giving" data-ar="كن سبباً في طمأنينة بيت" data-en="Bring a little peace home">Bring a little peace home</a><a class="btn soft" href="#story" data-ar="تعرّف إلى قصتنا" data-en="Read our story">Read our story</a></div></div>
 <div class="art reveal delay1"><div class="hero-photo-frame"><img class="family hero-photo" src="Together%20in%20Faith%20and%20Love.png" alt="A loving family embraced by Jesus beneath a peaceful sky"></div><button class="hero-share-button" id="hero-share" type="button" aria-label="Share our family story" title="Share our story" data-ar="شارك قصتنا" data-en="Share our story"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="18" cy="5" r="3" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="6" cy="12" r="3" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="18" cy="19" r="3" fill="none" stroke="currentColor" stroke-width="2"/><path d="m8.7 10.6 6.6-4.2M8.7 13.4l6.6 4.2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span data-ar="شارك قصتنا" data-en="Share our story">Share our story</span></button></div></div></div>
 <div class="goal"><div class="wrap"><div class="goal-card reveal"><div><div class="goal-label" data-ar="هدف الحملة لشهرين" data-en="Two-month campaign goal">Two-month campaign goal</div><div class="goal-value">$1,800</div><p class="goal-small" data-ar="لتغطية الاحتياجات الأساسية للأسرة" data-en="For our family's essential needs">For our family's essential needs</p></div><div><div class="meter-meta"><span data-ar="المبلغ المؤكد حتى الآن" data-en="Confirmed so far">Confirmed so far</span><strong>$0 / $1,800</strong></div><div class="meter"><div class="fill" id="fill"></div></div></div><div class="percent">0%</div></div></div></div>
-<section class="story" id="story"><div class="wrap"><div class="intro reveal"><div class="kicker" data-ar="وراء كل رقم حكاية" data-en="Behind every number, a story">Behind every number, a story</div><h2 data-ar="لسنا رقماً في قائمة احتياجات." data-en="We are more than a list of needs.">We are more than a list of needs.</h2><p data-ar="نحن أشخاص، وبيت، وتفاصيل صغيرة تصنع معنى الحياة." data-en="We are people, a home, and the little things that make life feel whole.">We are people, a home, and the little things that make life feel whole.</p></div><div class="family-photo-wrap reveal"><figure class="family-photo-card"><img src="my%20family.jpeg" alt="صورة عائلية تجمع الأم وابنيها أمام الكنيسة" loading="lazy" decoding="async"><figcaption><span data-ar="العائلة وراء هذه الحكاية" data-en="The family behind this story">The family behind this story</span><small data-ar="معاً، نتمسك بالأمل والمحبة." data-en="Together, holding on to hope and love.">Together, holding on to hope and love.</small></figcaption></figure></div><div class="story-grid"><div class="quote reveal"><div class="quote-mark">“</div><blockquote data-ar="أكثر ما نتمناه ليس حياةً مثالية… بل صباحاً لا نقلق فيه كيف سنؤمّن احتياجات البيت." data-en="We do not dream of a perfect life… only a morning when we do not worry about how to meet our family's needs.">We do not dream of a perfect life… only a morning when we do not worry about how to meet our family's needs.</blockquote><small data-ar="من قلب عائلتنا، بكل صدق وامتنان." data-en="From our family, with honesty and gratitude.">From our family, with honesty and gratitude.</small></div><div class="story-copy reveal delay1"><h3 data-ar="نحاول أن نبقى متماسكين، مهما ضاقت الأيام." data-en="We are doing our best to hold on, even when days are hard.">We are doing our best to hold on, even when days are hard.</h3><p data-ar="في سوريا، أصبحت أساسيات الحياة عبئاً يومياً ثقيلاً على كثير من العائلات. ونحن إحدى هذه العائلات. نعمل بما نستطيع، وندبّر أمورنا قدر الإمكان، لكن الدخل المتقطع وارتفاع تكاليف المعيشة يجعلان تأمين الطعام والدواء والفواتير والتدفئة تحدياً مستمراً." data-en="In Syria, life's essentials have become a daily burden for many families. Ours is one of them. We do what work we can and stretch every resource, but irregular income and rising living costs make food, medicine, household bills and heating a constant challenge.">In Syria, life's essentials have become a daily burden for many families. Ours is one of them. We do what work we can and stretch every resource, but irregular income and rising living costs make food, medicine, household bills and heating a constant challenge.</p><p data-ar="لهذا أنشأنا هذه المبادرة العائلية البسيطة. نشارك قصتنا كما هي، ونأمل أن يصل صوتنا إلى أشخاص يستطيعون المساندة، ولو بالقليل." data-en="That is why we created this small family initiative. We share our story as it is, hoping to reach people who can stand beside us, even in a small way.">That is why we created this small family initiative. We share our story as it is, hoping to reach people who can stand beside us, even in a small way.</p><div class="signature"><b>♡</b><span data-ar="بامتنان، من عائلتنا إليكم" data-en="With gratitude, from our family to you">With gratitude, from our family to you</span></div></div></div></div></section>
+<section class="story" id="story"><div class="wrap"><div class="intro reveal"><div class="kicker" data-ar="وراء كل رقم حكاية" data-en="Behind every number, a story">Behind every number, a story</div><h2 data-ar="لسنا رقماً في قائمة احتياجات." data-en="We are more than a list of needs.">We are more than a list of needs.</h2><p data-ar="نحن أشخاص، وبيت، وتفاصيل صغيرة تصنع معنى الحياة." data-en="We are people, a home, and the little things that make life feel whole.">We are people, a home, and the little things that make life feel whole.</p></div><div class="story-grid"><div class="family-photo-wrap reveal"><figure class="family-photo-card"><img src="my%20family.jpeg" alt="صورة عائلية تجمع الأم وابنيها أمام الكنيسة" loading="lazy" decoding="async"><figcaption><span data-ar="العائلة وراء هذه الحكاية" data-en="The family behind this story">The family behind this story</span><small data-ar="معاً، نتمسك بالأمل والمحبة." data-en="Together, holding on to hope and love.">Together, holding on to hope and love.</small></figcaption></figure></div><div class="quote reveal"><div class="quote-mark">“</div><blockquote data-ar="أكثر ما نتمناه ليس حياةً مثالية… بل صباحاً لا نقلق فيه كيف سنؤمّن احتياجات البيت." data-en="We do not dream of a perfect life… only a morning when we do not worry about how to meet our family's needs.">We do not dream of a perfect life… only a morning when we do not worry about how to meet our family's needs.</blockquote><small data-ar="من قلب عائلتنا، بكل صدق وامتنان." data-en="From our family, with honesty and gratitude.">From our family, with honesty and gratitude.</small></div><div class="story-copy reveal delay1"><h3 data-ar="نحاول أن نبقى متماسكين، مهما ضاقت الأيام." data-en="We are doing our best to hold on, even when days are hard.">We are doing our best to hold on, even when days are hard.</h3><p data-ar="في سوريا، أصبحت أساسيات الحياة عبئاً يومياً ثقيلاً على كثير من العائلات. ونحن إحدى هذه العائلات. نعمل بما نستطيع، وندبّر أمورنا قدر الإمكان، لكن الدخل المتقطع وارتفاع تكاليف المعيشة يجعلان تأمين الطعام والدواء والفواتير والتدفئة تحدياً مستمراً." data-en="In Syria, life's essentials have become a daily burden for many families. Ours is one of them. We do what work we can and stretch every resource, but irregular income and rising living costs make food, medicine, household bills and heating a constant challenge.">In Syria, life's essentials have become a daily burden for many families. Ours is one of them. We do what work we can and stretch every resource, but irregular income and rising living costs make food, medicine, household bills and heating a constant challenge.</p><p data-ar="لهذا أنشأنا هذه المبادرة العائلية البسيطة. نشارك قصتنا كما هي، ونأمل أن يصل صوتنا إلى أشخاص يستطيعون المساندة، ولو بالقليل." data-en="That is why we created this small family initiative. We share our story as it is, hoping to reach people who can stand beside us, even in a small way.">That is why we created this small family initiative. We share our story as it is, hoping to reach people who can stand beside us, even in a small way.</p><div class="signature"><b>♡</b><span data-ar="بامتنان، من عائلتنا إليكم" data-en="With gratitude, from our family to you">With gratitude, from our family to you</span></div></div></div></div></section>
 <section class="needs" id="needs"><div class="wrap"><div class="intro reveal"><div class="kicker" data-ar="أين تذهب المساعدة؟" data-en="Where does support go?">Where does support go?</div><h2 data-ar="أربع حاجات… وأثرها كبير." data-en="Four essentials. A meaningful difference.">Four essentials. A meaningful difference.</h2><p data-ar="كل مساهمة تساعدنا في تخفيف عبء ملموس من أعباء الحياة اليومية." data-en="Every contribution helps ease a real part of everyday life.">Every contribution helps ease a real part of everyday life.</p></div><div class="needs-grid">
 <article class="need reveal"><div class="need-icon"><svg viewBox="0 0 64 64" aria-hidden="true"><path d="M13 26h38l-4 27H17Z" fill="#e7c982" stroke="#397b83" stroke-width="3" stroke-linejoin="round"/><path d="M20 25q-4-11 4-13 8-1 8 11 1-13 9-12 8 2 3 14" fill="#8fbd8c" stroke="#397b83" stroke-width="3"/><path d="M22 35h20" stroke="#fff4dc" stroke-width="3" stroke-linecap="round"/></svg></div><h3 data-ar="الطعام" data-en="Food">Food</h3><p data-ar="تأمين وجبات ومستلزمات غذائية أساسية تحفظ استقرار البيت." data-en="Groceries and everyday food essentials to keep our home going.">Groceries and everyday food essentials to keep our home going.</p></article>
 <article class="need reveal delay1"><div class="need-icon"><svg viewBox="0 0 64 64" aria-hidden="true"><rect x="15" y="10" width="34" height="44" rx="10" fill="#e9e6ca" stroke="#397b83" stroke-width="3"/><path d="M32 17v30M20 32h24" stroke="#d87569" stroke-width="8" stroke-linecap="round"/><path d="M32 17v30M20 32h24" stroke="#fff4df" stroke-width="2" stroke-linecap="round"/></svg></div><h3 data-ar="الأدوية" data-en="Medicine">Medicine</h3><p data-ar="المساهمة في توفير الأدوية والاحتياجات الصحية الضرورية." data-en="Helping cover essential medicines and basic health needs.">Helping cover essential medicines and basic health needs.</p></article>
