@@ -349,6 +349,19 @@ footer{background:var(--forest-deep);border-top:4px solid #58a6c8;color:#eaf7fc}
 
 
 /* Unified finish — rounded components, clean section transitions, no divider bars */
+
+/* Global polish: no hard section rules; rounded silhouettes across all visible panels */
+:where(section,header,footer,.goal-card,.need,.donate,.paypal-box,.update-card,.contact-card,.trust-box,.youtube-panel,.youtube-video,.family-photo-card,.family-photo-card img,.hero-photo-frame,.hero-photo-frame img,.quote,.story-copy,.warning,.wallet,.qr img,.links,.btn,.share-button,.contact-link,.chain,.copy,.paypal-recipient,.paypal-link-pending,.paypal-create-link,.need-icon,.contact-icon,.brand-icon,.heart,.update-symbol,.youtube-icon){
+ border-radius:var(--corner)!important;
+}
+section{border:0!important;outline:0!important}
+section:not(.hero)::before,section:not(.hero)::after{display:none!important;content:none!important}
+.needs-grid,.contact-grid,.update-card,.youtube-panel{border:0!important}
+.need,.contact-card{border:0!important}
+.quote{border:0!important;border-radius:var(--corner)!important}
+.story-copy{border:1px solid #a8ccdc!important}
+.hero-photo-frame,.hero-photo-frame img,.family-photo-card img{transform:none!important}
+
 :root{--corner:20px;--corner-small:14px}
 .hero-photo-frame{transform:none!important;border-radius:var(--corner)!important;overflow:hidden}
 .hero-photo-frame:before{border-radius:calc(var(--corner) - 5px)}
