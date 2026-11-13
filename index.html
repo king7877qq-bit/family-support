@@ -611,9 +611,75 @@ section:before,section:after{display:none!important;content:none!important}
 <a class="paypal-send-button" href="https://www.paypal.com/send" target="_blank" rel="noopener noreferrer" data-ar="المتابعة إلى PayPal" data-en="Continue to PayPal"><span aria-hidden="true">P</span> <span data-ar="المتابعة إلى PayPal" data-en="Continue to PayPal">Continue to PayPal</span></a>
 <p class="paypal-policy-note" data-ar="في صفحة PayPal، أدخل البريد أعلاه، ثم المبلغ والعملة. اختر نوع الدفع الذي يطابق حقيقة التحويل. خيار Friends and Family مخصص فعلاً للأصدقاء والعائلة فقط، ولا يوفر حماية المشتري. تأكد من اسم المستلم والبريد قبل الإرسال؛ فالدفعات المرسلة قد لا يمكن إلغاؤها." data-en="On PayPal, enter the email above, then the amount and currency. Choose the payment type that accurately reflects the transfer. Friends and Family is only for genuine transfers to friends or family and does not include Buyer Protection. Verify the recipient name and email before sending; completed payments may not be reversible.">On PayPal, enter the email above, then the amount and currency. Choose the payment type that accurately reflects the transfer. Friends and Family is only for genuine transfers to friends or family and does not include Buyer Protection. Verify the recipient name and email before sending; completed payments may not be reversible.</p>
 </div>
+</div></div></section>
 <section class="youtube"><div class="wrap"><div class="youtube-panel reveal"><div class="youtube-icon">▶</div><div class="youtube-copy"><h3>Family Support — YouTube</h3><p data-ar="شاهدوا فيديوهاتنا وتحديثاتنا العائلية مباشرةً من قناتنا." data-en="Watch our family videos and updates directly from our channel.">Watch our family videos and updates directly from our channel.</p></div><a class="btn primary" href="https://www.youtube.com/@FareedFamilySupport?sub_confirmation=1" target="_blank" rel="noopener noreferrer" data-ar="زيارة القناة والاشتراك" data-en="Visit & subscribe">Visit &amp; subscribe</a></div><div class="youtube-video reveal"><iframe src="https://www.youtube-nocookie.com/embed/videoseries?list=UU0qMPyrT8LXMIQIbbvoIinQ" title="Latest videos from Family Support" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div></div></section>
 <div class="trust"><div class="wrap"><div class="trust-box"><strong data-ar="خصوصية الداعمين والشفافية" data-en="Donor privacy and transparency">Donor privacy and transparency</strong><span data-ar="سنشارك المعلومات والتحديثات بصدق. لن ننشر أسماء الداعمين أو مبالغ مساهماتهم دون موافقتهم الصريحة. ونرحب دائماً بالدعم المجهول." data-en="We will share information and updates honestly. Donors' names and contribution amounts will never be published without explicit permission. Anonymous support is always welcome.">We will share information and updates honestly. Donors' names and contribution amounts will never be published without explicit permission. Anonymous support is always welcome.</span></div><div class="trust-box disclaimer"><strong data-ar="مبادرة عائلية شخصية" data-en="A personal family initiative">A personal family initiative</strong><span data-ar="هذه مبادرة دعم عائلية شخصية وليست جمعية خيرية مسجلة أو منظمة غير ربحية. لا ندّعي وجود تسجيل رسمي أو كيان قانوني." data-en="This is a personal family support initiative, not a registered charity or nonprofit organisation. No official registration or legal entity is claimed.">This is a personal family support initiative, not a registered charity or nonprofit organisation. No official registration or legal entity is claimed.</span></div></div></div>
 </main><footer><div class="wrap"><p>© Family Support · Syria</p><p data-ar="شكراً لأنكم رأيتم قصتنا، ولأنكم تهتمون." data-en="Thank you for seeing our story, and for caring.">Thank you for seeing our story, and for caring.</p></div></footer>
 <script>
-(()=>{const $=s=>document.querySelector(s);let language='en';function setLang(lang){language=lang;document.documentElement.lang=lang;document.documentElement.dir=lang==='ar'?'rtl':'ltr';document.querySelectorAll('[data-ar][data-en]').forEach(el=>{el.innerHTML=el.dataset[lang]});$('#ar').classList.toggle('active',lang==='ar');$('#en').classList.toggle('active',lang==='en');$('#menu').setAttribute('aria-label',lang==='ar'?'فتح القائمة':'Open menu')}$('#ar').addEventListener('click',()=>setLang('ar'));$('#en').addEventListener('click',()=>setLang('en'));$('#menu').addEventListener('click',()=>$('#links').classList.toggle('open'));document.querySelectorAll('.links a').forEach(a=>a.addEventListener('click',()=>$('#links').classList.remove('open')));$('#copy').addEventListener('click',async()=>{const value=$('#wallet').textContent;try{await navigator.clipboard.writeText(value);$('#copy').textContent=language==='ar'?'تم نسخ العنوان ✓':'Address copied ✓'}catch(e){const t=document.createElement('textarea');t.value=value;document.body.append(t);t.select();document.execCommand('copy');t.remove();$('#copy').textContent=language==='ar'?'تم نسخ العنوان ✓':'Address copied ✓'}setTimeout(()=>$('#copy').textContent=language==='ar'?'نسخ عنوان المحفظة':'Copy wallet address',2200)});const shareUrl='https://king7877qq-bit.github.io/family-support/';const shareTitle='Family Support';const shareText='Please take a moment to read and share our family story.';$('#share-story').addEventListener('click',async()=>{if(navigator.share){try{await navigator.share({title:shareTitle,text:shareText,url:shareUrl})}catch(e){if(e.name!=='AbortError')console.error('Share failed:',e)}}else{const popup=window.open('','_blank','width=560,height=620');if(popup){popup.document.write('<!doctype html><html><head><meta charset="utf-8"><title>Share Family Support</title></head><body style="font:16px Arial,sans-serif;padding:24px;background:#f3eddf;color:#31545b"><h2>Share Our Story</h2><p>Choose where to share:</p><p><a href="https://wa.me/?text='+encodeURIComponent(shareText+' '+shareUrl)+'" target="_blank">WhatsApp</a></p><p><a href="https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(shareUrl)+'" target="_blank">Facebook</a></p><p><a href="https://t.me/share/url?url='+encodeURIComponent(shareUrl)+'&text='+encodeURIComponent(shareText)+'" target="_blank">Telegram</a></p><p><a href="mailto:?subject='+encodeURIComponent(shareTitle)+'&body='+encodeURIComponent(shareText+' '+shareUrl)+'">Email</a></p><p>Instagram and other installed apps may appear in your device share menu when supported.</p></body></html>');popup.document.close()}else{try{await navigator.clipboard.writeText(shareUrl);alert('Website link copied.')}catch(e){prompt('Copy the website link:',shareUrl)}}}});$('#hero-share').addEventListener('click',()=>$('#share-story').click());$('#copy-site-link').addEventListener('click',async()=>{const b=$('#copy-site-link');try{await navigator.clipboard.writeText(shareUrl)}catch(e){const t=document.createElement('textarea');t.value=shareUrl;document.body.append(t);t.select();document.execCommand('copy');t.remove()}b.textContent=language==='ar'?'تم نسخ رابط الموقع ✓':'Website link copied ✓';setTimeout(()=>b.textContent=language==='ar'?'نسخ رابط الموقع':'Copy Website Link',2200)});if('IntersectionObserver'in window){const io=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target)}}),{threshold:.12});document.querySelectorAll('.reveal').forEach(el=>io.observe(el))}else document.querySelectorAll('.reveal').forEach(el=>el.classList.add('visible'));setLang('en');setTimeout(()=>$('#fill').style.width='0%',350);})();
+(()=> {
+ const $ = (selector) => document.querySelector(selector);
+ let language = 'en';
+ const safeOn = (selector, event, handler) => {
+   const element = $(selector);
+   if (element) element.addEventListener(event, handler);
+   return element;
+ };
+ function setLang(lang) {
+   language = lang;
+   document.documentElement.lang = lang;
+   document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+   document.querySelectorAll('[data-ar][data-en]').forEach(el => {
+     const value = lang === 'ar' ? el.dataset.ar : el.dataset.en;
+     if (value !== undefined) el.innerHTML = value;
+   });
+   const ar = $('#ar'), en = $('#en'), menu = $('#menu');
+   if (ar) ar.classList.toggle('active', lang === 'ar');
+   if (en) en.classList.toggle('active', lang === 'en');
+   if (menu) menu.setAttribute('aria-label', lang === 'ar' ? 'فتح القائمة' : 'Open menu');
+ }
+ safeOn('#ar','click',()=>setLang('ar'));
+ safeOn('#en','click',()=>setLang('en'));
+ safeOn('#menu','click',()=>{const links=$('#links');if(links)links.classList.toggle('open')});
+ document.querySelectorAll('.links a').forEach(a=>a.addEventListener('click',()=>$('#links')?.classList.remove('open')));
+ safeOn('#copy','click',async()=>{
+   const wallet=$('#wallet'), button=$('#copy');
+   if(!wallet||!button)return;
+   const value=wallet.textContent.trim();
+   try{await navigator.clipboard.writeText(value)}catch(e){
+     const area=document.createElement('textarea');area.value=value;document.body.append(area);area.select();document.execCommand('copy');area.remove();
+   }
+   button.textContent=language==='ar'?'تم نسخ العنوان ✓':'Address copied ✓';
+   setTimeout(()=>button.textContent=language==='ar'?'نسخ عنوان المحفظة':'Copy wallet address',2200);
+ });
+ const shareUrl='https://king7877qq-bit.github.io/family-support/';
+ const shareTitle='Family Support';
+ const shareText='Please take a moment to read and share our family story.';
+ async function shareStory(){
+   if(navigator.share){
+     try{await navigator.share({title:shareTitle,text:shareText,url:shareUrl})}
+     catch(e){if(e.name!=='AbortError')console.error('Share failed:',e)}
+   }else{
+     try{await navigator.clipboard.writeText(shareUrl);alert(language==='ar'?'تم نسخ رابط الموقع':'Website link copied.')}
+     catch(e){prompt(language==='ar'?'انسخ رابط الموقع:':'Copy the website link:',shareUrl)}
+   }
+ }
+ safeOn('#share-story','click',shareStory);
+ safeOn('#hero-share','click',shareStory);
+ safeOn('#copy-site-link','click',async()=>{
+   const button=$('#copy-site-link');
+   try{await navigator.clipboard.writeText(shareUrl)}catch(e){
+     const area=document.createElement('textarea');area.value=shareUrl;document.body.append(area);area.select();document.execCommand('copy');area.remove();
+   }
+   if(button){button.textContent=language==='ar'?'تم نسخ رابط الموقع ✓':'Website link copied ✓';setTimeout(()=>button.textContent=language==='ar'?'نسخ رابط الموقع':'Copy Website Link',2200)}
+ });
+ document.querySelectorAll('.reveal').forEach(el=>el.classList.add('visible'));
+ if('IntersectionObserver' in window){
+   const observer=new IntersectionObserver(entries=>entries.forEach(entry=>{
+     if(entry.isIntersecting){entry.target.classList.add('visible');observer.unobserve(entry.target)}
+   }),{threshold:.12});
+   document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+ }
+ setLang('en');
+ const fill=$('#fill');if(fill)setTimeout(()=>fill.style.width='0%',350);
+})();
 </script></body></html>
