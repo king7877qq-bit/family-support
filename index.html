@@ -400,79 +400,113 @@ section:not(.hero)::before,section:not(.hero)::after{display:none!important;cont
 @media(prefers-reduced-motion:reduce){
  *,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;transition-duration:.01ms!important}
 }
-</style>
 
-<style id="sky-blue-final">
-/* Final, high-specificity design layer: intentionally overrides every earlier theme rule. */
-html,body{background:#eaf6fb!important;color:#173b53!important}
-body{--paper:#eaf6fb;--paper-deep:#d5edf7;--ink:#173b53;--muted:#527184;--forest:#145b83;--forest-deep:#0b3d60;--sage:#8fc9e2;--sage-light:#d7eff9;--clay:#267fa8;--clay-light:#c5e5f2;--ochre:#68aeca;--line:#79b7d2;--white:#f7fcff;--shadow:0 18px 44px rgba(13,64,94,.12)}
-header{background:#eaf6fb!important;border-bottom:3px solid #0b3d60!important}
-.hero{background:linear-gradient(120deg,#eaf8fd 0%,#bfe4f3 56%,#83c6e2 100%)!important;border-bottom:4px solid #0b3d60!important}
-.hero:before{background:linear-gradient(105deg,rgba(239,249,253,.97),rgba(220,242,250,.78) 54%,rgba(151,208,231,.18))!important}
-.hero h1,.intro h2,.giving-copy h2,.quote blockquote,.story-copy h3,.need h3,.donate h3,.contact-card h3{color:#0b3d60!important}
-.hero h1 span,.kicker,.eyebrow,.goal-label,.percent{color:#176f9b!important}
-.hero-photo-frame{background:#f8fdff!important;border:3px solid #0b3d60!important;box-shadow:0 22px 48px rgba(11,61,96,.2)!important}
-.goal-card,.donate{background:#f7fcff!important;border:2px solid #0b3d60!important;box-shadow:0 18px 44px rgba(13,64,94,.12)!important}
-.goal-card{border-top:4px solid #0b3d60!important}
-section{position:relative!important;border-top:4px solid #0b3d60!important;border-bottom:2px solid #79b7d2!important}
-section:before{content:""!important;position:absolute!important;top:7px!important;left:0!important;right:0!important;height:1px!important;background:#fff!important;pointer-events:none!important}
-.story{background:#e6f4fa!important}
-.needs{background:#d5edf7!important}
-.giving{background:#eaf6fb!important}
-.updates{background:#d8edf7!important}
-.contact{background:#e8f5fb!important}
-.youtube{background:#cfe9f5!important}
-.story-grid{display:grid!important;grid-template-columns:minmax(0,.92fr) minmax(0,1.08fr)!important;grid-template-areas:"family quote" "copy copy"!important;gap:26px 38px!important;align-items:stretch!important}
-.story-grid>.family-photo-wrap{grid-area:family!important;display:flex!important;align-items:stretch!important;justify-content:center!important;width:100%!important;margin:0!important}
-.story-grid>.quote{grid-area:quote!important;align-self:stretch!important;padding:32px!important;background:#f7fcff!important;border:2px solid #0b3d60!important;border-radius:5px!important;box-shadow:0 12px 30px rgba(13,64,94,.09)!important}
-.story-grid>.story-copy{grid-area:copy!important;padding:28px 32px!important;background:#d7edf7!important;border:1px solid #6ca9c6!important;border-inline-start:5px solid #0b3d60!important;border-radius:3px!important}
-.family-photo-card{width:100%!important;max-width:440px!important;height:100%!important;padding:12px!important;background:#f7fcff!important;border:2px solid #0b3d60!important;box-shadow:0 12px 30px rgba(13,64,94,.1)!important}
-.family-photo-card img{width:100%!important;height:calc(100% - 72px)!important;min-height:280px!important;max-height:430px!important;object-fit:cover!important;border:4px solid #9acbe0!important}
-.needs-grid,.contact-grid{border:2px solid #0b3d60!important;background:rgba(247,252,255,.55)!important}
-.need{border-inline-end:1px solid #79b7d2!important}
-.need-icon,.contact-icon{background:#f7fcff!important;border:1px solid #4d94b5!important}
-.donate{border-top:6px solid #0b3d60!important}
-.wallet{background:#e6f4fa!important;border:1px dashed #267fa8!important}
-.updates .update-card,.youtube-panel{border-top:2px solid #0b3d60!important;border-bottom:2px solid #0b3d60!important}
-.youtube-video{border:3px solid #0b3d60!important}
-.trust{background:#eaf6fb!important}
-.trust-box{background:#f7fcff!important;border:1px solid #79b7d2!important}
-footer{background:#0b3d60!important;border-top:4px solid #58a6c8!important}
+
+/* Consolidated sky-blue design system — replaces conflicting later overrides */
+:root{
+ --paper:#edf8fc;--paper-deep:#dceff7;--ink:#173d55;--muted:#557487;
+ --forest:#17648a;--forest-deep:#104766;--sage:#9bcfe3;--sage-light:#d9f0f8;
+ --clay:#327fa2;--clay-light:#cce8f3;--ochre:#75b5cf;--line:#a9d0e0;
+ --white:#f9fdff;--shadow:0 14px 36px rgba(17,69,96,.09);
+ --corner:22px;--corner-small:16px;
+}
+html,body{background:var(--paper);color:var(--ink)}
+body{overflow-x:hidden}
+header{background:rgba(237,248,252,.97);border:0;box-shadow:0 5px 22px rgba(17,69,96,.07)}
+.hero{background:linear-gradient(135deg,#f1fbff 0%,#c8e9f5 58%,#9bd2e7 100%);border:0}
+.hero:before{background:linear-gradient(105deg,rgba(245,252,255,.94),rgba(221,243,250,.72) 55%,rgba(151,208,231,.12))}
+.hero h1,.intro h2,.giving-copy h2,.quote blockquote,.story-copy h3,.need h3,.donate h3,.contact-card h3{color:#104766}
+.hero h1 span,.kicker,.eyebrow,.goal-label,.percent{color:#247da5}
+.hero-copy,.intro p,.story-copy p,.giving-copy p{color:#4d7185}
+.primary,.chain,.contact-link,.copy,.share-button.primary-share{background:#104766;border-color:#104766}
+.primary:hover,.chain:hover,.contact-link:hover,.copy:hover,.share-button.primary-share:hover{background:#247da5}
+.soft,.hero-share-button,.share-button{color:#104766;border-color:#8bbdd2}
+.hero-photo-frame{transform:none!important;padding:12px;background:#f9fdff;border:1px solid #9ac9dc;box-shadow:0 20px 48px rgba(17,69,96,.14)}
+.hero-photo-frame:before{border:1px solid rgba(16,71,102,.12)}
+.hero-photo-frame .hero-photo{transform:none!important;object-fit:contain}
+.goal-card{background:#f9fdff;border:1px solid #a8cddd;box-shadow:var(--shadow)}
+.goal-label,.percent{color:#247da5}
+.goal-value{color:#104766}
+.meter{background:#d3eaf3;border:0}
+.fill{background:linear-gradient(90deg,#e4a0a0,#e9c58e,#94c8ce,#247da5)}
+/* Sections flow into one another without divider rules or separator bars */
+section{position:relative;border:0!important;outline:0!important}
+section:before,section:after{display:none!important;content:none!important}
+.story{background:linear-gradient(180deg,#eaf7fc,#e3f2f8)}
+.needs{background:linear-gradient(180deg,#e3f2f8,#d9edf6)}
+.giving{background:linear-gradient(180deg,#d9edf6,#edf8fc)}
+.updates{background:linear-gradient(180deg,#eaf7fc,#dceff7)}
+.contact{background:linear-gradient(180deg,#dceff7,#eaf7fc)}
+.youtube{background:linear-gradient(180deg,#eaf7fc,#d8edf6)}
+.trust{background:#edf8fc}
+.story-grid{display:grid;grid-template-columns:minmax(0,.95fr) minmax(0,1.05fr);grid-template-areas:"family quote" "copy copy";gap:30px 40px;align-items:center}
+.story-grid>.family-photo-wrap{grid-area:family;display:flex;align-items:center;justify-content:center;width:100%;margin:0}
+.family-photo-card{width:100%;max-width:450px;margin:0;padding:12px;background:#f9fdff;border:1px solid #a8cddd;box-shadow:var(--shadow)}
+.family-photo-card img{display:block;width:100%;height:auto;max-height:450px;object-fit:contain;object-position:center;border:0;box-shadow:none;transform:none!important}
+.family-photo-card figcaption{padding:13px 7px 2px;color:#104766}
+.story-grid>.quote{grid-area:quote;align-self:center;padding:30px;background:linear-gradient(145deg,#f9fdff,#e6f4fa);border:1px solid #a8cddd;box-shadow:var(--shadow)}
+.quote{border:0}
+.quote-mark{color:#398eb5}
+.quote blockquote,.story-copy h3{color:#104766}
+.story-grid>.story-copy{grid-area:copy;max-width:850px;margin:4px auto 0;padding:25px 30px;background:rgba(249,253,255,.7);border:1px solid #b6d7e4}
+.signature{color:#247da5}
+.signature b{background:#d5edf6;color:#104766}
+/* Needs and contact are independent soft panels, not grids split by lines */
+.needs-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;border:0;background:transparent}
+.need{min-width:0;min-height:240px;padding:24px 20px;background:rgba(249,253,255,.72);border:1px solid #b5d7e4;box-shadow:0 7px 20px rgba(17,69,96,.04)}
+.need:hover{background:#f9fdff;transform:translateY(-3px)}
+.need-icon,.contact-icon,.brand-icon,.update-symbol,.heart,.youtube-icon{background:#d9eff7;border:1px solid #b1d5e3;color:#17648a}
+.need-icon svg,.contact-icon svg,.brand-icon svg,.update-symbol svg,.heart svg,.youtube-icon svg{stroke-linecap:round;stroke-linejoin:round}
+.needs-foot{border:0;background:rgba(249,253,255,.65);padding:12px 16px;border-radius:var(--corner-small)}
+.donate{background:#f9fdff;border:1px solid #a8cddd;box-shadow:var(--shadow)}
+.wallet{background:#eef8fc;border:1px solid #b5d7e4}
+.warning{background:#e5f3f9;border:1px solid #b5d7e4;border-inline-start:3px solid #327fa2}
+.paypal-box{background:linear-gradient(145deg,#f9fdff,#e6f4fa);border:1px solid #a8cddd;box-shadow:var(--shadow)}
+.updates .update-card{max-width:780px;margin:auto;padding:28px;background:rgba(249,253,255,.72);border:1px solid #b5d7e4;text-align:center;box-shadow:var(--shadow)}
+.contact-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;border:0;background:transparent}
+.contact-card{padding:22px;background:rgba(249,253,255,.72);border:1px solid #b5d7e4}
+.youtube-panel{display:flex;gap:20px;align-items:center;padding:24px;background:rgba(249,253,255,.72);border:1px solid #b5d7e4}
+.youtube-video{background:#dceff7;border:1px solid #a8cddd;box-shadow:var(--shadow)}
+.trust-box{background:#f9fdff;border:1px solid #b5d7e4;color:#4d7185}
+.trust-box.disclaimer{background:#e5f3f9;border:1px solid #b5d7e4;color:#315d73}
+footer{background:#104766;border:0;color:#eaf7fc}
+/* Rounded silhouettes across every panel, control, badge, and icon container */
+:where(header,footer,section,.goal-card,.need,.donate,.paypal-box,.update-card,.contact-card,.trust-box,.youtube-panel,.youtube-video,.family-photo-card,.family-photo-card img,.hero-photo-frame,.hero-photo-frame img,.quote,.story-copy,.warning,.wallet,.qr img,.links,.btn,.share-button,.contact-link,.chain,.copy,.hero-share-button,.lang,.lang button,.menu,.brand-icon,.need-icon,.heart,.update-symbol,.contact-icon,.youtube-icon,.needs-foot,.address,.paypal-recipient,.paypal-link-pending,.paypal-create-link){
+ border-radius:var(--corner)!important
+}
+:where(button,a,input,textarea,select,iframe){border-radius:var(--corner-small)!important}
+:where(.need-icon,.contact-icon,.brand-icon,.heart,.update-symbol,.youtube-icon){overflow:hidden}
+svg{stroke-linecap:round;stroke-linejoin:round}
+.hero-photo-frame,.hero-photo-frame img,.family-photo-card img{transform:none!important}
+@media(max-width:980px){
+ .needs-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
 @media(max-width:700px){
- .story-grid{grid-template-columns:1fr!important;grid-template-areas:"family" "quote" "copy"!important;gap:20px!important}
- .story-grid>.family-photo-wrap{max-width:440px!important;width:100%!important;margin-inline:auto!important}
- .family-photo-card{height:auto!important}
- .family-photo-card img{height:auto!important;min-height:0!important;max-height:440px!important;object-fit:contain!important}
- .story-grid>.quote,.story-grid>.story-copy{padding:23px 20px!important}
+ .story-grid{grid-template-columns:1fr;grid-template-areas:"family" "quote" "copy";gap:20px}
+ .story-grid>.family-photo-wrap{max-width:430px;width:100%;margin-inline:auto}
+ .family-photo-card img{height:auto;min-height:0;max-height:440px;object-fit:contain}
+ .story-grid>.quote,.story-grid>.story-copy{padding:22px 18px}
+ .needs-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+ .need{min-height:0;padding:20px 14px}
+ .contact-grid{grid-template-columns:1fr}
+ .youtube-panel{flex-wrap:wrap;justify-content:center;text-align:center}
+ .youtube-copy{flex:1 1 calc(100% - 90px)}
+ .youtube-panel .btn{width:100%}
 }
+@media(max-width:420px){
+ .needs-grid{grid-template-columns:1fr}
+ .need{padding:20px 16px}
+}
+@media(prefers-reduced-motion:reduce){
+ *,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;transition-duration:.01ms!important}
+}
+
 </style>
 
 
-<style id="rounded-panels-and-paypal">
-/* Softer, consistent corners; keep section separators crisp and linear. */
-.hero-photo-frame,.hero-photo-frame .hero-photo,.goal-card,.family-photo-card,
-.family-photo-card img,.story-grid>.quote,.story-grid>.story-copy,
-.need,.need-icon,.donate,.heart,.wallet,.paypal-box,.paypal-fallback,
-.update-card,.update-symbol,.contact-card,.contact-icon,.youtube-panel,
-.youtube-video,.trust-box,.btn,.share-button,.hero-share-button,.copy,
-.contact-link,.chain,.lang,.lang button,.menu,.brand-icon,.warning,
-.paypal-donate-button-container img{
- border-radius:14px!important;
-}
-.family-photo-card img{border-radius:10px!important}
-.paypal-box{background:#f7fcff!important;border:2px solid #0b3d60!important;border-top:5px solid #0b3d60!important;padding:22px!important}
-.paypal-box h4{margin-top:0}
-.paypal-donate-button-container{display:flex;align-items:center;justify-content:center;min-height:58px;margin:16px auto 10px;padding:10px;background:#e6f4fa;border:1px solid #79b7d2;border-radius:12px!important}
-.paypal-donate-button-container img{display:block;max-width:100%;height:auto;cursor:pointer}
-.paypal-fallback{display:inline-flex;align-items:center;justify-content:center;min-height:46px;padding:10px 24px;background:#0b3d60;color:#fff;text-decoration:none;font-weight:800;border:2px solid #0b3d60;border-radius:10px!important}
-.paypal-fallback:hover{background:#176f9b;border-color:#176f9b}
-.paypal-secure-note{display:block;color:#527184;font-size:.76rem;line-height:1.7;text-align:center;margin-top:9px}
-section{border-radius:0!important}
-@media(max-width:700px){
- .paypal-box{padding:18px!important}
- .paypal-donate-button-container{width:100%}
-}
-</style>
+
+
+
 
 </head>
 <body><div class="topline"></div>
@@ -490,11 +524,10 @@ section{border-radius:0!important}
 </div><div class="needs-foot reveal" data-ar="نلتزم بتوجيه المساعدة إلى هذه الاحتياجات الأساسية الأربع، ومشاركة المستجدات بوضوح." data-en="We are committed to these four essential needs and to sharing clear updates.">We are committed to these four essential needs and to sharing clear updates.</div></div></section>
 <section class="giving" id="giving"><div class="wrap giving-grid"><div class="giving-copy reveal"><div class="kicker" data-ar="إذا سمحت لكم ظروفكم" data-en="If your circumstances allow">If your circumstances allow</div><h2 data-ar="قد تكون مساعدتكم الصغيرة سنداً كبيراً." data-en="A small act of kindness can carry a family far.">A small act of kindness can carry a family far.</h2><p data-ar="لا يوجد مبلغ صغير عندما يأتي من القلب. مشاركة الصفحة، أو كلمة تشجيع، أو مساهمة بسيطة — كلها طرق حقيقية للوقوف إلى جانبنا. شكراً لأنكم منحتم قصتنا بعضاً من وقتكم." data-en="No amount is too small when it comes from the heart. Sharing this page, sending an encouraging word, or making a small contribution — each is a real way to stand beside us. Thank you for giving our story some of your time.">No amount is too small when it comes from the heart. Sharing this page, sending an encouraging word, or making a small contribution — each is a real way to stand beside us. Thank you for giving our story some of your time.</p><div class="points"><div class="point"><span class="tick">✓</span><span data-ar="مبادرة عائلية مباشرة" data-en="A direct family initiative">A direct family initiative</span></div><div class="point"><span class="tick">✓</span><span data-ar="هدف واضح واحتياجات محددة" data-en="A clear goal and defined needs">A clear goal and defined needs</span></div><div class="point"><span class="tick">✓</span><span data-ar="شفافية واحترام خصوصية الداعمين" data-en="Transparency and donor privacy">Transparency and donor privacy</span></div></div></div>
 <div class="donate reveal delay1"><div class="heart"><svg viewBox="0 0 64 64" aria-hidden="true"><path d="M32 54S10 41 10 25c0-8 5-13 12-13 5 0 8 3 10 8 2-5 6-8 11-8 7 0 12 5 12 13 0 16-23 29-23 29Z" fill="#71b98a"/><path d="M20 32c4 4 8 6 12 6s8-2 12-6" fill="none" stroke="#267f9b" stroke-width="3" stroke-linecap="round"/></svg></div><span class="network">USDT · TRON · TRC20 ONLY</span><h3 data-ar="عنوان محفظة الدعم" data-en="Support wallet address">Support wallet address</h3><p data-ar="يرجى التأكد من اختيار شبكة TRC20 فقط." data-en="Please select the TRC20 network only.">Please select the TRC20 network only.</p><div class="wallet"><span class="address" id="wallet">TYtWeZ6Xf9a8uACp35Bv2BpgmZjrHt8mTG</span><button class="copy" id="copy" data-ar="نسخ عنوان المحفظة" data-en="Copy wallet address">Copy wallet address</button></div><div class="qr"><img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&amp;data=TYtWeZ6Xf9a8uACp35Bv2BpgmZjrHt8mTG" width="104" height="104" alt="QR code for wallet address"></div><div class="warning"><strong data-ar="تنبيه مهم" data-en="Important">Important</strong><span data-ar="أرسل USDT عبر شبكة TRON (TRC20) فقط. استخدام شبكة أخرى قد يؤدي إلى فقدان الأموال نهائياً." data-en="Send USDT via TRON (TRC20) only. Using another network may result in permanent loss of funds.">Send USDT via TRON (TRC20) only. Using another network may result in permanent loss of funds.</span></div><a class="chain" href="https://tronscan.org/#/address/TYtWeZ6Xf9a8uACp35Bv2BpgmZjrHt8mTG" target="_blank" rel="noopener noreferrer" data-ar="عرض المحفظة على Tronscan" data-en="View wallet on Tronscan">View wallet on Tronscan</a><div class="paypal-box paypal-donate-panel">
-<div class="paypal-heading"><span class="paypal-mark" aria-hidden="true">P</span><div><h4 data-ar="الدعم عبر PayPal" data-en="Support via PayPal">Support via PayPal</h4><p data-ar="يمكن إرسال الدعم إلى حساب PayPal التالي:" data-en="You can send support to this PayPal account:">You can send support to this PayPal account:</p></div></div>
+<div class="paypal-heading"><span class="paypal-mark" aria-hidden="true">P</span><div><h4 data-ar="الدعم عبر PayPal" data-en="Support via PayPal">Support via PayPal</h4><p data-ar="الحساب الذي زودتمونا به:" data-en="PayPal account provided:">PayPal account provided:</p></div></div>
 <div class="paypal-recipient"><span>PayPal account</span><strong dir="ltr">Youssefsabah@live.com</strong></div>
-<div class="paypal-link-pending" role="note" data-ar="لجعل زر الدفع يفتح هذا المستلم مباشرةً، نحتاج رابط PayPal.Me الذي ينشئه صاحب الحساب من داخل PayPal. عنوان البريد وحده لا ينشئ رابط دفع مباشر موثوقاً." data-en="To make the payment button open this recipient directly, the account holder must create and share their PayPal.Me link from inside PayPal. An email address alone cannot generate a verified direct payment link.">To make the payment button open this recipient directly, the account holder must create and share their PayPal.Me link from inside PayPal. An email address alone cannot generate a verified direct payment link.</div>
-<a class="paypal-create-link" href="https://www.paypal.com/paypalme/" target="_blank" rel="noopener noreferrer" data-ar="إنشاء رابط PayPal.Me الرسمي" data-en="Open official PayPal.Me">Open official PayPal.Me</a>
-<small class="paypal-secure-note" data-ar="بعد إنشاء الرابط، أرسله لنا لنربط زر الدعم بالحساب الصحيح. لا تشارك كلمة المرور أو رموز التحقق." data-en="Once the link is created, share it with us so the support button can point to the correct account. Never share passwords or verification codes.">Once the link is created, share it with us so the support button can point to the correct account. Never share passwords or verification codes.</small>
+<div class="paypal-link-pending" role="status" data-ar="الدفع المباشر غير مفعّل حالياً. زر PayPal السابق لم يكن يرسل الأموال إلى هذا الحساب؛ كان يفتح صفحة إنشاء PayPal.Me فقط. نحتاج رابط PayPal.Me الفعلي الذي أنشأه صاحب الحساب، ثم يجب التحقق من أنه يسمح بنوع التحويل المقصود قبل وضع زر الدفع." data-en="Direct payment is not enabled yet. The previous PayPal button did not send money to this account; it only opened the PayPal.Me setup page. We need the actual PayPal.Me link created by the account holder, then must verify that it supports the intended type of payment before adding a payment button.">Direct payment is not enabled yet. The previous PayPal button did not send money to this account; it only opened the PayPal.Me setup page. We need the actual PayPal.Me link created by the account holder, then must verify that it supports the intended type of payment before adding a payment button.</div>
+<small class="paypal-secure-note" data-ar="مهم: هذا الموقع مبادرة عائلية شخصية وليس جمعية مسجلة. لا نستخدم زر تبرعات الجمعيات أو نطلب من المتبرعين تصنيف التبرع كتحويل للأصدقاء والعائلة خلافاً لشروط PayPal." data-en="Important: this is a personal family initiative, not a registered charity. We do not use charity-only donation buttons or ask donors to misclassify contributions as Friends and Family payments.">Important: this is a personal family initiative, not a registered charity. We do not use charity-only donation buttons or ask donors to misclassify contributions as Friends and Family payments.</small>
 </div></div></div></section>
 <section class="updates" id="updates"><div class="wrap"><div class="intro reveal"><div class="kicker" data-ar="بكل وضوح وصدق" data-en="Open and honest">Open and honest</div><h2 data-ar="التحديثات من عائلتنا." data-en="Updates from our family.">Updates from our family.</h2><p data-ar="سننشر هنا المستجدات المؤكدة المتعلقة بالحملة والاحتياجات." data-en="We will share confirmed updates about the campaign and our needs here.">We will share confirmed updates about the campaign and our needs here.</p></div><div class="update-card reveal"><div class="update-symbol">✧</div><h3 data-ar="هذه بداية الحكاية" data-en="This is the beginning">This is the beginning</h3><p data-ar="لم تُنشر تحديثات بعد. سنضيف المعلومات عندما تتوفر أمور مؤكدة تستحق مشاركتها." data-en="There are no updates yet. We will add information when there is something confirmed to share.">There are no updates yet. We will add information when there is something confirmed to share.</p><div class="share-actions"><button class="share-button primary-share" id="share-story" type="button" data-ar="شارك قصتنا" data-en="Share Our Story">Share Our Story</button><button class="share-button" id="copy-site-link" type="button" data-ar="نسخ رابط الموقع" data-en="Copy Website Link">Copy Website Link</button></div><p class="share-note" data-ar="ساعدونا في إيصال قصتنا إلى المزيد من الناس. يمكنكم المشاركة عبر التطبيقات المتاحة على أجهزتكم." data-en="Help our story reach more people. Share using the apps available on your device.">Help our story reach more people. Share using the apps available on your device.</p></div></div></section>
 <section class="contact" id="contact"><div class="wrap"><div class="intro reveal"><div class="kicker" data-ar="كلمة طيبة تصنع فرقاً" data-en="A kind word matters">A kind word matters</div><h2 data-ar="نحن قريبون، راسلونا." data-en="We are here. Reach out.">We are here. Reach out.</h2><p data-ar="لأي سؤال أو استفسار أو حتى رسالة محبة، يسعدنا التواصل معكم." data-en="For questions, information, or even a kind message, we would be glad to hear from you.">For questions, information, or even a kind message, we would be glad to hear from you.</p></div><div class="contact-grid"><div class="contact-card reveal"><div class="contact-icon"><svg viewBox="0 0 48 48"><rect x="5" y="10" width="38" height="28" rx="8" fill="#8bc798"/><path d="m9 15 15 12 15-12" fill="none" stroke="#287e9b" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><h3>Email</h3><p>king7877@gmail.com</p><a class="contact-link" href="mailto:king7877@gmail.com" data-ar="إرسال بريد إلكتروني" data-en="Send an email">Send an email</a></div><div class="contact-card reveal delay1"><div class="contact-icon"><svg viewBox="0 0 48 48"><path d="M14 7 8 12c-2 2 1 11 9 19s17 11 19 9l5-6-10-8-5 5c-4-2-8-6-10-10l5-5-7-9Z" fill="#8bc798" stroke="#287e9b" stroke-width="2.5" stroke-linejoin="round"/></svg></div><h3>WhatsApp</h3><p>+963 997 675 625</p><a class="contact-link" href="https://wa.me/963997675625" target="_blank" rel="noopener noreferrer" data-ar="مراسلة عبر واتساب" data-en="Message on WhatsApp">Message on WhatsApp</a></div></div></div></section>
