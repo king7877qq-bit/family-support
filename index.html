@@ -348,45 +348,45 @@ footer{background:var(--forest-deep);border-top:4px solid #58a6c8;color:#eaf7fc}
 }
 
 
-/* Final visual consistency pass — 2026-11-13 */
-:root{
-  --corner:18px;
-  --corner-small:12px;
-}
+/* Unified finish — rounded components, clean section transitions, no divider bars */
+:root{--corner:20px;--corner-small:14px}
 .hero-photo-frame{transform:none!important;border-radius:var(--corner)!important;overflow:hidden}
 .hero-photo-frame:before{border-radius:calc(var(--corner) - 5px)}
 .hero-photo-frame .hero-photo{border-radius:var(--corner-small)!important;transform:none!important}
-.family-photo-card,.family-photo-card img{border-radius:var(--corner)!important;overflow:hidden}
-.goal-card,.need,.donate,.paypal-box,.update-card,.contact-card,.trust-box,.youtube-panel,.youtube-video,.warning,.wallet,.qr img,.chain,.btn,.share-button,.contact-link,.hero-share-button,.lang,.menu,.links,.brand-icon,.need-icon,.heart,.update-symbol,.contact-icon,.youtube-icon,.copy,.paypal-donate-button-container{
-  border-radius:var(--corner-small)!important;
+.family-photo-wrap,.family-photo-card,.family-photo-card img,.hero-photo-frame .hero-photo{border-radius:var(--corner)!important}
+.goal-card,.need,.donate,.paypal-box,.update-card,.contact-card,.trust-box,.youtube-panel,.youtube-video,.warning,.wallet,.qr img,.chain,.btn,.share-button,.contact-link,.hero-share-button,.lang,.menu,.links,.brand-icon,.need-icon,.heart,.update-symbol,.contact-icon,.youtube-icon,.copy,.paypal-donate-button-container,.paypal-recipient,.paypal-link-pending,.paypal-create-link{
+ border-radius:var(--corner-small)!important
 }
-section:not(.hero){padding-block:104px}
-section:not(.hero)::before{
-  content:"";position:absolute;top:0;left:50%;transform:translateX(-50%);
-  width:min(86%,1120px);height:3px;border-radius:99px;
-  background:linear-gradient(90deg,transparent,#9bd7ed 16%,#246b91 50%,#9bd7ed 84%,transparent);
-  opacity:.9;
-}
-.story-grid{
-  grid-template-columns:minmax(0,.95fr) minmax(0,1.05fr);
-  grid-template-areas:"family quote" "copy copy";
-  align-items:center;gap:28px 42px;
-}
+button,a,input,textarea,select,iframe{border-radius:var(--corner-small)}
+section:not(.hero){padding-block:92px}
+section:not(.hero)::before,section:not(.hero)::after{display:none!important;content:none!important}
+.story-grid{grid-template-columns:minmax(0,.95fr) minmax(0,1.05fr);grid-template-areas:"family quote" "copy copy";align-items:center;gap:28px 42px}
 .story-grid>.family-photo-wrap{grid-area:family;width:100%;max-width:470px;margin:0 auto}
-.story-grid>.quote{grid-area:quote;padding:28px 26px;background:linear-gradient(145deg,#f8fdff,#e7f5fb);border:1px solid #8bbbd0;border-top:4px solid #245f80;border-radius:var(--corner)!important;box-shadow:0 14px 34px rgba(27,77,105,.10)}
+.story-grid>.quote{grid-area:quote;padding:28px 26px;background:linear-gradient(145deg,#f8fdff,#e7f5fb);border:1px solid #8bbbd0;border-top:0;border-radius:var(--corner)!important;box-shadow:0 14px 34px rgba(27,77,105,.10)}
 .story-grid>.story-copy{grid-area:copy;max-width:850px;margin:10px auto 0;padding:24px 28px;border:1px solid #a8ccdc;border-radius:var(--corner)!important;background:rgba(247,252,255,.72)}
-.paypal-link-pending{margin:0;padding:14px 16px;border:1px dashed #4b91b2;border-radius:var(--corner-small);background:#f5fbff;color:#315d73;font-size:.86rem;line-height:1.8}
-.paypal-secure-note{display:block;margin-top:12px}
+.paypal-box{padding:22px;background:linear-gradient(145deg,#f7fcff,#e6f4fa);border:1px solid #8bbbd0;box-shadow:0 12px 30px rgba(27,77,105,.08)}
+.paypal-heading{display:flex;align-items:center;gap:14px;margin-bottom:14px}
+.paypal-mark{width:46px;height:46px;display:grid;place-items:center;border-radius:14px;background:#d4eefa;color:#12649a;font:bold 1.7rem Arial,sans-serif;font-style:italic}
+.paypal-box h4{margin:0 0 3px;color:#174f70;font-size:1.18rem}
+.paypal-box p{margin:0;color:#547184;font-size:.88rem}
+.paypal-recipient{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px;padding:13px 15px;background:#fff;border:1px solid #c2dce8;margin:12px 0}
+.paypal-recipient span{font-size:.78rem;color:#587589}
+.paypal-recipient strong{color:#174f70;font:700 .9rem ui-monospace,Consolas,monospace;overflow-wrap:anywhere}
+.paypal-link-pending{margin:12px 0;padding:14px 16px;border:1px solid #b5d2df;background:#f8fcff;color:#315d73;font-size:.84rem;line-height:1.8}
+.paypal-create-link{display:inline-flex;align-items:center;justify-content:center;margin-top:5px;padding:11px 17px;background:#12649a;color:white;text-decoration:none;font-weight:800;font-size:.85rem}
+.paypal-create-link:hover{background:#0b456b}
+.paypal-secure-note{display:block;margin-top:13px;color:#607b8d;line-height:1.7}
 @media(max-width:700px){
-  section:not(.hero){padding-block:76px}
-  .story-grid{grid-template-columns:1fr;grid-template-areas:"family" "quote" "copy";gap:20px}
-  .story-grid>.family-photo-wrap{max-width:390px}
-  .story-grid>.quote,.story-grid>.story-copy{padding:21px 18px}
+ section:not(.hero){padding-block:68px}
+ .story-grid{grid-template-columns:1fr;grid-template-areas:"family" "quote" "copy";gap:20px}
+ .story-grid>.family-photo-wrap{max-width:390px}
+ .story-grid>.quote,.story-grid>.story-copy{padding:21px 18px}
+ .paypal-box{padding:17px}
+ .paypal-recipient{align-items:flex-start;flex-direction:column}
 }
 @media(prefers-reduced-motion:reduce){
-  *,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;transition-duration:.01ms!important}
+ *,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;transition-duration:.01ms!important}
 }
-
 </style>
 
 <style id="sky-blue-final">
@@ -477,12 +477,11 @@ section{border-radius:0!important}
 </div><div class="needs-foot reveal" data-ar="نلتزم بتوجيه المساعدة إلى هذه الاحتياجات الأساسية الأربع، ومشاركة المستجدات بوضوح." data-en="We are committed to these four essential needs and to sharing clear updates.">We are committed to these four essential needs and to sharing clear updates.</div></div></section>
 <section class="giving" id="giving"><div class="wrap giving-grid"><div class="giving-copy reveal"><div class="kicker" data-ar="إذا سمحت لكم ظروفكم" data-en="If your circumstances allow">If your circumstances allow</div><h2 data-ar="قد تكون مساعدتكم الصغيرة سنداً كبيراً." data-en="A small act of kindness can carry a family far.">A small act of kindness can carry a family far.</h2><p data-ar="لا يوجد مبلغ صغير عندما يأتي من القلب. مشاركة الصفحة، أو كلمة تشجيع، أو مساهمة بسيطة — كلها طرق حقيقية للوقوف إلى جانبنا. شكراً لأنكم منحتم قصتنا بعضاً من وقتكم." data-en="No amount is too small when it comes from the heart. Sharing this page, sending an encouraging word, or making a small contribution — each is a real way to stand beside us. Thank you for giving our story some of your time.">No amount is too small when it comes from the heart. Sharing this page, sending an encouraging word, or making a small contribution — each is a real way to stand beside us. Thank you for giving our story some of your time.</p><div class="points"><div class="point"><span class="tick">✓</span><span data-ar="مبادرة عائلية مباشرة" data-en="A direct family initiative">A direct family initiative</span></div><div class="point"><span class="tick">✓</span><span data-ar="هدف واضح واحتياجات محددة" data-en="A clear goal and defined needs">A clear goal and defined needs</span></div><div class="point"><span class="tick">✓</span><span data-ar="شفافية واحترام خصوصية الداعمين" data-en="Transparency and donor privacy">Transparency and donor privacy</span></div></div></div>
 <div class="donate reveal delay1"><div class="heart"><svg viewBox="0 0 64 64" aria-hidden="true"><path d="M32 54S10 41 10 25c0-8 5-13 12-13 5 0 8 3 10 8 2-5 6-8 11-8 7 0 12 5 12 13 0 16-23 29-23 29Z" fill="#71b98a"/><path d="M20 32c4 4 8 6 12 6s8-2 12-6" fill="none" stroke="#267f9b" stroke-width="3" stroke-linecap="round"/></svg></div><span class="network">USDT · TRON · TRC20 ONLY</span><h3 data-ar="عنوان محفظة الدعم" data-en="Support wallet address">Support wallet address</h3><p data-ar="يرجى التأكد من اختيار شبكة TRC20 فقط." data-en="Please select the TRC20 network only.">Please select the TRC20 network only.</p><div class="wallet"><span class="address" id="wallet">TYtWeZ6Xf9a8uACp35Bv2BpgmZjrHt8mTG</span><button class="copy" id="copy" data-ar="نسخ عنوان المحفظة" data-en="Copy wallet address">Copy wallet address</button></div><div class="qr"><img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&amp;data=TYtWeZ6Xf9a8uACp35Bv2BpgmZjrHt8mTG" width="104" height="104" alt="QR code for wallet address"></div><div class="warning"><strong data-ar="تنبيه مهم" data-en="Important">Important</strong><span data-ar="أرسل USDT عبر شبكة TRON (TRC20) فقط. استخدام شبكة أخرى قد يؤدي إلى فقدان الأموال نهائياً." data-en="Send USDT via TRON (TRC20) only. Using another network may result in permanent loss of funds.">Send USDT via TRON (TRC20) only. Using another network may result in permanent loss of funds.</span></div><a class="chain" href="https://tronscan.org/#/address/TYtWeZ6Xf9a8uACp35Bv2BpgmZjrHt8mTG" target="_blank" rel="noopener noreferrer" data-ar="عرض المحفظة على Tronscan" data-en="View wallet on Tronscan">View wallet on Tronscan</a><div class="paypal-box paypal-donate-panel">
-<h4 data-ar="تبرع آمن عبر PayPal" data-en="Donate securely with PayPal">Donate securely with PayPal</h4>
-<p data-ar="اختر زر التبرع للانتقال إلى صفحة PayPal الآمنة. يمكنك اختيار المبلغ وإتمام الدفع من حسابك أو ببطاقة بنكية إذا أتاح PayPal ذلك في بلدك." data-en="Choose the donate button to continue to PayPal’s secure checkout. Select an amount and pay with your PayPal account or a bank card where available.">Choose the donate button to continue to PayPal’s secure checkout. Select an amount and pay with your PayPal account or a bank card where available.</p>
-<div id="paypal-donate-button-container" class="paypal-donate-button-container">
-<p class="paypal-link-pending" data-ar="نعمل على تفعيل رابط دفع شخصي آمن من PayPal. سيظهر زر الدفع هنا فور تزويدنا بالرابط الرسمي الذي ينشئه صاحب الحساب من داخل PayPal." data-en="We are setting up a secure personal PayPal payment link. The payment button will appear here once the account holder provides the official link generated inside PayPal.">We are setting up a secure personal PayPal payment link. The payment button will appear here once the account holder provides the official link generated inside PayPal.</p>
-</div>
-<small class="paypal-secure-note" data-ar="لن نستخدم زر التبرعات المخصص للجمعيات، ولن نعرض رابط دفع غير مختبر." data-en="We will not use the charity-only donation flow or publish an unverified payment link.">We will not use the charity-only donation flow or publish an unverified payment link.</small>
+<div class="paypal-heading"><span class="paypal-mark" aria-hidden="true">P</span><div><h4 data-ar="الدعم عبر PayPal" data-en="Support via PayPal">Support via PayPal</h4><p data-ar="يمكن إرسال الدعم إلى حساب PayPal التالي:" data-en="You can send support to this PayPal account:">You can send support to this PayPal account:</p></div></div>
+<div class="paypal-recipient"><span>PayPal account</span><strong dir="ltr">Youssefsabah@live.com</strong></div>
+<div class="paypal-link-pending" role="note" data-ar="لجعل زر الدفع يفتح هذا المستلم مباشرةً، نحتاج رابط PayPal.Me الذي ينشئه صاحب الحساب من داخل PayPal. عنوان البريد وحده لا ينشئ رابط دفع مباشر موثوقاً." data-en="To make the payment button open this recipient directly, the account holder must create and share their PayPal.Me link from inside PayPal. An email address alone cannot generate a verified direct payment link.">To make the payment button open this recipient directly, the account holder must create and share their PayPal.Me link from inside PayPal. An email address alone cannot generate a verified direct payment link.</div>
+<a class="paypal-create-link" href="https://www.paypal.com/paypalme/" target="_blank" rel="noopener noreferrer" data-ar="إنشاء رابط PayPal.Me الرسمي" data-en="Open official PayPal.Me">Open official PayPal.Me</a>
+<small class="paypal-secure-note" data-ar="بعد إنشاء الرابط، أرسله لنا لنربط زر الدعم بالحساب الصحيح. لا تشارك كلمة المرور أو رموز التحقق." data-en="Once the link is created, share it with us so the support button can point to the correct account. Never share passwords or verification codes.">Once the link is created, share it with us so the support button can point to the correct account. Never share passwords or verification codes.</small>
 </div></div></div></section>
 <section class="updates" id="updates"><div class="wrap"><div class="intro reveal"><div class="kicker" data-ar="بكل وضوح وصدق" data-en="Open and honest">Open and honest</div><h2 data-ar="التحديثات من عائلتنا." data-en="Updates from our family.">Updates from our family.</h2><p data-ar="سننشر هنا المستجدات المؤكدة المتعلقة بالحملة والاحتياجات." data-en="We will share confirmed updates about the campaign and our needs here.">We will share confirmed updates about the campaign and our needs here.</p></div><div class="update-card reveal"><div class="update-symbol">✧</div><h3 data-ar="هذه بداية الحكاية" data-en="This is the beginning">This is the beginning</h3><p data-ar="لم تُنشر تحديثات بعد. سنضيف المعلومات عندما تتوفر أمور مؤكدة تستحق مشاركتها." data-en="There are no updates yet. We will add information when there is something confirmed to share.">There are no updates yet. We will add information when there is something confirmed to share.</p><div class="share-actions"><button class="share-button primary-share" id="share-story" type="button" data-ar="شارك قصتنا" data-en="Share Our Story">Share Our Story</button><button class="share-button" id="copy-site-link" type="button" data-ar="نسخ رابط الموقع" data-en="Copy Website Link">Copy Website Link</button></div><p class="share-note" data-ar="ساعدونا في إيصال قصتنا إلى المزيد من الناس. يمكنكم المشاركة عبر التطبيقات المتاحة على أجهزتكم." data-en="Help our story reach more people. Share using the apps available on your device.">Help our story reach more people. Share using the apps available on your device.</p></div></div></section>
 <section class="contact" id="contact"><div class="wrap"><div class="intro reveal"><div class="kicker" data-ar="كلمة طيبة تصنع فرقاً" data-en="A kind word matters">A kind word matters</div><h2 data-ar="نحن قريبون، راسلونا." data-en="We are here. Reach out.">We are here. Reach out.</h2><p data-ar="لأي سؤال أو استفسار أو حتى رسالة محبة، يسعدنا التواصل معكم." data-en="For questions, information, or even a kind message, we would be glad to hear from you.">For questions, information, or even a kind message, we would be glad to hear from you.</p></div><div class="contact-grid"><div class="contact-card reveal"><div class="contact-icon"><svg viewBox="0 0 48 48"><rect x="5" y="10" width="38" height="28" rx="8" fill="#8bc798"/><path d="m9 15 15 12 15-12" fill="none" stroke="#287e9b" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><h3>Email</h3><p>king7877@gmail.com</p><a class="contact-link" href="mailto:king7877@gmail.com" data-ar="إرسال بريد إلكتروني" data-en="Send an email">Send an email</a></div><div class="contact-card reveal delay1"><div class="contact-icon"><svg viewBox="0 0 48 48"><path d="M14 7 8 12c-2 2 1 11 9 19s17 11 19 9l5-6-10-8-5 5c-4-2-8-6-10-10l5-5-7-9Z" fill="#8bc798" stroke="#287e9b" stroke-width="2.5" stroke-linejoin="round"/></svg></div><h3>WhatsApp</h3><p>+963 997 675 625</p><a class="contact-link" href="https://wa.me/963997675625" target="_blank" rel="noopener noreferrer" data-ar="مراسلة عبر واتساب" data-en="Message on WhatsApp">Message on WhatsApp</a></div></div></div></section>
