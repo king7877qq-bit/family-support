@@ -583,6 +583,8 @@ section:before,section:after{display:none!important;content:none!important}
 }
 @media(max-width:390px){.contact-grid{grid-template-columns:1fr!important}}
 
+/* Blank-page safeguard: content remains visible even if an optional script or observer fails */
+.reveal{opacity:1!important;transform:none!important;visibility:visible!important}
 </style>
 
 
