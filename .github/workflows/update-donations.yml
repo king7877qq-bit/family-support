@@ -16,6 +16,8 @@ jobs:
   update:
     runs-on: ubuntu-latest
     steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
       - name: Read confirmed incoming USDT transfers
         env:
           TRONGRID_API_KEY: ${{ secrets.TRONGRID_API_KEY }}
