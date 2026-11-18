@@ -34,8 +34,8 @@ jobs:
             contract_address: process.env.USDT_CONTRACT,
             order_by: 'block_timestamp,asc'
           });
-          const headers = { accept: 'application/json' };
-          if (process.env.TRONGRID_API_KEY) headers['TRON-PRO-API-KEY'] = process.env.TRONGRID_API_KEY;
+          if (!process.env.TRONGRID_API_KEY) throw new Error('Add the TRONGRID_API_KEY repository secret before syncing.');
+          const headers = { accept: 'application/json', 'TRON-PRO-API-KEY': process.env.TRONGRID_API_KEY };
           async function main() {
             const seen = new Set();
             const transfers = [];
