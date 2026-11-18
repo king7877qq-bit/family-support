@@ -54,13 +54,7 @@ jobs:
                 const raw = BigInt(String(tx.value || '0'));
                 const amount = Number(raw) / Math.pow(10, decimals);
                 if (!Number.isFinite(amount) || amount <= 0) continue;
-                transfers.push({
-                  id: key,
-                  txid: tx.transaction_id || tx.transactionId,
-                  amount: amount,
-                  timestamp: Number(tx.block_timestamp || 0),
-                  from: tx.from || ''
-                });
+                transfers.push({ id: key, amount });
               }
               fingerprint = body.meta && body.meta.fingerprint || '';
               if (!fingerprint || !(body.data || []).length) break;
@@ -76,8 +70,7 @@ jobs:
               total_usdt: Number(total.toFixed(6)),
               total_usd: Number(total.toFixed(2)),
               transfer_count: transfers.length,
-              updated_at: new Date().toISOString(),
-              transfers
+              updated_at: new Date().toISOString()
             };
             fs.writeFileSync('donations.json', JSON.stringify(result, null, 2) + '\n');
           }
