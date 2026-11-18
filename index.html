@@ -683,7 +683,31 @@ main{display:block!important}
    if(button){button.textContent=language==='ar'?'تم نسخ رابط الموقع ✓':'Website link copied ✓';setTimeout(()=>button.textContent=language==='ar'?'نسخ رابط الموقع':'Copy Website Link',2200)}
  });
  
+  async function loadVerifiedDonations(){
+    const total=$('#tracker-total'), updated=$('#tracker-updated'), fill=$('#tracker-fill'), percent=$('#tracker-percent'), bar=$('.tracker-bar');
+    try{
+      const response=await fetch('./donations.json?ts='+Date.now(),{cache:'no-store'});
+      if(!response.ok) throw new Error('Donation data unavailable');
+      const data=await response.json();
+      if(data.status!=='verified'||!Number.isFinite(Number(data.total_usdt))||!data.updated_at) throw new Error('First verified sync is pending');
+      const amount=Number(data.total_usdt), pct=Math.min(amount/2800*100,100);
+      if(total) total.textContent=(language==='ar'?'تم استلام ':'Received ')+amount.toLocaleString(language==='ar'?'ar':'en-US',{minimumFractionDigits:2,maximumFractionDigits:2})+' USDT ('+(language==='ar'?'حوالي ':'about ')+'
+ const fill=$('#fill');if(fill)setTimeout(()=>fill.style.width='0%',350);
+})();
+</script></body></html>+Number(data.total_usd).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})+') / $2,800';
+      if(percent) percent.textContent=pct.toFixed(1)+'%';
+      if(fill) fill.style.width=pct.toFixed(2)+'%';
+      if(bar) bar.setAttribute('aria-valuenow',String(Math.min(amount,2800)));
+      if(updated) updated.textContent=(language==='ar'?'آخر تحقق ناجح: ':'Last successful verification: ')+new Date(data.updated_at).toLocaleString(language==='ar'?'ar':'en-US');
+    }catch(error){
+      if(total) total.textContent=language==='ar'?'لم تكتمل أول مزامنة موثوقة بعد؛ لن نعرض رقماً تقديرياً.':'The first verified sync has not completed; no estimated total will be shown.';
+      if(updated) updated.textContent=language==='ar'?'سيظهر العداد بعد نجاح التحقق من شبكة TRON.':'The tracker will appear after a successful TRON verification.';
+      if(percent) percent.textContent='—';
+      if(fill) fill.style.width='0%';
+    }
+  }
  setLang('en');
+ loadVerifiedDonations();
  const fill=$('#fill');if(fill)setTimeout(()=>fill.style.width='0%',350);
 })();
 </script></body></html>
