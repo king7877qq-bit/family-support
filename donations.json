@@ -1,0 +1,12 @@
+{
+  "status": "pending",
+  "network": "TRON",
+  "token": "USDT",
+  "wallet": "TYtWeZ6Xf9a8uACp35Bv2BpgmZjrHt8mTG",
+  "goal_usd": 2800,
+  "total_usdt": null,
+  "total_usd": null,
+  "transfer_count": null,
+  "updated_at": null,
+  "transfers": []
+}
