@@ -20,49 +20,57 @@ jobs:
         uses: actions/checkout@v4
       - name: Read confirmed incoming USDT transfers
         env:
-          TRONGRID_API_KEY: ${{ secrets.TRONGRID_API_KEY }}
+          TRONSCAN_API_KEY: ${{ secrets.TRONSCAN_API_KEY }}
           WALLET: TYtWeZ6Xf9a8uACp35Bv2BpgmZjrHt8mTG
           USDT_CONTRACT: TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t
         run: |
           node <<'NODE'
           const fs = require('fs');
-          const base = 'https://api.trongrid.io/v1/accounts/' + process.env.WALLET + '/transactions/trc20';
-          const params = new URLSearchParams({
-            only_confirmed: 'true',
-            only_to: 'true',
-            limit: '200',
-            contract_address: process.env.USDT_CONTRACT,
-            order_by: 'block_timestamp,asc'
-          });
-          if (!process.env.TRONGRID_API_KEY) throw new Error('Add the TRONGRID_API_KEY repository secret before syncing.');
-          const headers = { accept: 'application/json', 'TRON-PRO-API-KEY': process.env.TRONGRID_API_KEY };
+          const API = 'https://apilist.tronscanapi.com/api/token_trc20/transfers';
+          if (!process.env.TRONSCAN_API_KEY) throw new Error('Add the TRONSCAN_API_KEY repository secret before syncing.');
+          const headers = { accept: 'application/json', 'TRON-PRO-API-KEY': process.env.TRONSCAN_API_KEY };
           async function main() {
             const seen = new Set();
             const transfers = [];
-            let fingerprint = '';
-            for (let page = 0; page < 100; page++) {
-              const url = base + '?' + params.toString() + (fingerprint ? '&fingerprint=' + encodeURIComponent(fingerprint) : '');
-              const response = await fetch(url, { headers });
-              if (!response.ok) throw new Error('TronGrid HTTP ' + response.status + ': ' + (await response.text()).slice(0, 300));
+            let expectedTotal = null;
+            for (let start = 0; ; start += 50) {
+              const params = new URLSearchParams({
+                toAddress: process.env.WALLET,
+                contract_address: process.env.USDT_CONTRACT,
+                direction: 'in',
+                confirm: '0',
+                start: String(start),
+                limit: '50'
+              });
+              const response = await fetch(API + '?' + params.toString(), { headers });
+              if (!response.ok) throw new Error('TronScan HTTP ' + response.status + ': ' + (await response.text()).slice(0, 300));
               const body = await response.json();
-              for (const tx of (body.data || [])) {
-                const info = tx.token_info || {};
-                if (String(info.address || '').toLowerCase() !== process.env.USDT_CONTRACT.toLowerCase()) continue;
-                if (String(tx.to || '').toLowerCase() !== process.env.WALLET.toLowerCase()) continue;
-                const key = String(tx.transaction_id || tx.transactionId || '') + ':' + String(tx.event_index ?? tx.eventIndex ?? '');
-                if (!key || seen.has(key)) continue;
+              if (!Array.isArray(body.token_transfers) || !Number.isFinite(Number(body.total))) {
+                throw new Error('Unexpected TronScan response; refusing to publish a total.');
+              }
+              if (expectedTotal === null) {
+                expectedTotal = Number(body.total);
+                if (expectedTotal > 10000) throw new Error('TronScan API caps this endpoint at 10000 records; refusing to publish an incomplete total.');
+              }
+              for (const tx of body.token_transfers) {
+                if (String(tx.contract_address || '').toLowerCase() !== process.env.USDT_CONTRACT.toLowerCase()) continue;
+                if (String(tx.to_address || '').toLowerCase() !== process.env.WALLET.toLowerCase()) continue;
+                if (tx.confirmed !== true || tx.revert === true || tx.finalResult !== 'SUCCESS' || tx.event_type !== 'Transfer') continue;
+                if (String(tx.tokenInfo?.tokenId || '').toLowerCase() !== process.env.USDT_CONTRACT.toLowerCase()) continue;
+                const key = [tx.transaction_id, tx.from_address, tx.to_address, tx.quant, tx.block].join(':');
+                if (!tx.transaction_id || seen.has(key)) continue;
                 seen.add(key);
-                const decimals = Number(info.decimals ?? 6);
-                const raw = BigInt(String(tx.value || '0'));
+                const decimals = Number(tx.tokenInfo?.tokenDecimal);
+                if (!Number.isInteger(decimals) || decimals < 0 || decimals > 18) throw new Error('Invalid USDT decimal metadata; refusing to publish.');
+                const raw = BigInt(String(tx.quant || '0'));
                 const amount = Number(raw) / Math.pow(10, decimals);
                 if (!Number.isFinite(amount) || amount <= 0) continue;
-                transfers.push({ id: key, amount });
+                transfers.push(amount);
               }
-              fingerprint = body.meta && body.meta.fingerprint || '';
-              if (!fingerprint || !(body.data || []).length) break;
-              if (page === 99) throw new Error('Pagination limit reached; refusing to publish an incomplete total.');
+              if (start + 50 >= expectedTotal || body.token_transfers.length === 0) break;
+              if (start >= 9950) throw new Error('Pagination limit reached; refusing to publish an incomplete total.');
             }
-            const total = transfers.reduce((sum, item) => sum + item.amount, 0);
+            const total = transfers.reduce((sum, amount) => sum + amount, 0);
             const result = {
               status: 'verified',
               network: 'TRON',
