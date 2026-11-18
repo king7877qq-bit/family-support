@@ -64,6 +64,7 @@ jobs:
               }
               fingerprint = body.meta && body.meta.fingerprint || '';
               if (!fingerprint || !(body.data || []).length) break;
+              if (page === 99) throw new Error('Pagination limit reached; refusing to publish an incomplete total.');
             }
             const total = transfers.reduce((sum, item) => sum + item.amount, 0);
             const result = {
