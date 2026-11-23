@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://king7877qq-bit.github.io/family-support/sitemap.xml
