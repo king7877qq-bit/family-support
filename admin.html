@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>السجل الداخلي للتبرعات | Family Support</title>
+<style>
+:root{color-scheme:light;--blue:#dff3ff;--ink:#183247;--accent:#2679a8;--line:#c8deeb}
+*{box-sizing:border-box}body{margin:0;background:linear-gradient(135deg,#dff3ff,#f0f9ff);font-family:Arial,sans-serif;color:var(--ink);padding:22px}
+main{max-width:1000px;margin:auto}.panel{background:#ffffffd9;border:1px solid var(--line);border-radius:18px;padding:20px;margin:14px 0;box-shadow:0 8px 28px #24516b12}
+h1{font-size:24px}h2{font-size:19px}p{line-height:1.7}.muted{color:#557184;font-size:13px}
+input,select,textarea,button{font:inherit;padding:11px;border:1px solid var(--line);border-radius:10px;width:100%;margin:5px 0;background:white;color:var(--ink)}
+button{background:var(--accent);color:white;border:0;cursor:pointer;font-weight:bold}button.secondary{background:#e7f3fa;color:var(--ink);border:1px solid var(--line)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:8px}
+table{border-collapse:collapse;width:100%;font-size:13px}th,td{padding:9px;border-bottom:1px solid var(--line);text-align:right;vertical-align:top}th{background:#edf7fc}
+.tablewrap{overflow:auto}.hidden{display:none}.status{font-weight:bold}.danger{color:#a33}
+</style></head>
+<body><main>
+<h1>السجل الداخلي للتبرعات</h1>
+<p class="muted">لوحة خاصة ومحمية. لا تشارك هذا الرابط أو رموز الدخول مع أي شخص.</p>
+<section class="panel" id="login">
+<h2>دخول المسؤول</h2>
+<p>أدخل بريد المسؤول لإرسال رابط دخول لمرة واحدة.</p>
+<input id="email" type="email" value="king7877@gmail.com" autocomplete="email" aria-label="البريد الإلكتروني">
+<button id="send">إرسال رابط الدخول</button>
+<p id="loginmsg" class="muted" aria-live="polite"></p>
+</section>
+<section class="panel hidden" id="app">
+<div style="display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap">
+<h2>إدارة سجلات التبرعات</h2><button class="secondary" id="logout" style="width:auto">تسجيل الخروج</button>
+</div>
+<form id="recordform">
+<div class="grid">
+<input id="amount" type="number" min="0.01" step="0.01" placeholder="المبلغ" required>
+<select id="currency"><option>USD</option><option>USDT</option><option>EUR</option><option>GBP</option><option>CAD</option><option>AUD</option><option>other</option></select>
+<select id="method"><option value="TRC20">TRC20</option><option value="PayPal">PayPal</option><option value="other">أخرى</option></select>
+<select id="status"><option value="pending">قيد المراجعة</option><option value="confirmed">مؤكد الاستلام</option><option value="rejected">مرفوض</option></select>
+<input id="tx" placeholder="رقم المعاملة (اختياري)">
+<input id="donor" placeholder="اسم المتبرع (اختياري)">
+</div>
+<textarea id="note" rows="2" placeholder="ملاحظة داخلية (اختياري)"></textarea>
+<button type="submit">حفظ التبرع</button><p id="formmsg" class="muted" aria-live="polite"></p>
+</form>
+<div class="tablewrap"><table><thead><tr><th>التاريخ</th><th>المبلغ</th><th>الوسيلة</th><th>الاسم</th><th>رقم المعاملة</th><th>الحالة</th><th>تغيير الحالة</th></tr></thead><tbody id="records"></tbody></table></div>
+<p id="loadmsg" class="muted" aria-live="polite"></p>
+</section></main>
+<script type="module">
+import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
+const URL="https://mxyabxgjpmpryrmzfnko.supabase.co";
+const KEY="sb_publishable_pKArLS8bNbgo5fbuNMH8mA_zxjzj2yn";
+const ADMIN="king7877@gmail.com";
+const supabase=createClient(URL,KEY);
+const $=id=>document.getElementById(id);
+let session=null;
+function message(id,s){$(id).textContent=s}
+async function api(method,body){
+ const {data:{session:s}}=await supabase.auth.getSession();
+ if(!s)throw new Error("انتهت الجلسة؛ سجّل الدخول مجدداً");
+ const res=await fetch(URL+"/functions/v1/donor-admin",{method,headers:{"Content-Type":"application/json","apikey":KEY,"Authorization":"Bearer "+s.access_token},body:body?JSON.stringify(body):undefined});
+ const data=await res.json().catch(()=>({}));
+ if(!res.ok)throw new Error(data.error||"تعذر تنفيذ الطلب");
+ return data;
+}
+async function showApp(){
+ const {data:{session:s}}=await supabase.auth.getSession();session=s;
+ if(!s){$("login").classList.remove("hidden");$("app").classList.add("hidden");return}
+ if((s.user.email||"").toLowerCase()!==ADMIN){await supabase.auth.signOut();message("loginmsg","هذا البريد غير مخوّل للدخول.");return}
+ $("login").classList.add("hidden");$("app").classList.remove("hidden");await load();
+}
+async function load(){
+ message("loadmsg","جارٍ تحميل السجلات…");
+ try{
+ const {records=[]}=await api("GET");
+ const tbody=$("records");tbody.replaceChildren();
+ for(const r of records){
+  const tr=document.createElement("tr");
+  const vals=[new Date(r.donation_date).toLocaleString("ar"),Number(r.amount).toFixed(2)+" "+r.currency,r.payment_method,r.donor_name||"—",r.transaction_id||"—",r.status];
+  for(const v of vals){const td=document.createElement("td");td.textContent=v;tr.append(td)}
+  const td=document.createElement("td"),sel=document.createElement("select");
+  for(const [v,l] of [["pending","قيد المراجعة"],["confirmed","مؤكد"],["rejected","مرفوض"]]){const o=document.createElement("option");o.value=v;o.textContent=l;o.selected=r.status===v;sel.append(o)}
+  sel.addEventListener("change",async()=>{try{await api("PATCH",{id:r.id,status:sel.value});message("loadmsg","تم تحديث الحالة.");}catch(e){message("loadmsg",e.message);sel.value=r.status}});
+  td.append(sel);tr.append(td);tbody.append(tr);
+ }
+ message("loadmsg",records.length+" سجل (يعرض آخر 500 سجل).");
+ }catch(e){message("loadmsg",e.message)}
+}
+$("send").addEventListener("click",async()=>{
+ const email=$("email").value.trim().toLowerCase();
+ if(email!==ADMIN){message("loginmsg","هذا البريد غير مخوّل.");return}
+ message("loginmsg","جارٍ إرسال رابط الدخول…");
+ const {error}=await supabase.auth.signInWithOtp({email,options:{shouldCreateUser:false,emailRedirectTo:location.href.split("#")[0]}});
+ message("loginmsg",error?error.message:"تم طلب رابط الدخول. افحص بريدك واضغط الرابط من نفس الجهاز.");
+});
+$("recordform").addEventListener("submit",async e=>{
+ e.preventDefault();message("formmsg","جارٍ الحفظ…");
+ try{
+ await api("POST",{amount:$("amount").value,currency:$("currency").value,payment_method:$("method").value,status:$("status").value,transaction_id:$("tx").value,donor_name:$("donor").value,internal_note:$("note").value});
+ $("recordform").reset();message("formmsg","تم حفظ السجل.");await load();
+ }catch(err){message("formmsg",err.message)}
+});
+$("logout").addEventListener("click",async()=>{await supabase.auth.signOut();await showApp()});
+supabase.auth.onAuthStateChange(()=>{setTimeout(showApp,0)});
+showApp();
+</script></body></html>
