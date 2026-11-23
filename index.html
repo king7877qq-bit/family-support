@@ -593,6 +593,8 @@ section:before,section:after{display:none!important;content:none!important}
 html,body,body>*,main,main>*{visibility:visible!important;opacity:1!important}
 main{display:block!important}
 .tracker-top{display:flex;align-items:center;justify-content:space-between;gap:12px}.tracker-bar{height:13px;margin:12px 0 8px;background:#dce9e8;border-radius:99px;overflow:hidden}.tracker-bar span{display:block;width:0;height:100%;background:linear-gradient(90deg,#d87569,#e6bd67,#62ad7d);transition:width .7s ease}.tracker-updated{font-size:.7rem!important;opacity:.85}
+
+.paypal-amount-step{margin:14px 0 8px;text-align:start}.paypal-amount-step label{display:block;margin-bottom:7px;color:var(--forest-deep);font-size:.84rem;font-weight:800}.paypal-amount-step input{display:block;width:100%;min-height:48px;padding:10px 13px;border:2px solid #79b7d2;border-radius:8px;background:#fff;color:#173b53;font:700 1rem ui-monospace,Consolas,monospace}.paypal-amount-step p{margin:6px 0 0;color:var(--muted);font-size:.76rem;line-height:1.6}
 </style>
 
 
@@ -626,8 +628,8 @@ main{display:block!important}
 <div class="paypal-box paypal-donate-panel">
 <div class="paypal-heading"><span class="paypal-mark" aria-hidden="true"><img src="https://www.paypalobjects.com/paypal-ui/logos/svg/paypal-mark-color.svg" alt="" width="30" height="30"></span><div><h4 data-ar="ساهم عبر PayPal" data-en="Support us with PayPal">Support us with PayPal</h4><p data-ar="إرسال الدعم إلى حساب PayPal التالي" data-en="Send your support to this PayPal account">Send your support to this PayPal account</p></div></div>
 <div class="paypal-recipient"><span>PayPal.Me</span><strong dir="ltr">paypal.me/YoussefSabah</strong></div>
-<a class="paypal-send-button" href="https://paypal.me/YoussefSabah" target="_blank" rel="noopener noreferrer" data-ar="تبرع عبر PayPal" data-en="Donate with PayPal"><img class="paypal-button-logo" src="https://www.paypalobjects.com/paypal-ui/logos/svg/paypal-mark-color.svg" alt="" width="28" height="28"> <span data-ar="تبرع عبر PayPal" data-en="Donate with PayPal">Donate with PayPal</span></a>
-<p class="paypal-policy-note" data-ar="سينقلك الزر مباشرة إلى صفحة PayPal.Me الخاصة بالمستلم. أدخل مبلغ الدعم، ثم راجع اسم المستلم والمبلغ والعملة قبل تأكيد الدفع. لا تختر Friends and Family إلا إذا كانت الدفعة تحويلاً شخصياً حقيقياً إلى صديق أو فرد من العائلة؛ فهذا الخيار لا يتضمن حماية المشتري. قد لا يمكن عكس الدفعات بعد إرسالها." data-en="The button takes you directly to the recipient’s PayPal.Me page. Enter your support amount, then check the recipient name, amount, and currency before confirming. Choose Friends and Family only for a genuine personal transfer to a friend or family member; this option does not include Buyer Protection. Payments may not be reversible after they are sent.">The button takes you directly to the recipient’s PayPal.Me page. Enter your support amount, then check the recipient name, amount, and currency before confirming. Choose Friends and Family only for a genuine personal transfer to a friend or family member; this option does not include Buyer Protection. Payments may not be reversible after they are sent.</p>
+<div class="paypal-amount-step"><label for="paypal-amount" data-ar="الخطوة 1: اختر مبلغ التبرع بالدولار" data-en="Step 1: Choose your donation amount in USD">Step 1: Choose your donation amount in USD</label><input id="paypal-amount" type="number" inputmode="decimal" min="1" max="10000" step="0.01" placeholder="25.00" required><p data-ar="أدخل المبلغ الذي تريد التبرع به. سننقلك إلى PayPal والمبلغ محدد مسبقاً." data-en="Enter the amount you wish to donate. PayPal will open with this amount pre-filled.">Enter the amount you wish to donate. PayPal will open with this amount pre-filled.</p></div><a class="paypal-send-button" id="paypal-send" href="https://paypal.me/YoussefSabah" target="_blank" rel="noopener noreferrer" data-ar="الخطوة 2: المتابعة إلى PayPal" data-en="Step 2: Continue to PayPal"><img class="paypal-button-logo" src="https://www.paypalobjects.com/paypal-ui/logos/svg/paypal-mark-color.svg" alt="" width="28" height="28"> <span data-ar="الخطوة 2: المتابعة إلى PayPal" data-en="Step 2: Continue to PayPal">Step 2: Continue to PayPal</span></a>
+<p class="paypal-policy-note" data-ar="بعد اختيار المبلغ، ستفتح PayPal والمبلغ محدد مسبقاً. راجع اسم المستلم والمبلغ والعملة قبل الدفع. لا ترسل PayPal.Me تأكيد دفع تلقائياً إلى هذا الموقع؛ لذلك لا تُضاف تبرعات PayPal إلى عداد USDT المباشر إلا بعد التحقق منها بشكل مستقل." data-en="After choosing an amount, PayPal opens with that amount pre-filled. Review the recipient, amount, and currency before paying. PayPal.Me does not send an automatic payment confirmation to this website, so PayPal donations are not included in the live USDT counter unless separately verified.">The button takes you directly to the recipient’s PayPal.Me page. Enter your support amount, then check the recipient name, amount, and currency before confirming. Choose Friends and Family only for a genuine personal transfer to a friend or family member; this option does not include Buyer Protection. Payments may not be reversible after they are sent.</p>
 </div>
 </div></div></section>
 <section class="youtube" id="youtube"><div class="wrap"><div class="youtube-panel "><div class="youtube-icon">▶</div><div class="youtube-copy"><h3>Family Support — YouTube</h3><p data-ar="شاهدوا فيديوهاتنا وتحديثاتنا العائلية مباشرةً من قناتنا." data-en="Watch our family videos and updates directly from our channel.">Watch our family videos and updates directly from our channel.</p></div><a class="btn primary" href="https://www.youtube.com/@FareedFamilySupport?sub_confirmation=1" target="_blank" rel="noopener noreferrer" data-ar="زيارة القناة والاشتراك" data-en="Visit & subscribe">Visit &amp; subscribe</a></div><div class="youtube-video "><iframe src="https://www.youtube-nocookie.com/embed/videoseries?list=UU0qMPyrT8LXMIQIbbvoIinQ" title="Latest videos from Family Support" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div></div></section>
@@ -655,8 +657,8 @@ main{display:block!important}
    if (en) en.classList.toggle('active', lang === 'en');
    if (menu) menu.setAttribute('aria-label', lang === 'ar' ? 'فتح القائمة' : 'Open menu');
  }
- safeOn('#ar','click',()=>setLang('ar'));
- safeOn('#en','click',()=>setLang('en'));
+ safeOn('#ar','click',()=>{setLang('ar');loadVerifiedDonations()});
+ safeOn('#en','click',()=>{setLang('en');loadVerifiedDonations()});
  safeOn('#menu','click',()=>{const links=$('#links');if(links)links.classList.toggle('open')});
  document.querySelectorAll('.links a').forEach(a=>a.addEventListener('click',()=>$('#links')?.classList.remove('open')));
  
@@ -689,23 +691,36 @@ main{display:block!important}
       const response=await fetch('./donations.json?ts='+Date.now(),{cache:'no-store'});
       if(!response.ok) throw new Error('Donation data unavailable');
       const data=await response.json();
-      if(data.status!=='verified'||!Number.isFinite(Number(data.total_usdt))||!data.updated_at) throw new Error('First verified sync is pending');
-      const amount=Number(data.total_usdt), pct=Math.min(amount/2800*100,100);
-      if(total) total.textContent=(language==='ar'?'تم استلام ':'Received ')+amount.toLocaleString(language==='ar'?'ar':'en-US',{minimumFractionDigits:2,maximumFractionDigits:2})+' USDT ('+(language==='ar'?'حوالي ':'about ')+'
- const fill=$('#fill');if(fill)setTimeout(()=>fill.style.width='0%',350);
-})();
-</script></body></html>+Number(data.total_usd).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})+') / $2,800';
+      if(data.status!=='verified'||data.network!=='TRON'||data.token!=='USDT'||data.wallet!=='TYtWeZ6Xf9a8uACp35Bv2BpgmZjrHt8mTG'||!Number.isFinite(Number(data.total_usdt))||Number(data.total_usdt)<0||!Number.isFinite(Number(data.total_usd))||!data.updated_at) throw new Error('Verified donation data is incomplete');
+      const amount=Number(data.total_usdt), usd=Number(data.total_usd), pct=Math.min(amount/2800*100,100);
+      if(total) total.textContent=(language==='ar'?'تم استلام ':'Received ')+amount.toLocaleString(language==='ar'?'ar':'en-US',{minimumFractionDigits:2,maximumFractionDigits:6})+' USDT ('+(language==='ar'?'ما يعادل تقريباً ':'approximately ')+usd.toLocaleString(language==='ar'?'ar':'en-US',{minimumFractionDigits:2,maximumFractionDigits:2})+' USD) / $2,800';
       if(percent) percent.textContent=pct.toFixed(1)+'%';
       if(fill) fill.style.width=pct.toFixed(2)+'%';
       if(bar) bar.setAttribute('aria-valuenow',String(Math.min(amount,2800)));
       if(updated) updated.textContent=(language==='ar'?'آخر تحقق ناجح: ':'Last successful verification: ')+new Date(data.updated_at).toLocaleString(language==='ar'?'ar':'en-US');
     }catch(error){
-      if(total) total.textContent=language==='ar'?'لم تكتمل أول مزامنة موثوقة بعد؛ لن نعرض رقماً تقديرياً.':'The first verified sync has not completed; no estimated total will be shown.';
-      if(updated) updated.textContent=language==='ar'?'سيظهر العداد بعد نجاح التحقق من شبكة TRON.':'The tracker will appear after a successful TRON verification.';
+      if(total) total.textContent=language==='ar'?'تعذّر التحقق من إجمالي التبرعات؛ لن نعرض رقماً غير مؤكد.':'Donation total could not be verified; no unverified figure will be shown.';
+      if(updated) updated.textContent=language==='ar'?'سيظهر الإجمالي بعد نجاح التحقق من شبكة TRON.':'The total will appear after successful TRON verification.';
       if(percent) percent.textContent='—';
       if(fill) fill.style.width='0%';
+      if(bar) bar.setAttribute('aria-valuenow','0');
     }
   }
+  const paypalAmount=$('#paypal-amount'), paypalSend=$('#paypal-send');
+  function updatePayPalAmount(){
+    if(!paypalAmount||!paypalSend) return;
+    const value=Number(paypalAmount.value);
+    if(!paypalAmount.value||!Number.isFinite(value)||value<1||value>10000){paypalSend.href='https://paypal.me/YoussefSabah';return;}
+    const amount=value.toFixed(2).replace(/\.00$/,'');
+    paypalSend.href='https://paypal.me/YoussefSabah/'+amount+'USD';
+  }
+  if(paypalAmount) paypalAmount.addEventListener('input',updatePayPalAmount);
+  if(paypalSend) paypalSend.addEventListener('click',(event)=>{
+    const value=Number(paypalAmount&&paypalAmount.value);
+    if(!paypalAmount||!paypalAmount.value||!Number.isFinite(value)||value<1||value>10000){event.preventDefault();if(paypalAmount)paypalAmount.focus();alert(language==='ar'?'يرجى إدخال مبلغ صحيح بين 1 و10000 دولار أولاً.':'Please enter a valid amount between $1 and $10,000 first.');}
+    else updatePayPalAmount();
+  });
+
  setLang('en');
  loadVerifiedDonations();
  const fill=$('#fill');if(fill)setTimeout(()=>fill.style.width='0%',350);
