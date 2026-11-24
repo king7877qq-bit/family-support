@@ -18,21 +18,36 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
-      - name: Read confirmed incoming USDT transfers
+
+      - name: Read confirmed incoming USDT transfers and record them privately
         env:
           TRONSCAN_API_KEY: ${{ secrets.TRONSCAN_API_KEY }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          SUPABASE_URL: https://mxyabxgjpmpryrmzfnko.supabase.co
           WALLET: TYtWeZ6Xf9a8uACp35Bv2BpgmZjrHt8mTG
           USDT_CONTRACT: TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t
         run: |
           node <<'NODE'
           const fs = require('fs');
           const API = 'https://apilist.tronscanapi.com/api/token_trc20/transfers';
-          if (!process.env.TRONSCAN_API_KEY) throw new Error('Add the TRONSCAN_API_KEY repository secret before syncing.');
+
+          if (!process.env.TRONSCAN_API_KEY) throw new Error('Missing TRONSCAN_API_KEY repository secret.');
+          if (!process.env.SUPABASE_SERVICE_ROLE_KEY) throw new Error('Missing SUPABASE_SERVICE_ROLE_KEY repository secret. Add it in GitHub Actions secrets; never place it in a file.');
           const headers = { accept: 'application/json', 'TRON-PRO-API-KEY': process.env.TRONSCAN_API_KEY };
+
+          function tokenAmount(rawValue, decimals) {
+            const raw = BigInt(String(rawValue || '0'));
+            const divisor = 10n ** BigInt(decimals);
+            const whole = raw / divisor;
+            const fraction = (raw % divisor).toString().padStart(decimals, '0').replace(/0+$/, '');
+            return fraction ? whole.toString() + '.' + fraction : whole.toString();
+          }
+
           async function main() {
             const seen = new Set();
             const transfers = [];
             let expectedTotal = null;
+
             for (let start = 0; ; start += 50) {
               const params = new URLSearchParams({
                 toAddress: process.env.WALLET,
@@ -52,25 +67,62 @@ jobs:
                 expectedTotal = Number(body.total);
                 if (expectedTotal > 10000) throw new Error('TronScan API caps this endpoint at 10000 records; refusing to publish an incomplete total.');
               }
+
               for (const tx of body.token_transfers) {
                 if (String(tx.contract_address || '').toLowerCase() !== process.env.USDT_CONTRACT.toLowerCase()) continue;
                 if (String(tx.to_address || '').toLowerCase() !== process.env.WALLET.toLowerCase()) continue;
                 if (tx.confirmed !== true || tx.revert === true || tx.finalResult !== 'SUCCESS' || tx.event_type !== 'Transfer') continue;
                 if (String(tx.tokenInfo?.tokenId || '').toLowerCase() !== process.env.USDT_CONTRACT.toLowerCase()) continue;
-                const key = [tx.transaction_id, tx.from_address, tx.to_address, tx.quant, tx.block].join(':');
-                if (!tx.transaction_id || seen.has(key)) continue;
-                seen.add(key);
+
+                const txid = String(tx.transaction_id || '');
+                const sender = String(tx.from_address || '');
+                const key = [txid, sender, tx.to_address, tx.quant, tx.block].join(':');
+                if (!/^[0-9a-fA-F]{64}$/.test(txid) || seen.has(key)) continue;
+
                 const decimals = Number(tx.tokenInfo?.tokenDecimal);
-                if (!Number.isInteger(decimals) || decimals < 0 || decimals > 18) throw new Error('Invalid USDT decimal metadata; refusing to publish.');
-                const raw = BigInt(String(tx.quant || '0'));
-                const amount = Number(raw) / Math.pow(10, decimals);
-                if (!Number.isFinite(amount) || amount <= 0) continue;
+                if (!Number.isInteger(decimals) || decimals !== 6) throw new Error('Unexpected USDT decimal metadata; refusing to record or publish.');
+                const amount = tokenAmount(tx.quant, decimals);
+                if (!(Number(amount) > 0)) continue;
+
+                const blockNumber = Number(tx.block);
+                const blockTimestamp = Number(tx.block_ts);
+                if (!Number.isSafeInteger(blockNumber) || blockNumber <= 0 || !Number.isFinite(blockTimestamp) || blockTimestamp <= 0) {
+                  throw new Error('Missing or invalid block metadata for confirmed transfer ' + txid);
+                }
+
+                const rpcResponse = await fetch(process.env.SUPABASE_URL + '/rest/v1/rpc/record_verified_usdt_transfer', {
+                  method: 'POST',
+                  headers: {
+                    apikey: process.env.SUPABASE_SERVICE_ROLE_KEY,
+                    Authorization: 'Bearer ' + process.env.SUPABASE_SERVICE_ROLE_KEY,
+                    'Content-Type': 'application/json'
+                  },
+                  body: JSON.stringify({
+                    p_amount: amount,
+                    p_transaction_id: txid,
+                    p_from_address: sender,
+                    p_block_timestamp: new Date(blockTimestamp).toISOString(),
+                    p_block_number: blockNumber
+                  })
+                });
+                if (!rpcResponse.ok) {
+                  throw new Error('Supabase rejected transfer ' + txid + ' (HTTP ' + rpcResponse.status + '): ' + (await rpcResponse.text()).slice(0, 400));
+                }
+                const saved = await rpcResponse.json();
+                if (!saved || typeof saved.inserted !== 'boolean') {
+                  throw new Error('Unexpected Supabase response for transfer ' + txid);
+                }
+
+                seen.add(key);
                 transfers.push(amount);
+                console.log('Verified transfer processed:', txid, 'inserted:', saved.inserted, 'duplicate:', saved.duplicate === true);
               }
+
               if (start + 50 >= expectedTotal || body.token_transfers.length === 0) break;
               if (start >= 9950) throw new Error('Pagination limit reached; refusing to publish an incomplete total.');
             }
-            const total = transfers.reduce((sum, amount) => sum + amount, 0);
+
+            const total = transfers.reduce((sum, amount) => sum + Number(amount), 0);
             const result = {
               status: 'verified',
               network: 'TRON',
@@ -84,6 +136,7 @@ jobs:
             };
             fs.writeFileSync('donations.json', JSON.stringify(result, null, 2) + '\n');
           }
+
           main().catch(error => { console.error(error); process.exit(1); });
           NODE
 
