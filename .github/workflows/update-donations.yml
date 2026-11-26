@@ -109,7 +109,7 @@ jobs:
               limit: '50',
               reverse: 'false'
             });
-            const response = await fetch('https://apilist.tronscanapi.com/api/transfer/trc20?' + params.toString(), { headers });
+            const response = await fetch('https://apilist.tronscanapi.com/api/token_trc20/transfers-with-status?' + params.toString(), { headers });
             const raw = await response.text();
             if (!response.ok) throw new Error('TronScan wallet-transfer HTTP ' + response.status + ': ' + raw.slice(0, 300));
             let body;
@@ -145,14 +145,14 @@ jobs:
             }
             const transfers = body.data.map(tx => ({
               transaction_id: tx.hash,
-              contract_address: tx.id,
+              contract_address: tx.contract_address || tx.id,
               to_address: tx.to,
               from_address: tx.from,
               confirmed: tx.confirmed === 1,
               revert: tx.revert === 1,
               finalResult: tx.contract_ret,
               event_type: tx.event_type,
-              tokenInfo: { tokenId: tx.id, tokenDecimal: tx.decimals },
+              tokenInfo: { tokenId: tx.contract_address || tx.id, tokenDecimal: tx.decimals },
               quant: tx.amount,
               block: tx.block,
               block_ts: tx.block_timestamp
