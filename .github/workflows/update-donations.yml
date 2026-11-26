@@ -4,6 +4,7 @@ on:
   push:
     paths:
       - '.github/workflows/update-donations.yml'
+      - 'donations.json'
   workflow_dispatch:
   schedule:
     - cron: "*/10 * * * *"
