@@ -99,10 +99,8 @@ jobs:
 
           async function fetchTransferPage(start, startTimestamp, endTimestamp) {
             const params = new URLSearchParams({
-              relatedAddress: process.env.WALLET,
+              toAddress: process.env.WALLET,
               contract_address: process.env.USDT_CONTRACT,
-              direction: 'in',
-              confirm: '0',
               start_timestamp: String(startTimestamp),
               end_timestamp: String(endTimestamp),
               start: String(start),
