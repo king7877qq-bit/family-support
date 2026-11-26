@@ -45,7 +45,6 @@ jobs:
 
           async function main() {
             const seen = new Set();
-            const transfers = [];
             let expectedTotal = null;
 
             for (let start = 0; ; start += 50) {
@@ -65,7 +64,7 @@ jobs:
               }
               if (expectedTotal === null) {
                 expectedTotal = Number(body.total);
-                if (expectedTotal > 10000) throw new Error('TronScan API caps this endpoint at 10000 records; refusing to publish an incomplete total.');
+                if (expectedTotal > 10000) throw new Error('TronScan API caps this endpoint at 10000 records; refusing to publish an incomplete scan.');
               }
 
               for (const tx of body.token_transfers) {
@@ -114,15 +113,32 @@ jobs:
                 }
 
                 seen.add(key);
-                transfers.push(amount);
                 console.log('Verified transfer processed:', txid, 'inserted:', saved.inserted, 'duplicate:', saved.duplicate === true);
               }
 
               if (start + 50 >= expectedTotal || body.token_transfers.length === 0) break;
-              if (start >= 9950) throw new Error('Pagination limit reached; refusing to publish an incomplete total.');
+              if (start >= 9950) throw new Error('Pagination limit reached; refusing to publish a possibly incomplete total.');
             }
 
-            const total = transfers.reduce((sum, amount) => sum + Number(amount), 0);
+            const totalsResponse = await fetch(process.env.SUPABASE_URL + '/rest/v1/rpc/get_verified_usdt_donation_totals', {
+              method: 'POST',
+              headers: {
+                apikey: process.env.SUPABASE_SERVICE_ROLE_KEY,
+                Authorization: 'Bearer ' + process.env.SUPABASE_SERVICE_ROLE_KEY,
+                'Content-Type': 'application/json'
+              },
+              body: '{}'
+            });
+            if (!totalsResponse.ok) {
+              throw new Error('Supabase cumulative totals request failed (HTTP ' + totalsResponse.status + '): ' + (await totalsResponse.text()).slice(0, 400));
+            }
+            const totals = await totalsResponse.json();
+            const total = Number(totals?.total_usdt);
+            const count = Number(totals?.transfer_count);
+            if (!Number.isFinite(total) || total < 0 || !Number.isSafeInteger(count) || count < 0) {
+              throw new Error('Supabase returned invalid cumulative donation totals; refusing to publish.');
+            }
+
             const result = {
               status: 'verified',
               network: 'TRON',
@@ -131,10 +147,11 @@ jobs:
               goal_usd: 2800,
               total_usdt: Number(total.toFixed(6)),
               total_usd: Number(total.toFixed(2)),
-              transfer_count: transfers.length,
+              transfer_count: count,
               updated_at: new Date().toISOString()
             };
             fs.writeFileSync('donations.json', JSON.stringify(result, null, 2) + '\n');
+            console.log('Published cumulative verified total:', result.total_usdt, 'USDT across', count, 'confirmed transfers.');
           }
 
           main().catch(error => { console.error(error); process.exit(1); });
