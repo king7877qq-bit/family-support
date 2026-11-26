@@ -43,82 +43,122 @@ jobs:
             return fraction ? whole.toString() + '.' + fraction : whole.toString();
           }
 
+          async function processTransfer(tx, seen) {
+            if (String(tx.contract_address || '').toLowerCase() !== process.env.USDT_CONTRACT.toLowerCase()) return;
+            if (String(tx.to_address || '').toLowerCase() !== process.env.WALLET.toLowerCase()) return;
+            if (tx.confirmed !== true || tx.revert === true || tx.finalResult !== 'SUCCESS' || tx.event_type !== 'Transfer') return;
+            if (String(tx.tokenInfo?.tokenId || '').toLowerCase() !== process.env.USDT_CONTRACT.toLowerCase()) return;
+
+            const txid = String(tx.transaction_id || '');
+            const sender = String(tx.from_address || '');
+            const key = [txid, sender, tx.to_address, tx.quant, tx.block].join(':');
+            if (!/^[0-9a-fA-F]{64}$/.test(txid) || seen.has(key)) return;
+
+            const decimals = Number(tx.tokenInfo?.tokenDecimal);
+            if (!Number.isInteger(decimals) || decimals !== 6) throw new Error('Unexpected USDT decimal metadata; refusing to record or publish.');
+            const amount = tokenAmount(tx.quant, decimals);
+            if (!(Number(amount) > 0)) return;
+
+            const blockNumber = Number(tx.block);
+            const blockTimestamp = Number(tx.block_ts);
+            if (!Number.isSafeInteger(blockNumber) || blockNumber <= 0 || !Number.isFinite(blockTimestamp) || blockTimestamp <= 0) {
+              throw new Error('Missing or invalid block metadata for confirmed transfer ' + txid);
+            }
+
+            const rpcResponse = await fetch(process.env.SUPABASE_URL + '/rest/v1/rpc/record_verified_usdt_transfer', {
+              method: 'POST',
+              headers: {
+                apikey: process.env.SUPABASE_SERVICE_ROLE_KEY,
+                Authorization: 'Bearer ' + process.env.SUPABASE_SERVICE_ROLE_KEY,
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({
+                p_amount: amount,
+                p_transaction_id: txid,
+                p_from_address: sender,
+                p_block_timestamp: new Date(blockTimestamp).toISOString(),
+                p_block_number: blockNumber
+              })
+            });
+            if (!rpcResponse.ok) {
+              throw new Error('Supabase rejected transfer ' + txid + ' (HTTP ' + rpcResponse.status + '): ' + (await rpcResponse.text()).slice(0, 400));
+            }
+            const saved = await rpcResponse.json();
+            if (!saved || typeof saved.inserted !== 'boolean') {
+              throw new Error('Unexpected Supabase response for transfer ' + txid);
+            }
+
+            seen.add(key);
+            console.log('Verified transfer processed:', txid, 'inserted:', saved.inserted, 'duplicate:', saved.duplicate === true);
+          }
+
+          async function fetchTransferPage(start, startTimestamp, endTimestamp) {
+            const params = new URLSearchParams({
+              toAddress: process.env.WALLET,
+              contract_address: process.env.USDT_CONTRACT,
+              direction: 'in',
+              confirm: '0',
+              start_timestamp: String(startTimestamp),
+              end_timestamp: String(endTimestamp),
+              start: String(start),
+              limit: '50'
+            });
+            const response = await fetch(API + '?' + params.toString(), { headers });
+            if (!response.ok) throw new Error('TronScan HTTP ' + response.status + ': ' + (await response.text()).slice(0, 300));
+            const body = await response.json();
+            if (!Array.isArray(body.token_transfers) ||
+                !Number.isSafeInteger(Number(body.total)) ||
+                !Number.isSafeInteger(Number(body.rangeTotal)) ||
+                Number(body.total) < 0 ||
+                Number(body.rangeTotal) < 0) {
+              throw new Error('Unexpected TronScan response; refusing to publish a total.');
+            }
+            return body;
+          }
+
+          async function scanTimeRange(startTimestamp, endTimestamp, seen, depth = 0) {
+            if (depth > 64) throw new Error('TronScan time-range subdivision exceeded its safety limit.');
+            const firstPage = await fetchTransferPage(0, startTimestamp, endTimestamp);
+            const rangeTotal = Number(firstPage.rangeTotal);
+            const reportedTotal = Number(firstPage.total);
+
+            // TronScan silently caps offset pagination at 10,000. Split saturated
+            // time ranges into disjoint millisecond windows before paginating.
+            if (rangeTotal >= 10000 || reportedTotal >= 10000) {
+              if (endTimestamp - startTimestamp <= 1) {
+                throw new Error('TronScan still reports 10000+ transfers in a 1 ms window; refusing an incomplete scan.');
+              }
+              const midpoint = Math.floor((startTimestamp + endTimestamp) / 2);
+              console.log('Splitting dense TronScan range:', startTimestamp, endTimestamp, 'count:', rangeTotal);
+              await scanTimeRange(startTimestamp, midpoint, seen, depth + 1);
+              await scanTimeRange(midpoint + 1, endTimestamp, seen, depth + 1);
+              return;
+            }
+
+            if (reportedTotal !== rangeTotal) {
+              throw new Error('TronScan total and rangeTotal disagree; refusing a possibly incomplete scan.');
+            }
+
+            for (let offset = 0; offset < rangeTotal; offset += 50) {
+              const page = offset === 0
+                ? firstPage
+                : await fetchTransferPage(offset, startTimestamp, endTimestamp);
+              if (Number(page.total) !== rangeTotal || Number(page.rangeTotal) !== rangeTotal) {
+                throw new Error('TronScan result count changed during pagination; refusing to publish.');
+              }
+              const expectedLength = Math.min(50, rangeTotal - offset);
+              if (page.token_transfers.length !== expectedLength) {
+                throw new Error('TronScan returned an incomplete page; refusing to publish.');
+              }
+              for (const tx of page.token_transfers) await processTransfer(tx, seen);
+            }
+          }
+
           async function main() {
             const seen = new Set();
-            let expectedTotal = null;
-
-            for (let start = 0; ; start += 50) {
-              const params = new URLSearchParams({
-                toAddress: process.env.WALLET,
-                contract_address: process.env.USDT_CONTRACT,
-                direction: 'in',
-                confirm: '0',
-                start: String(start),
-                limit: '50'
-              });
-              const response = await fetch(API + '?' + params.toString(), { headers });
-              if (!response.ok) throw new Error('TronScan HTTP ' + response.status + ': ' + (await response.text()).slice(0, 300));
-              const body = await response.json();
-              if (!Array.isArray(body.token_transfers) || !Number.isFinite(Number(body.total))) {
-                throw new Error('Unexpected TronScan response; refusing to publish a total.');
-              }
-              if (expectedTotal === null) {
-                expectedTotal = Number(body.total);
-                if (expectedTotal > 10000) throw new Error('TronScan API caps this endpoint at 10000 records; refusing to publish an incomplete scan.');
-              }
-
-              for (const tx of body.token_transfers) {
-                if (String(tx.contract_address || '').toLowerCase() !== process.env.USDT_CONTRACT.toLowerCase()) continue;
-                if (String(tx.to_address || '').toLowerCase() !== process.env.WALLET.toLowerCase()) continue;
-                if (tx.confirmed !== true || tx.revert === true || tx.finalResult !== 'SUCCESS' || tx.event_type !== 'Transfer') continue;
-                if (String(tx.tokenInfo?.tokenId || '').toLowerCase() !== process.env.USDT_CONTRACT.toLowerCase()) continue;
-
-                const txid = String(tx.transaction_id || '');
-                const sender = String(tx.from_address || '');
-                const key = [txid, sender, tx.to_address, tx.quant, tx.block].join(':');
-                if (!/^[0-9a-fA-F]{64}$/.test(txid) || seen.has(key)) continue;
-
-                const decimals = Number(tx.tokenInfo?.tokenDecimal);
-                if (!Number.isInteger(decimals) || decimals !== 6) throw new Error('Unexpected USDT decimal metadata; refusing to record or publish.');
-                const amount = tokenAmount(tx.quant, decimals);
-                if (!(Number(amount) > 0)) continue;
-
-                const blockNumber = Number(tx.block);
-                const blockTimestamp = Number(tx.block_ts);
-                if (!Number.isSafeInteger(blockNumber) || blockNumber <= 0 || !Number.isFinite(blockTimestamp) || blockTimestamp <= 0) {
-                  throw new Error('Missing or invalid block metadata for confirmed transfer ' + txid);
-                }
-
-                const rpcResponse = await fetch(process.env.SUPABASE_URL + '/rest/v1/rpc/record_verified_usdt_transfer', {
-                  method: 'POST',
-                  headers: {
-                    apikey: process.env.SUPABASE_SERVICE_ROLE_KEY,
-                    Authorization: 'Bearer ' + process.env.SUPABASE_SERVICE_ROLE_KEY,
-                    'Content-Type': 'application/json'
-                  },
-                  body: JSON.stringify({
-                    p_amount: amount,
-                    p_transaction_id: txid,
-                    p_from_address: sender,
-                    p_block_timestamp: new Date(blockTimestamp).toISOString(),
-                    p_block_number: blockNumber
-                  })
-                });
-                if (!rpcResponse.ok) {
-                  throw new Error('Supabase rejected transfer ' + txid + ' (HTTP ' + rpcResponse.status + '): ' + (await rpcResponse.text()).slice(0, 400));
-                }
-                const saved = await rpcResponse.json();
-                if (!saved || typeof saved.inserted !== 'boolean') {
-                  throw new Error('Unexpected Supabase response for transfer ' + txid);
-                }
-
-                seen.add(key);
-                console.log('Verified transfer processed:', txid, 'inserted:', saved.inserted, 'duplicate:', saved.duplicate === true);
-              }
-
-              if (start + 50 >= expectedTotal || body.token_transfers.length === 0) break;
-              if (start >= 9950) throw new Error('Pagination limit reached; refusing to publish a possibly incomplete total.');
-            }
+            const scanEnd = Date.now();
+            await scanTimeRange(0, scanEnd, seen);
+            console.log('Completed time-partitioned TronScan scan through', scanEnd, 'with', seen.size, 'unique transfer records processed.');
 
             const totalsResponse = await fetch(process.env.SUPABASE_URL + '/rest/v1/rpc/get_verified_usdt_donation_totals', {
               method: 'POST',
