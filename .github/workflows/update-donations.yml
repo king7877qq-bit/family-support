@@ -94,74 +94,68 @@ jobs:
 
           async function fetchTransferPage(start, startTimestamp, endTimestamp) {
             const params = new URLSearchParams({
-              toAddress: process.env.WALLET,
-              contract_address: process.env.USDT_CONTRACT,
-              direction: 'in',
-              confirm: '0',
+              address: process.env.WALLET,
+              trc20Id: process.env.USDT_CONTRACT,
+              direction: '2',
+              db_version: '0',
               start_timestamp: String(startTimestamp),
               end_timestamp: String(endTimestamp),
               start: String(start),
-              limit: '50'
+              limit: '50',
+              reverse: 'false'
             });
-            const response = await fetch(API + '?' + params.toString(), { headers });
-            if (!response.ok) throw new Error('TronScan HTTP ' + response.status + ': ' + (await response.text()).slice(0, 300));
-            const body = await response.json();
-            if (!Array.isArray(body.token_transfers) ||
-                !Number.isSafeInteger(Number(body.total)) ||
-                !Number.isSafeInteger(Number(body.rangeTotal)) ||
-                Number(body.total) < 0 ||
-                Number(body.rangeTotal) < 0) {
+            const response = await fetch('https://apilist.tronscanapi.com/api/transfer/trc20?' + params.toString(), { headers });
+            const raw = await response.text();
+            if (!response.ok) throw new Error('TronScan wallet-transfer HTTP ' + response.status + ': ' + raw.slice(0, 300));
+            let body;
+            try { body = JSON.parse(raw); }
+            catch { throw new Error('TronScan wallet-transfer returned non-JSON: ' + raw.slice(0, 300)); }
+            if (body?.code !== 200 || !Array.isArray(body.data) ||
+                !Number.isSafeInteger(Number(body.page_size)) ||
+                Number(body.page_size) !== body.data.length) {
               const diagnostic = {
-                keys: Object.keys(body || {}).slice(0, 30),
+                keys: Object.keys(body || {}).slice(0, 25),
                 code: body?.code ?? null,
-                message: typeof body?.message === 'string' ? body.message.slice(0, 240) : null,
-                totalType: typeof body?.total,
-                rangeTotalType: typeof body?.rangeTotal,
-                transfersType: Array.isArray(body?.token_transfers) ? 'array' : typeof body?.token_transfers,
-                totalValue: body?.total ?? null,
-                rangeTotalValue: body?.rangeTotal ?? null
+                pageSize: body?.page_size ?? null,
+                dataType: Array.isArray(body?.data) ? 'array' : typeof body?.data,
+                message: typeof body?.message === 'string' ? body.message.slice(0, 200) : null
               };
-              throw new Error('Unexpected TronScan response (safe diagnostics): ' + JSON.stringify(diagnostic) + '; refusing to publish a total.');
+              throw new Error('Unexpected TronScan wallet-transfer response: ' + JSON.stringify(diagnostic));
             }
-            return body;
+            const transfers = body.data.map(tx => ({
+              transaction_id: tx.hash,
+              contract_address: tx.id,
+              to_address: tx.to,
+              from_address: tx.from,
+              confirmed: tx.confirmed === 1,
+              revert: tx.revert === 1,
+              finalResult: tx.contract_ret,
+              event_type: tx.event_type,
+              tokenInfo: { tokenId: tx.id, tokenDecimal: tx.decimals },
+              quant: tx.amount,
+              block: tx.block,
+              block_ts: tx.block_timestamp
+            }));
+            return { token_transfers: transfers, page_size: Number(body.page_size) };
           }
 
           async function scanTimeRange(startTimestamp, endTimestamp, seen, depth = 0) {
             if (depth > 64) throw new Error('TronScan time-range subdivision exceeded its safety limit.');
-            const firstPage = await fetchTransferPage(0, startTimestamp, endTimestamp);
-            const rangeTotal = Number(firstPage.rangeTotal);
-            const reportedTotal = Number(firstPage.total);
-
-            // TronScan silently caps offset pagination at 10,000. Split saturated
-            // time ranges into disjoint millisecond windows before paginating.
-            if (rangeTotal >= 10000 || reportedTotal >= 10000) {
-              if (endTimestamp - startTimestamp <= 1) {
-                throw new Error('TronScan still reports 10000+ transfers in a 1 ms window; refusing an incomplete scan.');
-              }
-              const midpoint = Math.floor((startTimestamp + endTimestamp) / 2);
-              console.log('Splitting dense TronScan range:', startTimestamp, endTimestamp, 'count:', rangeTotal);
-              await scanTimeRange(startTimestamp, midpoint, seen, depth + 1);
-              await scanTimeRange(midpoint + 1, endTimestamp, seen, depth + 1);
-              return;
-            }
-
-            if (reportedTotal !== rangeTotal) {
-              throw new Error('TronScan total and rangeTotal disagree; refusing a possibly incomplete scan.');
-            }
-
-            for (let offset = 0; offset < rangeTotal; offset += 50) {
-              const page = offset === 0
-                ? firstPage
-                : await fetchTransferPage(offset, startTimestamp, endTimestamp);
-              if (Number(page.total) !== rangeTotal || Number(page.rangeTotal) !== rangeTotal) {
-                throw new Error('TronScan result count changed during pagination; refusing to publish.');
-              }
-              const expectedLength = Math.min(50, rangeTotal - offset);
-              if (page.token_transfers.length !== expectedLength) {
-                throw new Error('TronScan returned an incomplete page; refusing to publish.');
-              }
+            let offset = 0;
+            while (offset < 10000) {
+              const page = await fetchTransferPage(offset, startTimestamp, endTimestamp);
+              const received = page.token_transfers.length;
               for (const tx of page.token_transfers) await processTransfer(tx, seen);
+              if (received < 50) return;
+              offset += received;
             }
+            if (endTimestamp - startTimestamp <= 1) {
+              throw new Error('TronScan wallet-transfer range reached its 10,000-record cap at 1 ms; refusing an incomplete scan.');
+            }
+            const midpoint = Math.floor((startTimestamp + endTimestamp) / 2);
+            console.log('Splitting capped TronScan wallet-transfer range:', startTimestamp, endTimestamp);
+            await scanTimeRange(startTimestamp, midpoint, seen, depth + 1);
+            await scanTimeRange(midpoint + 1, endTimestamp, seen, depth + 1);
           }
 
           async function main() {
