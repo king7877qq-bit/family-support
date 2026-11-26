@@ -100,10 +100,8 @@ jobs:
 
           async function fetchTransferPage(start, startTimestamp, endTimestamp) {
             const params = new URLSearchParams({
-              toAddress: process.env.WALLET,
+              relatedAddress: process.env.WALLET,
               contract_address: process.env.USDT_CONTRACT,
-              start_timestamp: String(startTimestamp),
-              end_timestamp: String(endTimestamp),
               start: String(start),
               limit: '50',
               reverse: 'false'
@@ -157,7 +155,7 @@ jobs:
               block: tx.block,
               block_ts: tx.block_ts
             }));
-            return { token_transfers: transfers, page_size: transfers.length };
+            return { token_transfers: transfers, page_size: transfers.length, total: Number(body.total), rangeTotal: Number(body.rangeTotal) };
           }
 
           async function scanTimeRange(startTimestamp, endTimestamp, seen, depth = 0) {
@@ -170,21 +168,15 @@ jobs:
               if (received < 50) return;
               offset += received;
             }
-            if (endTimestamp - startTimestamp <= 1) {
-              throw new Error('TronScan wallet-transfer range reached its 10,000-record cap at 1 ms; refusing an incomplete scan.');
-            }
-            const midpoint = Math.floor((startTimestamp + endTimestamp) / 2);
-            console.log('Splitting capped TronScan wallet-transfer range:', startTimestamp, endTimestamp);
-            await scanTimeRange(startTimestamp, midpoint, seen, depth + 1);
-            await scanTimeRange(midpoint + 1, endTimestamp, seen, depth + 1);
+            throw new Error('TronScan returned the 10,000-record cap for an unbounded address query; refusing to publish an incomplete scan.');
           }
 
           async function main() {
             const seen = new Set();
             const scanEnd = Date.now();
-            // TronScan documents its earliest supported TRC20 transfer timestamp as 2018-06-23.
-            // Using 0 can produce an apparently successful but empty response on this endpoint.
-            await scanTimeRange(1529769600000, scanEnd, seen);
+            // Use the documented address + contract query without time filters first.
+            // The API returns a maximum of 10,000 hits; fail closed if that cap is reached.
+            await scanTimeRange(0, scanEnd, seen);
             console.log('Completed time-partitioned TronScan scan through', scanEnd, 'with', seen.size, 'unique transfer records processed.');
 
             const totalsResponse = await fetch(process.env.SUPABASE_URL + '/rest/v1/rpc/get_verified_usdt_donation_totals', {
