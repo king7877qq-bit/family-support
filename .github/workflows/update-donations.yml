@@ -111,7 +111,17 @@ jobs:
                 !Number.isSafeInteger(Number(body.rangeTotal)) ||
                 Number(body.total) < 0 ||
                 Number(body.rangeTotal) < 0) {
-              throw new Error('Unexpected TronScan response; refusing to publish a total.');
+              const diagnostic = {
+                keys: Object.keys(body || {}).slice(0, 30),
+                code: body?.code ?? null,
+                message: typeof body?.message === 'string' ? body.message.slice(0, 240) : null,
+                totalType: typeof body?.total,
+                rangeTotalType: typeof body?.rangeTotal,
+                transfersType: Array.isArray(body?.token_transfers) ? 'array' : typeof body?.token_transfers,
+                totalValue: body?.total ?? null,
+                rangeTotalValue: body?.rangeTotal ?? null
+              };
+              throw new Error('Unexpected TronScan response (safe diagnostics): ' + JSON.stringify(diagnostic) + '; refusing to publish a total.');
             }
             return body;
           }
