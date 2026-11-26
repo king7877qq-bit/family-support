@@ -99,65 +99,66 @@ jobs:
 
           async function fetchTransferPage(start, startTimestamp, endTimestamp) {
             const params = new URLSearchParams({
-              address: process.env.WALLET,
-              trc20Id: process.env.USDT_CONTRACT,
-              direction: '2',
-              db_version: '0',
+              relatedAddress: process.env.WALLET,
+              contract_address: process.env.USDT_CONTRACT,
+              direction: 'in',
+              confirm: '0',
               start_timestamp: String(startTimestamp),
               end_timestamp: String(endTimestamp),
               start: String(start),
               limit: '50',
               reverse: 'false'
             });
-            const response = await fetch('https://apilist.tronscanapi.com/api/token_trc20/transfers-with-status?' + params.toString(), { headers });
+            const response = await fetch('https://apilist.tronscanapi.com/api/token_trc20/transfers?' + params.toString(), { headers });
             const raw = await response.text();
             if (!response.ok) throw new Error('TronScan wallet-transfer HTTP ' + response.status + ': ' + raw.slice(0, 300));
             let body;
             try { body = JSON.parse(raw); }
             catch { throw new Error('TronScan wallet-transfer returned non-JSON: ' + raw.slice(0, 300)); }
-            if (body?.code !== 200 || !Array.isArray(body.data) ||
-                !Number.isSafeInteger(Number(body.page_size)) ||
-                Number(body.page_size) !== body.data.length) {
+            if (!Array.isArray(body?.token_transfers) ||
+                !Number.isSafeInteger(Number(body.total)) ||
+                !Number.isSafeInteger(Number(body.rangeTotal))) {
               const diagnostic = {
                 keys: Object.keys(body || {}).slice(0, 25),
                 code: body?.code ?? null,
-                pageSize: body?.page_size ?? null,
-                dataType: Array.isArray(body?.data) ? 'array' : typeof body?.data,
+                total: body?.total ?? null,
+                rangeTotal: body?.rangeTotal ?? null,
+                dataType: Array.isArray(body?.token_transfers) ? 'array' : typeof body?.token_transfers,
                 message: typeof body?.message === 'string' ? body.message.slice(0, 200) : null
               };
               throw new Error('Unexpected TronScan wallet-transfer response: ' + JSON.stringify(diagnostic));
             }
             if (!firstPageDiagnosticLogged) {
               firstPageDiagnosticLogged = true;
-              const sample = body.data[0] || null;
+              const sample = body.token_transfers[0] || null;
               console.log('TronScan raw response diagnostic:', JSON.stringify({
-                responseKeys: Object.keys(body || {}), rawRows: body.data.length,
+                responseKeys: Object.keys(body || {}), rawRows: body.token_transfers.length, total: body.total, rangeTotal: body.rangeTotal,
                 firstRowKeys: sample ? Object.keys(sample) : [],
                 firstRowChecks: sample ? {
-                  contractMatches: String(sample.id || '').toLowerCase() === process.env.USDT_CONTRACT.toLowerCase(),
-                  recipientMatches: String(sample.to || '').toLowerCase() === process.env.WALLET.toLowerCase(),
+                  contractMatches: String(sample.contract_address || '').toLowerCase() === process.env.USDT_CONTRACT.toLowerCase(),
+                  recipientMatches: String(sample.to_address || '').toLowerCase() === process.env.WALLET.toLowerCase(),
                   confirmed: sample.confirmed, revert: sample.revert,
-                  contract_ret: sample.contract_ret, event_type: sample.event_type,
-                  decimals: sample.decimals, amountPresent: sample.amount != null,
-                  hashPresent: typeof sample.hash === 'string'
+                  finalResult: sample.finalResult, event_type: sample.event_type,
+                  decimals: sample.tokenInfo?.tokenDecimal, amountPresent: sample.quant != null,
+                  hashPresent: typeof sample.transaction_id === 'string'
                 } : null
               }));
             }
-            const transfers = body.data.map(tx => ({
-              transaction_id: tx.hash,
-              contract_address: tx.contract_address || tx.id,
-              to_address: tx.to,
-              from_address: tx.from,
-              confirmed: tx.confirmed === 1,
-              revert: tx.revert === 1,
-              finalResult: tx.contract_ret,
+            const transfers = body.token_transfers.map(tx => ({
+              transaction_id: tx.transaction_id,
+              contract_address: tx.contract_address,
+              to_address: tx.to_address,
+              from_address: tx.from_address,
+              confirmed: tx.confirmed === true,
+              revert: tx.revert === true,
+              finalResult: tx.finalResult,
               event_type: tx.event_type,
-              tokenInfo: { tokenId: tx.contract_address || tx.id, tokenDecimal: tx.decimals },
-              quant: tx.amount,
+              tokenInfo: tx.tokenInfo,
+              quant: tx.quant,
               block: tx.block,
-              block_ts: tx.block_timestamp
+              block_ts: tx.block_ts
             }));
-            return { token_transfers: transfers, page_size: Number(body.page_size) };
+            return { token_transfers: transfers, page_size: transfers.length };
           }
 
           async function scanTimeRange(startTimestamp, endTimestamp, seen, depth = 0) {
