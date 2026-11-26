@@ -95,6 +95,8 @@ jobs:
             console.log('Verified transfer processed:', txid, 'inserted:', saved.inserted, 'duplicate:', saved.duplicate === true);
           }
 
+          let firstPageDiagnosticLogged = false;
+
           async function fetchTransferPage(start, startTimestamp, endTimestamp) {
             const params = new URLSearchParams({
               address: process.env.WALLET,
@@ -124,6 +126,22 @@ jobs:
                 message: typeof body?.message === 'string' ? body.message.slice(0, 200) : null
               };
               throw new Error('Unexpected TronScan wallet-transfer response: ' + JSON.stringify(diagnostic));
+            }
+            if (!firstPageDiagnosticLogged) {
+              firstPageDiagnosticLogged = true;
+              const sample = body.data[0] || null;
+              console.log('TronScan raw response diagnostic:', JSON.stringify({
+                responseKeys: Object.keys(body || {}), rawRows: body.data.length,
+                firstRowKeys: sample ? Object.keys(sample) : [],
+                firstRowChecks: sample ? {
+                  contractMatches: String(sample.id || '').toLowerCase() === process.env.USDT_CONTRACT.toLowerCase(),
+                  recipientMatches: String(sample.to || '').toLowerCase() === process.env.WALLET.toLowerCase(),
+                  confirmed: sample.confirmed, revert: sample.revert,
+                  contract_ret: sample.contract_ret, event_type: sample.event_type,
+                  decimals: sample.decimals, amountPresent: sample.amount != null,
+                  hashPresent: typeof sample.hash === 'string'
+                } : null
+              }));
             }
             const transfers = body.data.map(tx => ({
               transaction_id: tx.hash,
