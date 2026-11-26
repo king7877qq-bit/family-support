@@ -1,6 +1,9 @@
 name: Update verified USDT donations
 
 on:
+  push:
+    paths:
+      - '.github/workflows/update-donations.yml'
   workflow_dispatch:
   schedule:
     - cron: "*/10 * * * *"
