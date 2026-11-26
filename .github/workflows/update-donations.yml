@@ -164,7 +164,9 @@ jobs:
           async function main() {
             const seen = new Set();
             const scanEnd = Date.now();
-            await scanTimeRange(0, scanEnd, seen);
+            // TronScan documents its earliest supported TRC20 transfer timestamp as 2018-06-23.
+            // Using 0 can produce an apparently successful but empty response on this endpoint.
+            await scanTimeRange(1529769600000, scanEnd, seen);
             console.log('Completed time-partitioned TronScan scan through', scanEnd, 'with', seen.size, 'unique transfer records processed.');
 
             const totalsResponse = await fetch(process.env.SUPABASE_URL + '/rest/v1/rpc/get_verified_usdt_donation_totals', {
